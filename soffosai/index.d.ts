@@ -1,4 +1,4 @@
-import { SoffosPipelines, SoffosServices } from "./src/app";
+import * as fs from 'fs';
 
 declare module 'soffosai' {
     export const apiKey: string;
@@ -710,7 +710,7 @@ declare module 'soffosai' {
         export class FileConverterNode {
             /**
              * @param {string} name
-             * @param {Blob} file
+             * @param {string|FileSystem.ReadStream} file
              * @param {number} normalize
              */
             constructor(name:string, file:Blob, normalize:number);
@@ -986,11 +986,11 @@ declare module 'soffosai' {
             /**
              * 
              * @param {string} user 
-             * @param {Blob} file 
+             * @param {string|fs.ReadStream} file 
              * @param {number} [normalize=0]
              * @returns {object}
              */
-            call(user:string, file:Blob, normalize?:number): object;
+            call(user:string, file:string|fs.ReadStream, normalize?:number): object;
         }
     }
 }

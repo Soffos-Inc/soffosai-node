@@ -8,7 +8,7 @@ class FileConverterNode extends Node {
 
     /**
      * @param {string} name
-     * @param {Blob} file
+     * @param {string|fs.ReadStream} file
      * @param {number} normalize
      */
     constructor(name, file, normalize=0) {

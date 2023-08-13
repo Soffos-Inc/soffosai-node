@@ -198,7 +198,9 @@ class SoffosAIService {
           const formData = new FormData();
           Object.keys(data).forEach(key=>{
             if (key=='file'){
-              formData.append(key, createReadStream(data[key]));
+              if (typeof data[key] === 'string') formData.append(key, createReadStream(data[key]));
+              else formData.append(key, data[key]);
+
             } else {
               formData.append(key, data[key]);
             }
@@ -219,7 +221,7 @@ class SoffosAIService {
           }
         } catch (error) {
           if (error.response) {
-            return error.response.status, error.response.data;
+            return {status: error.response.status, error: error.response.data};
           } else if (error.request) {
             console.log(error.request);
           } else {

@@ -1,6 +1,6 @@
 {
-  "name": "soffosai",
-  "version": "0.1.2",
+  "name": "soffosai-node",
+  "version": "0.1.0",
   "description": "Javascript package for Soffos.ai API",
   "main": "./dist/app.js",
   "module": "./src/app.js",

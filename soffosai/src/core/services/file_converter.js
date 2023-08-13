@@ -15,7 +15,7 @@ class FileConverterService extends SoffosAIService {
   
     /**
      * @param {string} user 
-     * @param {Blob} file
+     * @param {string|fs.ReadStream} file
      * @param {number} [normalize=0] 
      * @returns {Promise<Object>}
      */

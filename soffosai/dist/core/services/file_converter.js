@@ -40,7 +40,7 @@ var FileConverterService = /*#__PURE__*/function (_SoffosAIService) {
 
   /**
    * @param {string} user 
-   * @param {string} file
+   * @param {string|fs.ReadStream} file
    * @param {number} [normalize=0] 
    * @returns {Promise<Object>} 
    */
