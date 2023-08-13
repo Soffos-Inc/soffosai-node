@@ -7,7 +7,11 @@ exports.SoffosAIService = void 0;
 exports.isValidUuid = isValidUuid;
 var _index = require("../../common/index.js");
 var _app = require("../../../../soffosai/src/app.js");
+var _axios = _interopRequireDefault(require("axios"));
+var _formData = _interopRequireDefault(require("form-data"));
+var _fs = require("fs");
 var _type_classifications = require("./../../utils/type_classifications.js");
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -26,7 +30,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
-function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); } // import FormData from 'form-data'; 
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 var visit_docs_message = "Kindly visit https://platform.soffos.ai/playground/docs#/ for guidance.";
 var input_structure_message = "To learn what the input dictionary should look like, access it by <your_service_instance>.input_structure";
 
@@ -213,7 +217,6 @@ var SoffosAIService = /*#__PURE__*/function () {
           allowInput,
           message,
           response,
-          response_data,
           data,
           url,
           headers,
@@ -247,73 +250,64 @@ var SoffosAIService = /*#__PURE__*/function () {
             case 9:
               data = this.getData();
               url = _index.SOFFOS_SERVICE_URL + this._service + "/";
-              if (_index.FORM_DATA_REQUIRED.includes(this._service)) {
-                _context.next = 24;
-                break;
+              headers = {};
+              if (!_index.FORM_DATA_REQUIRED.includes(this._service)) {
+                headers["content-type"] = "application/json";
+                headers["x-api-key"] = this._apikey;
+                // response = await axios.post(url, data, {headers: headers});
+              } else {
+                formData = new _formData["default"]();
+                Object.keys(data).forEach(function (key) {
+                  if (key == 'file') {
+                    if (typeof data[key] === 'string') formData.append(key, (0, _fs.createReadStream)(data[key]));else formData.append(key, data[key]);
+                  } else {
+                    formData.append(key, data[key]);
+                  }
+                });
+                headers = formData.getHeaders();
+                headers["x-api-key"] = this._apikey;
+                data = formData;
               }
-              headers = {
-                "content-type": "application/json",
-                "x-api-key": this._apikey
-              };
-              // response = await axios.post(url, data,{headers: headers});
               _context.prev = 13;
               _context.next = 16;
-              return fetch(url, {
-                headers: headers,
-                method: 'POST',
-                body: JSON.stringify(data)
+              return _axios["default"].post(url, data, {
+                headers: headers
               });
             case 16:
               response = _context.sent;
-              _context.next = 22;
+              if (!(response.status >= 200 && response.status < 300)) {
+                _context.next = 21;
+                break;
+              }
+              return _context.abrupt("return", response.data);
+            case 21:
+              console.log('Request failed');
+              return _context.abrupt("return", response.data);
+            case 23:
+              _context.next = 32;
               break;
-            case 19:
-              _context.prev = 19;
+            case 25:
+              _context.prev = 25;
               _context.t0 = _context["catch"](13);
+              if (!_context.t0.response) {
+                _context.next = 31;
+                break;
+              }
               return _context.abrupt("return", {
-                error: _context.t0,
-                response: response
-              });
-            case 22:
-              _context.next = 37;
-              break;
-            case 24:
-              formData = new FormData();
-              Object.keys(data).forEach(function (key) {
-                formData.append(key, data[key]);
-              });
-              // let headers = formData.getHeaders();
-              headers = {};
-              headers["x-api-key"] = this._apikey;
-              _context.prev = 28;
-              _context.next = 31;
-              return fetch(url, {
-                headers: headers,
-                method: 'POST',
-                body: formData
+                status: _context.t0.response.status,
+                error: _context.t0.response.data
               });
             case 31:
-              response = _context.sent;
-              _context.next = 37;
-              break;
-            case 34:
-              _context.prev = 34;
-              _context.t1 = _context["catch"](28);
-              return _context.abrupt("return", {
-                error: _context.t1,
-                response: response
-              });
-            case 37:
-              _context.next = 39;
-              return response.json();
-            case 39:
-              response_data = _context.sent;
-              return _context.abrupt("return", response_data);
-            case 41:
+              if (_context.t0.request) {
+                console.log(_context.t0.request);
+              } else {
+                console.log('Error', _context.t0.message);
+              }
+            case 32:
             case "end":
               return _context.stop();
           }
-        }, _callee, this, [[13, 19], [28, 34]]);
+        }, _callee, this, [[13, 25]]);
       }));
       function getResponse() {
         return _getResponse.apply(this, arguments);

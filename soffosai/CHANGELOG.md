@@ -3,15 +3,8 @@
 To all who installed soffosai package lower than 0.0.4, please reinstall/update your package.
 
 
-## 0.1.2
-- ES5 compatibility updates
-- documentation updates
-
-## 0.1.1
-- bugfixes
-
 ## 0.1.0
-- file parameter will now accept File instead of file path.
+- file parameter will now accept fs.ReadStream or file path instead of file path only.
 - sample page
 
 ## 0.0.9

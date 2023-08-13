@@ -70,7 +70,7 @@ var FileIngestPipeline = /*#__PURE__*/function (_Pipeline) {
   /**
    * 
    * @param {string} user
-   * @param {string|fs.ReadStream} file
+   * @param {Blob} file
    * @param {number} [normalize=0]
    * @param {string} [execution_code=null]
    * @returns {object}
