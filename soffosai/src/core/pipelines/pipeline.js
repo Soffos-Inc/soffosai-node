@@ -64,7 +64,7 @@ class Pipeline {
             throw new ReferenceError("'user' is not defined in user_input.");
         }
         if ("text" in user_input) {
-            user_input.document_text = this._input.text;
+            user_input.document_text = user_input.text;
         }
         if ("question" in user_input) {
             user_input.message = user_input.question;
@@ -115,7 +115,7 @@ class Pipeline {
             let temp_src = node.source;
             let src = {};
             for (let [key, notation] of Object.entries(temp_src)) {
-                if (isDictObject(notation)) { // value is a reference to a node or user input
+                if (isNodeInput(notation)) { // value is a reference to a node or user input
                     let value = infos[notation.source][notation.field];
                     if ("pre_process" in notation) { // pre-processing needed before use of input param
                         if (notation.pre_process instanceof Function) {
@@ -141,7 +141,7 @@ class Pipeline {
                 throw new Error(response);
             }
             
-            console.log(`Response ready for ${node.service._service}`);
+            console.log(`Response ready for ${node.name}`);
             infos[node.name] = response;
             total_cost += response.cost.total_cost;
         }
@@ -234,14 +234,11 @@ class Pipeline {
                     }
                     
                 } else {
-                    if (get_userinput_datatype(notation) == required_data_type) {
-                        stage.service._payload[key] = notation;
-                    } else {
+                    if (get_userinput_datatype(notation) != required_data_type) {
                         throw new TypeError(`On ${stage.name} node: ${key} requires ${required_data_type} but ${typeof notation} is provided.`)
                     }
                 }
 
-                // check datatype here
             }
         }
     
@@ -308,7 +305,7 @@ class Pipeline {
                         found_input = true;
                     }
                     // special considerations
-                    if (required_key == "context" && "text" in stage_for_output_output_fields) {
+                    else if (required_key == "context" && "text" in stage_for_output_output_fields) {
                         stage_source.context = {
                             source: stage_for_output.name,
                             field: "text"
@@ -334,7 +331,6 @@ class Pipeline {
 
                 if (!found_input) {
                     if (required_key in user_input) {
-                        stage_source[required_key] = user_input[required_key];
                         stage_source[required_key] = {
                             source: "user_input",
                             field: required_key
