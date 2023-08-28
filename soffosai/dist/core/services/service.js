@@ -119,8 +119,14 @@ var SoffosAIService = /*#__PURE__*/function () {
           return [false, "".concat(this._service, ": Please provide ").concat(missingRequirements, " on your payload. ").concat(visit_docs_message, ". ").concat(input_structure_message)];
         }
       }
+      var groupErrors = [];
+      var special_validation = this._serviceio.special_validation(payload);
+      var special_validation_passed = special_validation[0];
+      var special_validation_error_message = special_validation[1];
+      if (!special_validation_passed) {
+        groupErrors.push(special_validation_error_message);
+      }
       if (this._serviceio.require_one_of_choices.length > 0) {
-        var groupErrors = [];
         var _iterator = _createForOfIteratorHelper(this._serviceio.require_one_of_choices),
           _step;
         try {

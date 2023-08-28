@@ -95,9 +95,17 @@ class SoffosAIService {
             ];
           }
         }
+
+        let groupErrors = [];
+
+        let special_validation = this._serviceio.special_validation(payload);
+        let special_validation_passed = special_validation[0];
+        let special_validation_error_message = special_validation[1];
+        if (!special_validation_passed) {
+          groupErrors.push(special_validation_error_message);
+        }
       
         if (this._serviceio.require_one_of_choices.length > 0) {
-          const groupErrors = [];
           for (const group of this._serviceio.require_one_of_choices) {
             const foundChoices = group.filter((choice) => choice in this._payload);
             if (foundChoices.length === 0) {

@@ -29,6 +29,11 @@ class ServiceIO {
   get output_fields() {
     return this._output_fields;
   }
+
+  special_validation(payload) {
+    return [true, null]
+  }
+  
 }
 
 export default ServiceIO;

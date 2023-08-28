@@ -24,6 +24,13 @@ class EmotionDetectionIO extends ServiceIO {
       ]
     };
   }
+
+  special_validation(payload) {
+    if (payload.sentence_split > 10 || payload.sentence_split < 1) {
+      return [false, "sentence_split must be between 1 and 10."]
+    }
+  }
+  
 }
 
 export default EmotionDetectionIO;

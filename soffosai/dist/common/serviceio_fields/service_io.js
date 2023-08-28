@@ -53,6 +53,11 @@ var ServiceIO = /*#__PURE__*/function () {
     get: function get() {
       return this._output_fields;
     }
+  }, {
+    key: "special_validation",
+    value: function special_validation(payload) {
+      return [true, null];
+    }
   }]);
   return ServiceIO;
 }();

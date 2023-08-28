@@ -2,6 +2,8 @@
 ## Notice:
 To all who installed soffosai package lower than 0.0.4, please reinstall/update your package.
 
+## 0.1.1
+- special validation
 
 ## 0.1.0
 - file parameter will now accept fs.ReadStream or file path instead of file path only.
