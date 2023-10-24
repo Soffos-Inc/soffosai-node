@@ -54,9 +54,8 @@ class SoffosAIService {
       };
       this._apikey = this.headers["x-api-key"];
       this._service = service;
+      // In a pipeline, some payload properties are constants and should be related to the Service's instance
       this._payload = {};
-      this._payload_keys = Object.keys(this._payload);
-      this._args_dict = {};
     }
 
     /**
@@ -70,21 +69,21 @@ class SoffosAIService {
     /**
      * Checks if the input type is allowed for the service
      */
-    validatePayload() {
+    validatePayload(payload) {
         
-        if (!isDictObject(this._payload)) {
+        if (!isDictObject(payload)) {
           throw new TypeError("payload should be an object");
         }
       
         // Check for missing arguments
-        const userFromSrc = this._payload.user;
+        const userFromSrc = payload.user;
         if (!userFromSrc) {
           return [false, `${this._service}: user key is required in the payload`];
         }
       
         if (this._serviceio.required_input_fields.length > 0) {
           const missingRequirements = this._serviceio.required_input_fields.filter(
-            (required) => !(required in this._payload)
+            (required) => !(required in payload)
           );
 
           if (missingRequirements.length > 0) {
@@ -107,7 +106,7 @@ class SoffosAIService {
       
         if (this._serviceio.require_one_of_choices.length > 0) {
           for (const group of this._serviceio.require_one_of_choices) {
-            const foundChoices = group.filter((choice) => choice in this._payload);
+            const foundChoices = group.filter((choice) => choice in payload);
             if (foundChoices.length === 0) {
               groupErrors.push(
                 `${this._service}: Please provide one of these values on your payload: ${group}`
@@ -127,13 +126,12 @@ class SoffosAIService {
         // Check if payload has proper types
         const inputStructure = this._serviceio.input_structure;
         const valueErrors = [];
-        for (const [key, value] of Object.entries(this._payload)) {
+        for (const [key, value] of Object.entries(payload)) {
           if (key in inputStructure && key != 'file') {
             const serviceioType = get_serviceio_datatype(inputStructure[key]);
             const inputType = get_userinput_datatype(value);
             if (inputType !== serviceioType) {
-              const wrongType = value instanceof Object ? typeof value : typeof value;
-              valueErrors.push(`${key} requires ${inputType} but ${wrongType} is provided.`);
+              valueErrors.push(`${key} requires ${serviceioType} but ${inputType} is provided.`);
             }
           }
         }
@@ -142,8 +140,8 @@ class SoffosAIService {
           return [false, valueErrors];
         }
       
-        if ("document_ids" in this._payload) {
-          const documentIds = this._payload.document_ids;
+        if ("document_ids" in payload) {
+          const documentIds = payload.document_ids;
           if (Array.isArray(documentIds)) {
             for (const _id of documentIds) {
               const validUuid = isValidUuid(_id);
@@ -159,11 +157,11 @@ class SoffosAIService {
     
     /**
      * Prepare the JSON or form data input of the service
-     * Will be used when there is a special handling needed for an element of this._payload
+     * Will be used when there is a special handling needed for an element of the payload
      */
-    getData() {
+    getData(payload) {
         const requestData = {};
-        for (const [key, value] of Object.entries(this._payload)) {
+        for (const [key, value] of Object.entries(payload)) {
             requestData[key] = value;
         }
       
@@ -178,11 +176,10 @@ class SoffosAIService {
         if ("apiKey" in payload) {
           this._apikey = payload.apiKey;
         }
-        this._payload = payload;
-        const [allowInput, message] = this.validatePayload();
-        if ("question" in this._payload) {
+        const [allowInput, message] = this.validatePayload(payload);
+        if ("question" in payload) {
           // The API receives the question as "message"
-          this._payload["message"] = this._payload["question"];
+          payload["message"] = payload["question"];
         }
       
         if (!allowInput) {
@@ -194,7 +191,7 @@ class SoffosAIService {
         }
       
         let response;
-        let data = this.getData();
+        let data = this.getData(payload);
         const url = SOFFOS_SERVICE_URL + this._service + "/";
         let headers = {}
       

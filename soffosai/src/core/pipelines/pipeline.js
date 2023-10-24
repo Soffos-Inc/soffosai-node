@@ -19,9 +19,10 @@ class Pipeline {
     /**
      * @param {Array.<object>} nodes 
      * @param {boolean} [ use_defaults=false ]
+     * @param {string} [name]
      * @param {Object} [ kwargs={} ]
      */
-    constructor (nodes, use_defaults=false, kwargs={}) {
+    constructor (nodes, use_defaults=false, name=null, kwargs={}) {
         const api_key = kwargs.apiKey;
         this.apiKey = apiKey || api_key;
         this._stages = nodes;
@@ -46,14 +47,13 @@ class Pipeline {
             throw new Error(error_messages.join("\n"));
         }
 
-        this._outputfields = this._stages.map(stage => Object.keys(stage.service._serviceio.output_structure));
-
+        // when the pipeline is used as a Node, it needs a name
+        this.name = name;
     }
 
     /**
      * Run the Pipeline
      * @param {object} user_input 
-     * @param {string} [execution_code=null]
      * @returns 
      */
     async run(user_input) {
@@ -87,7 +87,7 @@ class Pipeline {
         }
 
         let infos = {};
-        this.validate_pipeline(user_input, stages);
+        this.validate_pipeline(stages, user_input);
         infos.user_input = user_input;
         let total_cost = 0.00;
         // Execute per stage:
@@ -110,9 +110,37 @@ class Pipeline {
                 return infos;
             }
 
-            let node = stages[i];
-            console.log(`Running ${node.service._service}`);
-            let temp_src = node.source;
+            let stage = stages[i];
+            console.log(`Running ${stage.name}`);
+
+            if (stage instanceof Pipeline) {
+                let response = await stage.run(user_input);
+                console.log(`Response ready for ${stage.name}.`);
+                let pipeOutput = {};
+                pipeOutput.costs = {};
+                for (let key in response) {
+                    if (key !== 'total_call_cost') {
+                        for (let subkey in response[key]) {
+                            if (subkey == 'cost') {
+                                pipeOutput['costs'][key] = response[key][subkey];
+                            } else if (subkey == 'charged_character_count') {
+                                pipeOutput['costs'][key]['charged_character_count'] = response[key][subkey]
+                            } else if (subkey == 'unit_price'){
+                                pipeOutput['costs'][key]['unit_price'] = response[key][subkey]
+                            } else {
+                                pipeOutput[subkey] = response[key][subkey];
+                            }
+                        }
+                    } 
+                    else {
+                        total_cost += response[key];
+                    }
+                }
+                infos[stage.name] = pipeOutput;
+                continue;
+            }
+
+            let temp_src = stage.source;
             let src = {};
             for (let [key, notation] of Object.entries(temp_src)) {
                 if (isNodeInput(notation)) { // value is a reference to a node or user input
@@ -136,13 +164,13 @@ class Pipeline {
             }
             src.apiKey = this.apiKey;
 
-            let response = await node.service.getResponse(src);
+            let response = await stage.service.getResponse(src);
             if ("error" in response || !isDictObject(response)) {
                 throw new Error(response);
             }
             
-            console.log(`Response ready for ${node.name}`);
-            infos[node.name] = response;
+            console.log(`Response ready for ${stage.name}`);
+            infos[stage.name] = response;
             total_cost += response.cost.total_cost;
         }
         infos.total_call_cost = total_cost;
@@ -164,24 +192,32 @@ class Pipeline {
      * @param {Node} stages 
      * @returns 
      */
-    validate_pipeline(user_input, stages) {
+    validate_pipeline(stages, user_input) {
         /*
         Before running the first service, the Pipeline will validate all nodes if they will all be
         executed successfully with the exception of database and server issues.
         */
         let error_messages = [];
     
-        //  The first available keys are of the source
-        this._outputfields.unshift(Object.keys(user_input));
-    
         for(let i = 0; i < stages.length; i++) {
             let stage = stages[i];
+
+            let sub_pipe_stages
+            if (stage instanceof Pipeline) {
+                if (stage._use_defaults) {
+                    sub_pipe_stages = stage.setDefaults(stage._stages, user_input)
+                } else {
+                    sub_pipe_stages = stage._stages
+                }
+                stage.validate_pipeline(sub_pipe_stages, user_input)
+                continue;
+            }
+
             // stage: Node to be validated
 
             // check if required fields are present: already solved by making the node subclasses.
 
             // check if require_one_of_choices is present and not more than one
-            // code here
             let serviceio = stage.service._serviceio;
             if (serviceio.require_one_of_choices.length > 0) {
                 const groupErrors = [];
@@ -216,26 +252,36 @@ class Pipeline {
                     if (reference_node_name == "user_input") {
                         let input_datatype = get_userinput_datatype(user_input[required_key])
                         if (required_data_type != input_datatype) {
-                            throw new TypeError(`On ${stage.name} node: ${required_data_type} required on user_input '${required_key}' field but ${input_datatype} is provided.`)
+                            error_messages.push(`On ${stage.name} node: ${required_data_type} required on user_input '${required_key}' field but ${input_datatype} is provided.`)
                         }
                     } else {
+                        let source_node_found = false;
                         for (let subnode of stages) {
                             if (reference_node_name == subnode.name) {
+                                source_node_found = true;
+                                if (subnode instanceof Pipeline) {
+                                    break;
+                                }
                                 let output_datatype = get_serviceio_datatype(subnode.service._serviceio.output_structure[required_key]);
                                 if (output_datatype == 'null') {
-                                    throw new TypeError(`On ${stage.name} node: the reference node '${reference_node_name}' does not have ${required_key} key on its output.`);
+                                    error_messages.push(`On ${stage.name} node: the reference node '${reference_node_name}' does not have ${required_key} key on its output.`);
                                 }
                                 if (required_data_type != output_datatype) {
-                                    throw new TypeError(`On ${stage.name} node: The input datatype required for field ${key} is ${required_data_type}. This does not match the datatype to be given by node ${subnode.name}'s ${notation.field} field which is ${output_datatype}.`);
+                                    error_messages.push(`On ${stage.name} node: The input datatype required for field ${key} is ${required_data_type}. This does not match the datatype to be given by node ${subnode.name}'s ${notation.field} field which is ${output_datatype}.`);
                                 }
                                 break;
                             }
                         }
+                        if (!source_node_found) {
+                            error_messages.push(`Node '${reference_node_name}' is not found.`)
+                        }
                     }
                     
                 } else {
-                    if (get_userinput_datatype(notation) != required_data_type) {
-                        throw new TypeError(`On ${stage.name} node: ${key} requires ${required_data_type} but ${typeof notation} is provided.`)
+                    if (get_userinput_datatype(notation) == required_data_type) {
+                        stage.service._payload[key] = notation;
+                    } else {
+                        error_messages.push(`On ${stage.name} node: ${key} requires ${required_data_type} but ${typeof notation} is provided.`)
                     }
                 }
 
@@ -243,7 +289,7 @@ class Pipeline {
         }
     
         if (error_messages.length != 0) {
-            throw new Error(error_messages);
+            throw new Error(error_messages.join(","));
         }
         return true;
     }
@@ -271,6 +317,9 @@ class Pipeline {
 
         for (let i=0; i<stages.length; i++) {
             const stage = stages[i];
+            if (stage instanceof Pipeline) {
+                continue;
+            }
             let stage_source = {};
             // enumerate the required inputs of this stage
             let required_keys= stage.service._serviceio.required_input_fields
@@ -312,14 +361,14 @@ class Pipeline {
                         };
                         found_input = true;
                     }
-                    if (required_key == "document_text" && "text" in stage_for_output_output_fields) {
+                    else if (required_key == "document_text" && "text" in stage_for_output_output_fields) {
                         stage_source.document_text = {
                             source: stage_for_output.name,
                             field: "text"
                         };
                         found_input = true;
                     }
-                    if (required_key == "document_ids" && "document_id" in stage_for_output_output_fields) {
+                    else if (required_key == "document_ids" && "document_id" in stage_for_output_output_fields) {
                         stage_source.document_ids = {
                             source: stage_for_output.name,
                             field: "document_id",

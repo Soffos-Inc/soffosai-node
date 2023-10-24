@@ -1,6 +1,20 @@
-# Soffosai JS (Alpha)
+# Welcome to the Soffos Platform SDK
+At Soffos Inc., our specialty is helping organizations create pioneering apps with conversational artificial intelligence (CAI) and natural language processing (NLP) at their core.
+
+NLP and conversational AI are at the heart of everything Soffos does. Using Soffos’ technology, we offer a suite of unique application programming interfaces (APIs) so businesses can choose the natural language and generative AI functionalities they would like to include in any kind of application.
+
+What sets Soffos apart is we’ve taken the most advanced technology, enhanced it with our own R&D, and made it easy to use and accessible to everyone.
+
+Our solution provides you with the ‘building blocks’ and core technologies required to build countless novel NLP applications, with minimal coding, from learning and assessment tools to knowledge management platforms and beyond. The opportunities with Soffos Platform are infinite.
+
+Sign up for a [Free Trial](https://platform.soffos.ai) and start building your first generative AI application today!
+
+Join our Discord channel: [SoffosAI](https://discord.gg/Q2yTEuFG2B)
+
+# Soffosai Node JS (Alpha)
 Javascript SDK for Soffos.ai API
-Note that this is in Alpha.
+Note that this is in Alpha. If you do not need file management, please use the Soffosai JS package for now:
+`npm install soffosai`
 
 ## API Keys
 - Create an account at [Soffos platform](https://platform.soffos.ai) or [login](https://platform.soffos.ai/login).
@@ -19,7 +33,7 @@ Note that this is in Alpha.
     set it in your environment variable with variable name = SOFFOSAI_API_KEY
 
 ## Installation
-`npm install soffosai`
+`npm install soffosai-node`
 
 
 ## SoffosAIService
@@ -27,9 +41,7 @@ The SoffosAIService class handles validation and execution of specified endpoint
 Here is the list of SoffosAIService Subclasses:
 ```
 [
-    "AmbiguityDetectionService",
     "AnswerScoringService",
-    "ContradictionDetectionService",
     "DocumentsService",
     "DocumentsIngestService", 
     "DocumentsSearchService", 
@@ -74,51 +86,6 @@ let response = await service.call(
 )
 console.log(JSON.stringify(response, null, 2));
 ```
-
-## Nodes 
-Nodes are the configuration of Services for Pipeline use.
-In a Soffos Pipeline, you will be declaring multiple sevices working together for a purpose.
-The configuration of each service: where to get the input, preprocessing of the input before use, will be declared in a Node.
-```
-import { SoffosNodes } from "soffosai";
-
-function foo(input) {
-    // process input
-    return input.split(".")[0]; // random example of process
-}
-
-let file_converter = new SoffosNodes.FileConverterNode(
-    "file-converter", // reference name of a Node in the Pipeline, you can have the same service in it.
-    { // definition of file parameter:
-        "source": "user_input", // take from user_input
-        "field":"my_file" // the file property/field_name
-    } 
-);
-
-let summarize = new SoffosNodes.SummarizationNode(
-    "summarization", // this Node will be referenced as "summary"
-    {
-        "source": "file-converter", // get the value of this argument from output of file-converter Node
-        "field": "text" // with field name "text" (property)
-    }, 
-    3 // This is a constant if you don't define a reference to anything.
-);
-
-let ingestor = new SoffosNodes.DocumentsIngestNode(
-    "ingest", // this node will be referred to as "ingest"
-    { // this is the full description where to get the "name" argument for the Node "ingest"
-        source: "user_input", // get from the user_input
-        field: "my_file", // with "my_file" field
-        pre_process: foo // but process it first into foo. name = foo(user_input[field]);
-    },
-    { //the text argument definition
-        source: "summarization", // get from the output of "summarization" Node (name of second Node)
-        field: "summary" // with this field name
-    }
-); 
-
-```
-the node's argument, if an object, can only have 3 attributes: "source", "field" and "pre_process".  Other attributes will be ignored.
 
 ## Pipeline
 - A Soffos Pipeline is a series of Soffos Service working together.

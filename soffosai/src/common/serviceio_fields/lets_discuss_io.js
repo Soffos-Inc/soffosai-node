@@ -75,7 +75,7 @@ class LetsDiscussDeleteIO extends ServiceIO {
     this.service = ServiceString.LETS_DISCUSS_DELETE;
     this.required_input_fields = ["session_ids"];
     this.input_structure = {
-      "session_ids": 'object'
+      "session_ids": 'array'
     };
     this.output_structure = {
       "success": 'boolean'

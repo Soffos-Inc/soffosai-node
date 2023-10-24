@@ -11,7 +11,7 @@ class EmotionDetectionIO extends ServiceIO {
       "sentence_split": "number",
       "sentence_overlap": 'boolean',
       "text": "string",
-      "emotion_choices": 'object'
+      "emotion_choices": 'array'
     };
     this.output_structure = {
       "spans": [
@@ -29,6 +29,7 @@ class EmotionDetectionIO extends ServiceIO {
     if (payload.sentence_split > 10 || payload.sentence_split < 1) {
       return [false, "sentence_split must be between 1 and 10."]
     }
+    return super.special_validation(payload);
   }
   
 }

@@ -20,8 +20,8 @@ class QuestionAnsweringService extends SoffosAIService {
     /**
      * @param {string} user 
      * @param {string} question
-     * @param {string} document_text
-     * @param {Array.<string>} document_ids
+     * @param {string} [document_text]
+     * @param {Array.<string>} [document_ids]
      * @param {bool} [check_ambiguity=true]
      * @param {string} [check_query_type=true]
      * @param {string} [generic_response=false]
