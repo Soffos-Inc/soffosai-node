@@ -49,8 +49,8 @@ var ServiceIO = /*#__PURE__*/function () {
     }
   }
   _createClass(ServiceIO, [{
-    key: "output_fields",
-    get: function get() {
+    key: "get_output_fields",
+    value: function get_output_fields() {
       return this._output_fields;
     }
   }, {

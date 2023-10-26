@@ -6,9 +6,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 var _service = require("./service.js");
-var _inspect_arguments = require("../../utils/inspect_arguments.js");
 var _constants = require("../../common/constants.js");
 var _index = require("../../common/serviceio_fields/index.js");
+var _input_config = require("./input_config.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
@@ -25,6 +25,8 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 /**
  * The Language Detection module detects the dominant language in the provided text.
+ * @class
+ * @alias SoffosServices.LanguageDetectionService
  */
 var LanguageDetectionService = /*#__PURE__*/function (_SoffosAIService) {
   _inherits(LanguageDetectionService, _SoffosAIService);
@@ -40,15 +42,54 @@ var LanguageDetectionService = /*#__PURE__*/function (_SoffosAIService) {
   }
 
   /**
-   * @param {string} user 
-   * @param {string} text
+   * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
+   * the api is an application (app) and that app has users. Soffos API will accept any string.
+   * @param {string} text - Text to be classified under a language.
    * @returns {Promise<Object>} 
+   * language - string<br>
+   * The language code of the detected language. <br>
+   * @example
+   * import { SoffosServices } from "soffosai";
+   * 
+   * const my_apiKey = "Token <put your api key here>";
+   * const service = new SoffosServices.LanguageDetectionService({apiKey:my_apiKey});
+   * let response = await service.call("me again", "空港はどこですか");
+   * console.log(JSON.stringify(response, null, 2));
+   * 
+   * // returns
+   * // {
+   * //     "language": "ja",
+   * //     "cost": {
+   * //       "api_call_cost": 0.005,
+   * //       "character_volume_cost": 0.005,
+   * //       "total_cost": 0.01
+   * //     },
+   * //     "charged_character_count": 100,
+   * //     "unit_price": "0.000050"
+   * // }
    */
   _createClass(LanguageDetectionService, [{
     key: "call",
     value: function call(user, text) {
-      this._argsDict = (0, _inspect_arguments.inspectArguments)(this.call, user, text);
-      return _get(_getPrototypeOf(LanguageDetectionService.prototype), "call", this).call(this);
+      var payload = {
+        "user": user,
+        "text": text
+      };
+      return _get(_getPrototypeOf(LanguageDetectionService.prototype), "call", this).call(this, payload);
+    }
+
+    /**
+     * @param {string} name - Reference name of this Service.
+     *  It will be used by the Pipeline to reference this Service.
+     * @param {string|InputConfig} text - Text to be classified under a language.
+     */
+  }, {
+    key: "setInputConfigs",
+    value: function setInputConfigs(name, text) {
+      var source = {
+        text: text
+      };
+      return _get(_getPrototypeOf(LanguageDetectionService.prototype), "setInputConfigs", this).call(this, name, source);
     }
   }]);
   return LanguageDetectionService;

@@ -3,22 +3,10 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-Object.defineProperty(exports, "AmbiguityDetectionService", {
-  enumerable: true,
-  get: function get() {
-    return _ambiguity_detection["default"];
-  }
-});
 Object.defineProperty(exports, "AnswerScoringService", {
   enumerable: true,
   get: function get() {
     return _answer_scoring["default"];
-  }
-});
-Object.defineProperty(exports, "ContradictionDetectionService", {
-  enumerable: true,
-  get: function get() {
-    return _contradiction_detection["default"];
   }
 });
 Object.defineProperty(exports, "DocumentsDeleteService", {
@@ -55,6 +43,12 @@ Object.defineProperty(exports, "FileConverterService", {
   enumerable: true,
   get: function get() {
     return _file_converter["default"];
+  }
+});
+Object.defineProperty(exports, "InputConfig", {
+  enumerable: true,
+  get: function get() {
+    return _input_config.InputConfig;
   }
 });
 Object.defineProperty(exports, "LanguageDetectionService", {
@@ -177,15 +171,13 @@ Object.defineProperty(exports, "TranscriptCorrectionService", {
     return _transcript_correction["default"];
   }
 });
-Object.defineProperty(exports, "inspectArguments", {
+Object.defineProperty(exports, "createInputConfig", {
   enumerable: true,
   get: function get() {
-    return _inspect_arguments.inspectArguments;
+    return _input_config.createInputConfig;
   }
 });
-var _ambiguity_detection = _interopRequireDefault(require("./ambiguity_detection.js"));
 var _answer_scoring = _interopRequireDefault(require("./answer_scoring.js"));
-var _contradiction_detection = _interopRequireDefault(require("./contradiction_detection.js"));
 var _documents = require("./documents.js");
 var _email_analysis = _interopRequireDefault(require("./email_analysis.js"));
 var _emotion_detection = _interopRequireDefault(require("./emotion_detection.js"));
@@ -207,5 +199,5 @@ var _table_generator = _interopRequireDefault(require("./table_generator.js"));
 var _tag_generation = _interopRequireDefault(require("./tag_generation.js"));
 var _transcript_correction = _interopRequireDefault(require("./transcript_correction.js"));
 var _service = require("./service.js");
-var _inspect_arguments = require("../../utils/inspect_arguments.js");
+var _input_config = require("./input_config.js");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }

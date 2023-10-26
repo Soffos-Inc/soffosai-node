@@ -31,8 +31,8 @@ var FileConverterIO = /*#__PURE__*/function (_ServiceIO) {
     _this.required_input_fields = ["file"];
     _this.optional_input_fields = ["normalize"];
     _this.input_structure = {
-      "file": "object",
-      "normalize": "number"
+      // "file": "object",
+      "normalize": "string"
     };
     _this.output_structure = {
       "text": "string",

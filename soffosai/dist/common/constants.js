@@ -6,15 +6,13 @@ Object.defineProperty(exports, "__esModule", {
 exports.ServiceString = exports.SOFFOS_SERVICE_URL = exports.SERVICES_LIST = exports.FORM_DATA_REQUIRED = void 0;
 var SOFFOS_SERVICE_URL = "https://api.soffos.ai/service/";
 exports.SOFFOS_SERVICE_URL = SOFFOS_SERVICE_URL;
-var SERVICES_LIST = ['ambiguity-detection', 'answer-scoring', 'contradiction-detection', 'discuss/create', 'discuss', 'discuss/count', 'discuss/delete', 'documents/ingest', 'documents/delete', 'documents/search', 'email-analysis', 'emotion-detection', 'file-converter', 'flashcard-generation', 'intent-classification/confirmation', 'intent-classification', 'language-detection', 'logical-error-detection', 'microlesson', 'ner', 'paraphrase', 'profanity', 'qna-generation', 'question-answering', 'review-tagger', 'search-recommendations', 'sentiment-analysis', 'simplify', 'string-similarity', 'summarization', 'table-generator', 'tag', 'transcript-correction', 'batch-service/'];
+var SERVICES_LIST = ['answer-scoring', 'discuss/create', 'discuss', 'discuss/count', 'discuss/delete', 'documents/ingest', 'documents/delete', 'documents/search', 'email-analysis', 'emotion-detection', 'file-converter', 'flashcard-generation', 'intent-classification/confirmation', 'intent-classification', 'language-detection', 'logical-error-detection', 'microlesson', 'ner', 'paraphrase', 'profanity', 'qna-generation', 'question-answering', 'review-tagger', 'search-recommendations', 'sentiment-analysis', 'simplify', 'string-similarity', 'summarization', 'table-generator', 'tag', 'transcript-correction', 'batch-service/'];
 exports.SERVICES_LIST = SERVICES_LIST;
 var ServiceString = {
   /*
   Contains the list of Soffos services as attributes
   */
-  AMBIGUITY_DETECTION: 'ambiguity-detection',
   ANSWER_SCORING: 'answer-scoring',
-  CONTRADICTION_DETECTION: 'contradiction-detection',
   LETS_DISCUSS_CREATE: 'discuss/create',
   LETS_DISCUSS: 'discuss',
   LETS_DISCUSS_RETRIEVE: 'discuss/count',

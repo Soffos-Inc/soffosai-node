@@ -109,7 +109,7 @@ var LetsDiscussDeleteIO = /*#__PURE__*/function (_ServiceIO4) {
     _this4.service = _constants.ServiceString.LETS_DISCUSS_DELETE;
     _this4.required_input_fields = ["session_ids"];
     _this4.input_structure = {
-      "session_ids": 'object'
+      "session_ids": 'array'
     };
     _this4.output_structure = {
       "success": 'boolean'

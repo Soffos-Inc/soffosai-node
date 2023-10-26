@@ -6,9 +6,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 var _service = require("./service.js");
-var _inspect_arguments = require("../../utils/inspect_arguments.js");
 var _constants = require("../../common/constants.js");
 var _index = require("../../common/serviceio_fields/index.js");
+var _input_config = require("./input_config.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
@@ -24,8 +24,22 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 /** 
- * This module will mark the user's answer based on the provided context, 
- * the question and, optionally, the expected correct answer..
+ * This module will mark the user's answer based on the provided context, the question and, 
+ * optionally, the expected correct answer. Typical string similarity methods often fail to accurately 
+ * capture the similarity in meaning and semantics, especially in cases where a single word can alter 
+ * the entire meaning of a sentence. This module not only addresses this issue, but the fact that the 
+ * underlying AI understands the context and question also enables it to evaluate an answer even if 
+ * the expected correct answer is not provided. However, when provided, the evaluation will give it 
+ * more weight than the information in the context.
+
+ * The score is a value between 0 and 1, with 0 being completely wrong and 1 being perfectly accurate. 
+ * Additionally, the reasoning behind the score is provided.
+
+ * The Answer Scoring module is a perfect fit to supplement the Q&A generation module by marking 
+ * users' answers to AI-generated question-answer pairs. Together they can power a wide range of 
+ * educational and retention-assessment applications.
+ * @class
+ * @alias SoffosServices.AnswerScoringService
 */
 var AnswerScoringService = /*#__PURE__*/function (_SoffosAIService) {
   _inherits(AnswerScoringService, _SoffosAIService);
@@ -41,19 +55,78 @@ var AnswerScoringService = /*#__PURE__*/function (_SoffosAIService) {
   }
 
   /**
-   * @param {string} user 
-   * @param {string} context
-   * @param {string} question
-   * @param {string} user_answer
-   * @param {string} [answer]
+   * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
+   *                        the api is an application (app) and that app has users. Soffos API will accept 
+   *                        any string.
+   * @param {string} context -  This should be the passage with the information that is related to the 
+   *                            question and answer.
+   * @param {string} question - The question to answer.
+   * @param {string} user_answer - The user's answer which will be marked.
+   * @param {string} [answer] - Optionally provide the expected answer.
    * @returns {Promise<Object>}
+   * score - float <br>
+   * A value between 0 and 1 indicating the correctness of the answer.<br>
+   * reasoning string - A concise explanation of how the AI arrived to the predicted score. <br>
+   * @example
+   * import { SoffosServices } from "soffosai";
+   * 
+   * const my_apiKey = "Token <put your api key here>";
+   * const service = new SoffosServices.AnswerScoringService({apiKey:my_apiKey});
+   * let response = await service.call(
+   *     "client 12345678",
+   *     "Genetic evidence suggests that dogs descended directly from wolves (Canis) and that the now-extinct wolf lineages that produced dogs branched off from the line that produced modern living wolves sometime between 27,000 and 40,000 years ago. The timing and location of dog domestication is a matter of debate. There is strong genetic evidence, however, that the first domestication events occurred somewhere in northern Eurasia between 14,000 and 29,000 years ago.",
+   *     "How long ago did dogs first become domesticated?",
+   *     "around 20,000 years ago.",
+   *     "Between 14,000 and 29,000 years ago."
+   * );
+   * console.log(JSON.stringify(response, null, 2));
+   * 
+   * // returns
+   * // {
+   * //     "score": 0.8,
+   * //     "reasoning": "The user's answer is close to the correct answer, but not exact. The correct answer is between 14,000 and 29,000 years ago, while the user's answer is around 20,000 years ago. Although the user's answer falls within the correct range, it is not as precise as the correct answer.",
+   * //     "cost": {
+   * //       "api_call_cost": 0.005,
+   * //       "character_volume_cost": 0.02855,
+   * //       "total_cost": 0.03355
+   * //     },
+   * //     "charged_character_count": 571,
+   * //     "unit_price": "0.000050"
+   * // }
    */
   _createClass(AnswerScoringService, [{
     key: "call",
     value: function call(user, context, question, user_answer) {
       var answer = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
-      this._argsDict = (0, _inspect_arguments.inspectArguments)(this.call, user, context, question, user_answer, answer);
-      return _get(_getPrototypeOf(AnswerScoringService.prototype), "call", this).call(this);
+      var payload = {
+        "user": user,
+        "context": context,
+        "question": question,
+        "user_answer": user_answer
+      };
+      if (answer) payload.answer = answer;
+      return _get(_getPrototypeOf(AnswerScoringService.prototype), "call", this).call(this, payload);
+    }
+
+    /**
+     * @param {string} name - Reference name of this Service.
+     *  It will be used by the Pipeline to reference this Service.
+     * @param {string|InputConfig} context - This should be the passage with the information that is related to the question and answer.
+     * @param {string|InputConfig} question - The question to answer.
+     * @param {string|InputConfig} user_answer - The user's answer which will be marked.
+     * @param {string|InputConfig} [answer=null] - Optionally provide the expected answer.
+     */
+  }, {
+    key: "setInputConfigs",
+    value: function setInputConfigs(name, context, question, user_answer) {
+      var answer = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
+      var source = {
+        context: context,
+        question: question,
+        user_answer: user_answer
+      };
+      if (answer) source.answer = answer;
+      return _get(_getPrototypeOf(AnswerScoringService.prototype), "setInputConfigs", this).call(this, name, source);
     }
   }]);
   return AnswerScoringService;

@@ -37,7 +37,8 @@ var DocumentsIngestIO = /*#__PURE__*/function (_ServiceIO) {
     _this.input_structure = {
       "name": "string",
       "meta": "object",
-      "text": "string"
+      "text": "string",
+      "tagged_elements": ["object", "object"]
     };
     // output_fields = ["success", "document_id"]
     _this.output_structure = {
@@ -59,7 +60,7 @@ var DocumentSearchIO = /*#__PURE__*/function (_ServiceIO2) {
     _this2 = _super2.call(this);
     _this2.service = _constants.ServiceString.DOCUMENTS_SEARCH;
     _this2.required_input_fields = [];
-    _this2.require_one_of_choices = [["document_ids", "query", "filters"]];
+    _this2.require_one_of_choices = [];
     _this2.defaults = ["query"];
     _this2.optional_input_fields = ["query", "filters", "document_ids", "top_n_keywords", "top_n_natural_language", "date_from", "date_until"];
     _this2.input_structure = {
@@ -91,11 +92,12 @@ var DocumentSearchIO = /*#__PURE__*/function (_ServiceIO2) {
   _createClass(DocumentSearchIO, [{
     key: "special_validation",
     value: function special_validation(payload) {
-      if (!payload.hasOwnProperty('query')) {
-        if (!payload.hasOwnProperty('filters')) {
-          return [False, "If query is not provided, please provide 'filters' argument."];
-        }
-      }
+      // if (!payload.hasOwnProperty('query')) {
+      //   if (!payload.hasOwnProperty('filters')) {
+      //     return [false, "If query is not provided, please provide 'filters' argument."]
+      //   }
+      // }
+
       if (payload.hasOwnProperty('top_n_natural_language')) {
         if (payload.top_n_natural_language > 0 && !payload.hasOwnProperty('query') && !payload.hasOwnProperty("document_ids")) {
           return [false, "If document_ids are not defined: query is required if top_n_natural_language is defined and is greater than 0."];

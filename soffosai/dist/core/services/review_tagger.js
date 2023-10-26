@@ -6,9 +6,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 var _service = require("./service.js");
-var _inspect_arguments = require("../../utils/inspect_arguments.js");
 var _constants = require("../../common/constants.js");
 var _index = require("../../common/serviceio_fields/index.js");
+var _input_config = require("./input_config.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
@@ -28,6 +28,8 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
  * the referred object, it's fault and an action/verb that is associated with it. If any 
  * of the information is not present, it returns "n/a". This is useful for organizations who 
  * want to analyze product reviews in order to identify and prioritize the most important issues.
+ * @class
+ * @alias SoffosServices.ReviewTaggerService
  */
 var ReviewTaggerService = /*#__PURE__*/function (_SoffosAIService) {
   _inherits(ReviewTaggerService, _SoffosAIService);
@@ -43,15 +45,65 @@ var ReviewTaggerService = /*#__PURE__*/function (_SoffosAIService) {
   }
 
   /**
-   * @param {string} user 
-   * @param {string} text
+   * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
+   * the api is an application (app) and that app has users. Soffos API will accept any string.
+   * @param {string} text - The review text.
    * @returns {Promise<Object>} 
+   * object - string<br>
+   * The faulty object. This could be the product itself, or a component, e.g. "door handle". If 'n/a' is returned, it's assumed that the object is the product itself. <br>
+   * action - string <br>
+   * The action/verb associated with that object, e.g. "squeaks" <br>
+   * fault - string <br>
+   * The fault (or strength) of the object, e.g. "loose" or "broken". <br>
+   * @example
+   * import { SoffosServices } from "soffosai";
+   * 
+   * const my_apiKey = "Token <put your api key here>";
+   * const service = new SoffosServices.ReviewTaggerService({apiKey:my_apiKey});
+   * let response = await service.call(
+   *     "client 12345",
+   *     "This oven has been a complete disaster from the start. After about 2 weeks of use, \
+   *     the oven and broiler burners would turn off suddenly after being on for only 5 seconds. \
+   *     This has been an ongoing issue for months, and it still does not work."
+   * );
+   * console.log(JSON.stringify(response, null, 2));
+   *     
+   * // returns
+   * // {
+   * //     "object": "oven and broiler burners",
+   * //     "action": "turn off suddenly",
+   * //     "fault": "not working",
+   * //     "cost": {
+   * //       "api_call_cost": 0.005,
+   * //       "character_volume_cost": 0.01245,
+   * //       "total_cost": 0.01745
+   * //     },
+   * //     "charged_character_count": 249,
+   * //     "unit_price": "0.000050"
+   * // }
    */
   _createClass(ReviewTaggerService, [{
     key: "call",
     value: function call(user, text) {
-      this._argsDict = (0, _inspect_arguments.inspectArguments)(this.call, user, text);
-      return _get(_getPrototypeOf(ReviewTaggerService.prototype), "call", this).call(this);
+      var payload = {
+        "user": user,
+        "text": text
+      };
+      return _get(_getPrototypeOf(ReviewTaggerService.prototype), "call", this).call(this, payload);
+    }
+
+    /**
+     * @param {string} name - Reference name of this Service.
+     *  It will be used by the Pipeline to reference this Service.
+     * @param {string|InputConfig} text - The review text.
+     */
+  }, {
+    key: "setInputConfigs",
+    value: function setInputConfigs(name, text) {
+      var source = {
+        text: text
+      };
+      return _get(_getPrototypeOf(ReviewTaggerService.prototype), "setInputConfigs", this).call(this, name, source);
     }
   }]);
   return ReviewTaggerService;

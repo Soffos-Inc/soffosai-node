@@ -3,22 +3,10 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-Object.defineProperty(exports, "AmbiguityDetectionIO", {
-  enumerable: true,
-  get: function get() {
-    return _ambiguity_detection_io["default"];
-  }
-});
 Object.defineProperty(exports, "AnswerScoringIO", {
   enumerable: true,
   get: function get() {
     return _answer_scoring_io["default"];
-  }
-});
-Object.defineProperty(exports, "ContradictionDetectionIO", {
-  enumerable: true,
-  get: function get() {
-    return _contradiction_detection_io["default"];
   }
 });
 Object.defineProperty(exports, "DocumentDeleteIO", {
@@ -178,9 +166,7 @@ Object.defineProperty(exports, "TranscriptCorrectionIO", {
   }
 });
 var _service_io = _interopRequireDefault(require("./service_io.js"));
-var _ambiguity_detection_io = _interopRequireDefault(require("./ambiguity_detection_io.js"));
 var _answer_scoring_io = _interopRequireDefault(require("./answer_scoring_io.js"));
-var _contradiction_detection_io = _interopRequireDefault(require("./contradiction_detection_io.js"));
 var _documents_io = require("./documents_io.js");
 var _email_analysis_io = _interopRequireDefault(require("./email_analysis_io.js"));
 var _emotion_detection_io = _interopRequireDefault(require("./emotion_detection_io.js"));
