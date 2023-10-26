@@ -88,86 +88,97 @@ console.log(JSON.stringify(response, null, 2));
 ```
 
 ## Pipeline
-- A Soffos Pipeline is a series of Soffos Service working together.
-In order to create a Pipeline a service Node should be defined as stated above then supply it to the pipeline's constructor:
+- A Soffos Pipeline is a series of Soffos Services working together.
+In order to create a Pipeline, a service should call .setInputConfig then supply it to the pipeline's constructor:
 ```
-import { SoffosPipeline } from "soffosai";
+import { SoffosPipeline, SoffosServices, SoffosConfig } from "soffosai";
 
-const nodes = [file_converter, summarize, ingestor];
-const pipe = new SoffosPipeline(nodes, false, {apiKey: my_apiKey});
+SoffosConfig.apiKey = "<api key>";
+const file_converter = new SoffosServices.FileConverterService();
+file_converter.setInputConfigs(
+    "file_converter",
+    new InputConfig("user_input", "file"), // get the value of "file" property of the user input.
+    new InputConfig("user_input", "normalize") // get the value of "normalize" property of the user input.
+);
+
+const document_ingest = new SoffosServices.DocumentsIngestService();
+document_ingest.setInputConfigs(
+    "doc_ingest",
+    new InputConfig("user_input", "file", get_filename),
+    new InputConfig("file_converter", "text") // get the ouput of the service named "fileconverter", get "text" property of it.
+);
+const services = [file_converter, ingestor];
+const pipe = new SoffosPipeline(services, false, "my_pipeline");
 ```
-This newly created Pipeline named "pipe" will then upload a file to soffos and extract its text content, summarize it to 3 sentences then save it as a document. The required input is clearly stated in the defined Nodes because it has "user_input" in them. Thus to run this Pipeline:
+This newly created Pipeline named "pipe" will then upload a file to soffos and extract its text content then save it as a document. The required input is clearly stated in the setInputConfigs because it has "user_input" in them. Thus to run this Pipeline:
 ```
-// provided you have a <input type="file" id="file">
-let the_file = document.getElementById("file").files[0];
 let sample_user_input = {
     "user": "your_client's_id", // always required on services and pipelines
-    "my_file": the_file
+    "my_file": <the_file as path or blob>
 }
 let response = await pipe.run(sample_user_input);
 console.log(JSON.stringify(response, null, 2));
 ```
 
-### Best way to declare a Pipeline
+### More Flexible way to declare a Pipeline
 To make your Pipeline more maintainable and easy to use, create a subclass:
 ```
-import { SoffosPipeline } from "soffosai";
-import { SoffosNodes } from "soffosai";
-import {inspectArguments} from 'soffosai';
+import { SoffosPipeline, InputConfig } from "soffosai";
+import { SoffosServices } from "soffosai";
 
 
+/**
+ * Get the filename only out of the given file
+ * @private
+ * @param {Blob} file - The file that is being converted to text and saved to Soffos db.
+ * @returns {string}
+ */
 function get_filename(file) {
     return file.name.split('.')[0];
 }
 
 
 /**
- * Given a file upload the file to Soffos and get its reference document_id.
+ * Given a file path, upload the file to Soffos and get its reference document_id in addition to the 
+ * converted text.
+ * @class
+ * @alias _SoffosPipelines.FileIngestPipeline
  */
-export class FileIngestPipeline extends SoffosPipeline {
-    constructor(kwargs) {
-        const file_converter = new SoffosNodes.FileConverterNode(
+class FileIngestPipeline extends Pipeline {
+    /**
+     * @param {string} [name] - The name of this pipeline. Will be used to reference this pipeline
+     *  if this pipeline is used as a Service inside another pipeline.
+     * @param {Object} [kwargs] - Include other needed properties like apiKey
+     */
+    constructor(name=null, kwargs={}) {
+        const file_converter = new FileConverterService();
+        file_converter.setInputConfigs(
             "file_converter",
-            {
-                source: "user_input",
-                field: "file"
-            },
-            {
-                source: "user_input",
-                field: "normalize"
-            }
+            new InputConfig("user_input", "file"),
+            new InputConfig("user_input", "normalize")
         );
-        const document_ingest = new SoffosNodes.DocumentsIngestNode(
+        const document_ingest = new DocumentsIngestService();
+        document_ingest.setInputConfigs(
             "doc_ingest",
-            {
-                source: "user_input",
-                field: "file",
-                pre_process: get_filename
-            },
-            {
-                source: "file_converter",
-                field: "text"
-            }
+            new InputConfig("user_input", "file", get_filename),
+            new InputConfig("file_converter", "text")
         );
-        return super([file_converter, document_ingest], false, kwargs);
+        return super([file_converter, document_ingest], false, name, kwargs);
     }
 
-    /*
-     * Create your own "call" function so you can create JSDocs and arrange your output data
-     * @param {string} user 
-     * @param {string} file 
-     * @param {number} normalize 
-     * @returns {object}
+    /**
+     * Start the pipeline processes.
      */
-    async call(user, file, normalize) {
-        let payload = inspectArguments(this.call, user, file, normalize);
-        const output = await this.run(payload);
-        let output_data = {
-            document_id: output.doc_ingest.document_id,
-            total_call_cost: output.total_call_cost
-        };
-        return output_data;
+    async call(user, file, normalize='0', execution_code=null) {
+        let payload = {
+            "user": user,
+            "file": file,
+            "normalize": normalize,
+            "execution_code": execution_code
+        }
+        return await this.run(payload);
     }
+
 }
 
 ```
@@ -175,10 +186,9 @@ When you do this, you can easily reuse your pipeline like this:
 ```
 import { FileIngestPipeline } from "./your_directory/your_file.js";
 
-let pipe = new FileIngestPipeline({apiKey: my_apiKey});
+let pipe = new FileIngestPipeline("myPipe", {apiKey: my_apiKey});
 
-// provided you have a <input type="file" id="file">
-let the_file = document.getElementById("file").files[0];
+let the_file = <the file as path or blob>;
 let result = await pipe.call("client_id", the_file, 0);
 console.log(JSON.stringify(result, null, 2));
 
@@ -187,52 +197,13 @@ result = await pipe.call("client2", other_file, 0);
 console.log(JSON.stringify(result, null, 2));
 ```
 
-### One more way to define a Pipeline:
-```
-import { SoffosPipeline } from "soffosai"; 
-import { SoffosNodes } from "soffosai";
-
-
-function get_content(value) {
-    let combined_text = "";
-    for (let item of value) {
-        combined_text += item.content;
-    }
-    return combined_text
-}
-
-
-const AskFromDocument = new SoffosPipeline(
-    [
-        new SoffosNodes.DocumentsSearchNode(
-            "search", null, null, {"source": "user_input", "field": "doc_ids"}
-        ),
-        new SoffosNodes.QuestionAnsweringNode(
-            "qa",
-            {"source": "user_input", "field": "question"},
-            {"source": "search", "field": "passages", "pre_process": get_content}
-        )
-    ],
-    false,
-    {apiKey: my_apiKey}
-);
-
-let input = {
-    "user": "client_id",
-    "doc_ids": ["1d77babf8164427cad8276ba944e6cbc"],
-    "question": "who is Neo?"
-}
-let result2 = await AskFromDocument.run(input);
-console.log(JSON.stringify(result2, null, 2));
-```
-
 ### Use Defaults
-When you are well versed by the output of the Nodes, you can create a pipeline without defining all the required arguments of each Node if you know that the previous Nodes or user_input will provide it. If you know this, just put "default" in the argument. Take note that the user_input or previous Nodes' outputs should contain the same property / fieldname. There are special cases where the previous Node's output has "document_id" and the current Node requires "document_ids"; this is already handled and can be defaulted. The same with required "document_text" and available "text". Also required "context" and available "text".
+When you are well versed by the output of the Services, you can create a pipeline without defining all the required arguments of each Service if you know that the previous Services or user_input will provide it. If you know this, just put "default" in the argument. Take note that the user_input or previous Services' outputs should contain the same property / fieldname. There are special cases where the previous Service's output has "document_id" and the current Service requires "document_ids"; this is already handled and can be defaulted. The same with required "document_text" and available "text". Also required "context" and available "text".
 
 Example:
 ```
-import { SoffosPipeline } from "soffosai"; 
-import { SoffosNodes } from "soffosai";
+import { SoffosPipeline, InputConfig } from "soffosai"; 
+import { SoffosServices } from "soffosai";
 
 
 function get_content(value) {
@@ -243,30 +214,35 @@ function get_content(value) {
     return combined_text
 }
 
+docSearch = new SoffosServices.DocumentsSearchService();
+docSearch.setInpugConfigs(
+    "search",
+    null,
+    null,
+    "default"// automatically get this value from the output of previous Services or user_input with
+                      // the same property / fieldname.
+);
 
+qa = new SoffosServices.QuestionAnsweringService();
+qa.setInputConfigs(
+    "qa",
+    "default",// take the value for this argument from previous Services or from the user_input
+    new InputConfig("search", "passage", get_content)
+);
 const AskFromDocument = new SoffosPipeline(
     [
-        new SoffosNodes.DocumentsSearchNode(
-            "search", 
-            null, 
-            null, 
-            "default" // automatically get this value from the output of previous Nodes or user_input with
-                      // the same property / fieldname.
-        ),
-        new SoffosNodes.QuestionAnsweringNode(
-            "qa",
-            "default", // take the value for this argument from previous Nodes or from the user_input
-            {"source": "search", "field": "passages", "pre_process": get_content}
-        )
+        docSearch,
+        qa
     ],
     true, // this is the **use_defaults** argument. defaults to **false** if not provided. 
          // You can only use the "**default**" keyword on arguments to mean "default this value" if this 
          //is **true**.  if use_defaults is false, it will be taken as literal string "default".
+    "myPipe",
     {apiKey: my_apiKey}
 );
 
 let input = {
-    "user": "client_id",
+    "user": "client_id", // This is the UUID of your clients. The API will accept any string
     "document_ids": ["1d77babf8164427cad8276ba944e6cbc"],
     "question": "who is Neo?"
 }
@@ -280,11 +256,11 @@ You can use them like this:
 ```
 import { SoffosPipelines } from "soffosai";
 
-let pipe = new SoffosPipelines.FileIngestPipeline({apiKey: my_apiKey});
+let pipe = new SoffosPipelines.FileIngestPipeline("myPipe", {apiKey: my_apiKey});
 result = await pipe.call("client_id2", the_file)
 console.log(JSON.stringify(result, null, 2));
 ```
 
 Take note of the difference in names:
-- SoffosPipeline is the pipeline Superclass while:
-- SoffosPipelines is the namespace for all Soffos Pipelines including SoffosPipeline as SoffosPipelines.Pipeline.
+- SoffosPipeline is the pipeline Superclass while
+- SoffosPipelines is the namespace for all Soffos Pipelines including SoffosPipeline as SoffosPipelines.SoffosPipeline.
