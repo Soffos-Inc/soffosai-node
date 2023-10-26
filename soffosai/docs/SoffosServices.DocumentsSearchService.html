@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Class: DocumentsSearchService</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Class: DocumentsSearchService</h1>
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2><span class="attribs"><span class="type-signature"></span></span>DocumentsSearchService<span class="signature">()</span><span class="type-signature"></span></h2>
+        
+            <div class="class-description">The Documents module enables search of ingested contents from Soffos.</div>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+    
+    <h2>Constructor</h2>
+    
+
+    
+    <h4 class="name" id="DocumentsSearchService"><span class="type-signature"></span>new DocumentsSearchService<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="services_documents.mjs.html">services/documents.mjs</a>, <a href="services_documents.mjs.html#line125">line 125</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="call"><span class="type-signature"></span>call<span class="signature">(user, query<span class="signature-attributes">opt</span>, filters<span class="signature-attributes">opt</span>, document_ids<span class="signature-attributes">opt</span>, top_n_keywords<span class="signature-attributes">opt</span>, top_n_natural_language<span class="signature-attributes">opt</span>, date_from<span class="signature-attributes">opt</span>, date_until<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise.&lt;Object>}</span></h4>
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>user</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">The ID of the user accessing the Soffos API.  Soffos assumes that the owner ofthe api is an application (app) and that app has users. Soffos API will accept any string.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>query</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    null
+                
+                </td>
+            
+
+            <td class="description last">Required when top_n_natural_language is set above 0.The text to be used to match passages from ingested documents. This could be anything from a very specific natural language question to a simple cobination of words for keyword search. It can also be set as null for only-filtering searches.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>filters</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    null
+                
+                </td>
+            
+
+            <td class="description last">The filters field can be used to narrow down the search to only the documents meeting certain metadata-based criteria, or even returning all the filtered documents when query is left null. It is catering only for the metadata provided in the meta field when ingesting a document. Other important filters such as document_ids, date_from and date_until are provided as top level fields.Filters are defined as nested dictionaries. The keys of the dictionaries can be a logical operator ("$and", "$or", "$not"), a comparison operator ("$eq", "$in", "$gt", "$gte", "$lt", "$lte") or a metadata field name. Logical operator keys have a dictionary of metadata field names and/or logical operators as their value. Metadata field names have a dictionary of comparison operators as their value. Comparison operator keys accept a single values or lists as their values. Lists can be compared with the with the "$in" operator against single values, or with the "$eq" operator against other lists in which case the set of values of each list is compared and order does not matter. If no logical operator is given, "$and" is used as the default operation. If no comparison operator is specified, "$eq" (or "$in" if the comparison value is a list) is used as the default operation.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>document_ids</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;string></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    null
+                
+                </td>
+            
+
+            <td class="description last">Passing document IDs will confine the search to those documents.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>top_n_keywords</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    5
+                
+                </td>
+            
+
+            <td class="description last">The number of document passages to be retrieved using keyword search. The relevancy is calculated algorithmically based on the frequency of the query words in the ingested passages. Setting this to 0 disables the keyword search. When query is left null while top_n_keywords is larger than 0, it will simply filter the documents based on the rest of the fields like date or metadata. All matched passages will be returned, therefore the actual value of top_n_keywords does not make a difference, so long it is larger than 0.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>top_n_natural_language</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    5
+                
+                </td>
+            
+
+            <td class="description last">The number of document passages to be retrieved using Machine Learning-based semantic search. Setting this to 0 disables the semantic search.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>date_from</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    null
+                
+                </td>
+            
+
+            <td class="description last">Filters passages to those ingested at or after the specified ISO-8601 formatted date.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>date_until</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    null
+                
+                </td>
+            
+
+            <td class="description last">Filters passages to those ingested before the specified ISO-8601 formatted date.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="services_documents.mjs.html">services/documents.mjs</a>, <a href="services_documents.mjs.html#line213">line 213</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    passages - dictionary list <br>List of passages. Each passage contains the following data: <br>content: The raw text of the passage. <br>document_id: Origin document's ID. <br>created_at: Ingestion datetime. <br>name: Origin document's name. <br>scores: Dictionary containing the matching score of this passage to the query for each method that matched it. <br>meta: Dictionary with the metadata that were provided when the passage's origin document was ingested. <br>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;Object></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>import { SoffosServices } from "soffosai";const my_apiKey = "Token &lt;put your api key here>";const service = new SoffosServices.DocumentsSearchService({apiKey:my_apiKey});let response = await service.call(    "client 987654321", null, null, ["0d059b3bf66b4ecfa124c175a6d3cd45"]);console.log(JSON.stringify(response, null, 2));// returns this if document_id exists and you own the document// {//     "passages": [//       {//         "content": "Genetic evidence suggests that dogs descended directly from wolves (Canis) and     that the now-extinct wolf lineages that produced dogs branched off from the line     that produced modern living wolves sometime between 27,000 and 40,000 years ago. The timing and location of dog domestication is a matter of debate. There is strong genetic evidence, //   however, that the first domestication events occurred     somewhere in northern Eurasia between 14,000 and 29,000 years ago.",//         "created_at": "2023-09-13T09:38:00.807895",//         "document_id": "0d059b3bf66b4ecfa124c175a6d3cd45",//         "name": "dogs",//         "scores": [//           {//             "keyword": 0.5312093733737563//           }//         ],//         "meta": {}//       }//     ],//     "cost": {//       "api_call_cost": 0,//       "character_volume_cost": 0,//       "total_cost": 0//     },//     "charged_character_count": 0,//     "unit_price": "0.000000"// }</code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="setInputConfigs"><span class="type-signature"></span>setInputConfigs<span class="signature">(name, query<span class="signature-attributes">opt</span>, filters<span class="signature-attributes">opt</span>, document_ids<span class="signature-attributes">opt</span>, top_n_keywords<span class="signature-attributes">opt</span>, top_n_natural_language<span class="signature-attributes">opt</span>, date_from<span class="signature-attributes">opt</span>, date_until<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">Reference name of this Service. It will be used by the Pipeline to reference this Service. It will be used by the Pipeline to reference this Node.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>query</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+|
+
+<span class="param-type">InputConfig</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    null
+                
+                </td>
+            
+
+            <td class="description last">Required when top_n_natural_language is set above 0.The text to be used to match passages from ingested documents. This could be anything from a very specific natural language question to a simple cobination of words for keyword search. It can also be set as null for only-filtering searches.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>filters</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+|
+
+<span class="param-type">InputConfig</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    null
+                
+                </td>
+            
+
+            <td class="description last">The filters field can be used to narrow down the search to only the documents meeting certain metadata-based criteria, or even returning all the filtered documents when query is left null. It is catering only for the metadata provided in the meta field when ingesting a document. Other important filters such as document_ids, date_from and date_until are provided as top level fields.Filters are defined as nested dictionaries. The keys of the dictionaries can be a logical operator ("$and", "$or", "$not"), a comparison operator ("$eq", "$in", "$gt", "$gte", "$lt", "$lte") or a metadata field name. Logical operator keys have a dictionary of metadata field names and/or logical operators as their value. Metadata field names have a dictionary of comparison operators as their value. Comparison operator keys accept a single values or lists as their values. Lists can be compared with the with the "$in" operator against single values, or with the "$eq" operator against other lists in which case the set of values of each list is compared and order does not matter. If no logical operator is given, "$and" is used as the default operation. If no comparison operator is specified, "$eq" (or "$in" if the comparison value is a list) is used as the default operation.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>document_ids</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;string></span>
+|
+
+<span class="param-type">InputConfig</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    null
+                
+                </td>
+            
+
+            <td class="description last">Passing document IDs will confine the search to those documents.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>top_n_keywords</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+|
+
+<span class="param-type">InputConfig</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    5
+                
+                </td>
+            
+
+            <td class="description last">The number of document passages to be retrieved using keyword search. The relevancy is calculated algorithmically based on the frequency of the query words in the ingested passages. Setting this to 0 disables the keyword search. When query is left null while top_n_keywords is larger than 0, it will simply filter the documents based on the rest of the fields like date or metadata. All matched passages will be returned, therefore the actual value of top_n_keywords does not make a difference, so long it is larger than 0.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>top_n_natural_language</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+|
+
+<span class="param-type">InputConfig</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    5
+                
+                </td>
+            
+
+            <td class="description last">The number of document passages to be retrieved using Machine Learning-based semantic search. Setting this to 0 disables the semantic search.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>date_from</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+|
+
+<span class="param-type">InputConfig</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    null
+                
+                </td>
+            
+
+            <td class="description last">Filters passages to those ingested at or after the specified ISO-8601 formatted date.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>date_until</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+|
+
+<span class="param-type">InputConfig</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    null
+                
+                </td>
+            
+
+            <td class="description last">Filters passages to those ingested before the specified ISO-8601 formatted date.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="services_documents.mjs.html">services/documents.mjs</a>, <a href="services_documents.mjs.html#line268">line 268</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="SoffosServices.AnswerScoringService.html">AnswerScoringService</a></li><li><a href="SoffosServices.DocumentsDeleteService.html">DocumentsDeleteService</a></li><li><a href="SoffosServices.DocumentsIngestService.html">DocumentsIngestService</a></li><li><a href="SoffosServices.DocumentsSearchService.html">DocumentsSearchService</a></li><li><a href="SoffosServices.EmailAnalysisService.html">EmailAnalysisService</a></li><li><a href="SoffosServices.EmotionDetectionService.html">EmotionDetectionService</a></li><li><a href="SoffosServices.FileConverterService.html">FileConverterService</a></li><li><a href="SoffosServices.LanguageDetectionService.html">LanguageDetectionService</a></li><li><a href="SoffosServices.LetsDiscussCreateService.html">LetsDiscussCreateService</a></li><li><a href="SoffosServices.LetsDiscussDeleteService.html">LetsDiscussDeleteService</a></li><li><a href="SoffosServices.LetsDiscussRetrieveService.html">LetsDiscussRetrieveService</a></li><li><a href="SoffosServices.LetsDiscussService.html">LetsDiscussService</a></li><li><a href="SoffosServices.LogicalErrorDetectionService.html">LogicalErrorDetectionService</a></li><li><a href="SoffosServices.MicrolessonService.html">MicrolessonService</a></li><li><a href="SoffosServices.NamedEntityRecognitionService.html">NamedEntityRecognitionService</a></li><li><a href="SoffosServices.ParaphraseService.html">ParaphraseService</a></li><li><a href="SoffosServices.ProfanityService.html">ProfanityService</a></li><li><a href="SoffosServices.QuestionAndAnswerGenerationService.html">QuestionAndAnswerGenerationService</a></li><li><a href="SoffosServices.QuestionAnsweringService.html">QuestionAnsweringService</a></li><li><a href="SoffosServices.ReviewTaggerService.html">ReviewTaggerService</a></li><li><a href="SoffosServices.SentimentAnalysisService.html">SentimentAnalysisService</a></li><li><a href="SoffosServices.SimplifyService.html">SimplifyService</a></li><li><a href="SoffosServices.SummarizationService.html">SummarizationService</a></li><li><a href="SoffosServices.TableGeneratorService.html">TableGeneratorService</a></li><li><a href="SoffosServices.TagGenerationService.html">TagGenerationService</a></li><li><a href="SoffosServices.TranscriptCorrectionService.html">TranscriptCorrectionService</a></li><li><a href="-_InputConfig.html">_InputConfig</a></li><li><a href="-_SoffosPipelines.AskADocumentPipeline.html">AskADocumentPipeline</a></li><li><a href="-_SoffosPipelines.FileIngestPipeline.html">FileIngestPipeline</a></li></ul><h3>Global</h3><ul><li><a href="global.html#_createInputConfig">_createInputConfig</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Thu Oct 26 2023 17:37:45 GMT+0800 (Singapore Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

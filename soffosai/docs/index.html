@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Home</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Home</h1>
+
+    
+
+
+
+    
+
+
+    <h3> </h3>
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+    <section>
+        <article><h1>Welcome to the Soffos Platform SDK</h1>
+<p>At Soffos Inc., our specialty is helping organizations create pioneering apps with conversational artificial intelligence (CAI) and natural language processing (NLP) at their core.</p>
+<p>NLP and conversational AI are at the heart of everything Soffos does. Using Soffos’ technology, we offer a suite of unique application programming interfaces (APIs) so businesses can choose the natural language and generative AI functionalities they would like to include in any kind of application.</p>
+<p>What sets Soffos apart is we’ve taken the most advanced technology, enhanced it with our own R&amp;D, and made it easy to use and accessible to everyone.</p>
+<p>Our solution provides you with the ‘building blocks’ and core technologies required to build countless novel NLP applications, with minimal coding, from learning and assessment tools to knowledge management platforms and beyond. The opportunities with Soffos Platform are infinite.</p>
+<p>Sign up for a <a href="https://platform.soffos.ai">Free Trial</a> and start building your first generative AI application today!</p>
+<p>Join our Discord channel: <a href="https://discord.gg/Q2yTEuFG2B">SoffosAI</a></p>
+<h1>Soffosai Node JS (Alpha)</h1>
+<p>Javascript SDK (backend use) for Soffos.ai API</p>
+<h2>Installation</h2>
+<p><code>npm install soffosai-node</code></p>
+<h2>API Keys</h2>
+<ul>
+<li>Create an account at <a href="https://platform.soffos.ai">Soffos platform</a> or <a href="https://platform.soffos.ai/login">login</a>.</li>
+<li>After loggin in, on the left panel, click <a href="https://platform.soffos.ai/apps-list">Projects</a>.</li>
+<li>Create a new project.</li>
+<li>Click on the key icon in the project you created and you will find the API Keys for that project.
+<ul>
+<li>An API key will automatically be provided for you on Project creation but you can still create more when your account is no longer on trial.</li>
+</ul>
+</li>
+<li>Protect this API Key as it will incur charges.</li>
+<li>You can also save your API Key into your environment variables with variable name = SOFFOSAI_API_KEY</li>
+<li>To set your API key:
+When you initialize a service, include it on key word arguments:<pre class="prettyprint source"><code>import { SoffosServices } from &quot;soffosai&quot;;
+
+let service = new SoffosServices.AmbiguityDetectionService({apiKey: my_apiKey});
+</code></pre>
+OR set your API key globally:<pre class="prettyprint source"><code>import { SoffosServices, SoffosConfig } from &quot;soffosai&quot;;
+
+SoffosConfig.apiKey = &quot;&lt;your API key>&quot;;
+let service = new SoffosServices.AmbiguityDetectionService();
+</code></pre>
+</li>
+</ul>
+<h2>SoffosAIService</h2>
+<p>The SoffosAIService class handles validation and execution of specified endpoint vs payload.
+Here is the list of SoffosAIService Subclasses:</p>
+<pre class="prettyprint source"><code>[
+    &quot;AnswerScoringService&quot;,
+    &quot;DocumentsService&quot;,
+    &quot;DocumentsIngestService&quot;, 
+    &quot;DocumentsSearchService&quot;, 
+    &quot;DocumentsDeleteService&quot;, 
+    &quot;EmailAnalysisService&quot;,
+    &quot;FileConverterService&quot;,
+    &quot;LanguageDetectionService&quot;,
+    &quot;LetsDiscussService&quot;,
+    &quot;LogicalErrorDetectionService&quot;,
+    &quot;MicrolessonService&quot;,
+    &quot;NamedEntityRecognitionService&quot;,
+    &quot;ParaphraseService&quot;,
+    &quot;ProfanityService&quot;,
+    &quot;QuestionAndAnswerGenerationService&quot;,
+    &quot;QuestionAnsweringService&quot;,
+    &quot;ReviewTaggerService&quot;,
+    &quot;SentimentAnalysisService&quot;,
+    &quot;SimplifyService&quot;,
+    &quot;SummarizationService&quot;,
+    &quot;TableGeneratorService&quot;,
+    &quot;TagGenerationService&quot;,
+    &quot;TranscriptCorrectionService&quot;,
+]
+
+</code></pre>
+<ul>
+<li>Syntax:</li>
+</ul>
+<pre class="prettyprint source"><code>// Import the Soffos Service you need
+import { SoffosServices } from &quot;soffosai&quot;;
+
+//Instantiate the SoffosAIService that you need:
+let service = new SoffosServices.TagGenerationService({apiKey: my_apiKey});
+
+// if you set your environment variables no need to put keyword argument apiKey:
+// let service = new SoffosServices.TagGenerationService();
+
+//Call the service and print the output:
+let response = await service.call(
+    &quot;client_id&quot;,
+    &quot;The Matrix is a 1999 science fiction action film written and directed by the Wachowskis. It is the first installment in The Matrix film series...&quot;,
+    undefined, 5
+)
+console.log(JSON.stringify(response, null, 2));
+</code></pre>
+<h2>Pipeline</h2>
+<ul>
+<li>A Soffos Pipeline is a series of Soffos Services working together.
+In order to create a Pipeline, a service should call .setInputConfig then supply it to the pipeline's constructor:</li>
+</ul>
+<pre class="prettyprint source"><code>import { SoffosPipeline, SoffosServices, SoffosConfig } from &quot;soffosai&quot;;
+
+SoffosConfig.apiKey = &quot;&lt;api key>&quot;;
+const file_converter = new SoffosServices.FileConverterService();
+file_converter.setInputConfigs(
+    &quot;file_converter&quot;,
+    new InputConfig(&quot;user_input&quot;, &quot;file&quot;), // get the value of &quot;file&quot; property of the user input.
+    new InputConfig(&quot;user_input&quot;, &quot;normalize&quot;) // get the value of &quot;normalize&quot; property of the user input.
+);
+
+const document_ingest = new SoffosServices.DocumentsIngestService();
+document_ingest.setInputConfigs(
+    &quot;doc_ingest&quot;,
+    new InputConfig(&quot;user_input&quot;, &quot;file&quot;, get_filename),
+    new InputConfig(&quot;file_converter&quot;, &quot;text&quot;) // get the ouput of the service named &quot;fileconverter&quot;, get &quot;text&quot; property of it.
+);
+const services = [file_converter, ingestor];
+const pipe = new SoffosPipeline(services, false, &quot;my_pipeline&quot;);
+</code></pre>
+<p>This newly created Pipeline named &quot;pipe&quot; will then upload a file to soffos and extract its text content then save it as a document. The required input is clearly stated in the setInputConfigs because it has &quot;user_input&quot; in them. Thus to run this Pipeline:</p>
+<pre class="prettyprint source"><code>let sample_user_input = {
+    &quot;user&quot;: &quot;your_client's_id&quot;, // always required on services and pipelines
+    &quot;my_file&quot;: &lt;the_file as path or blob>
+}
+let response = await pipe.run(sample_user_input);
+console.log(JSON.stringify(response, null, 2));
+</code></pre>
+<h3>More Flexible way to declare a Pipeline</h3>
+<p>To make your Pipeline more maintainable and easy to use, create a subclass:</p>
+<pre class="prettyprint source"><code>import { SoffosPipeline, InputConfig } from &quot;soffosai&quot;;
+import { SoffosServices } from &quot;soffosai&quot;;
+
+
+/**
+ * Get the filename only out of the given file
+ * @private
+ * @param {Blob} file - The file that is being converted to text and saved to Soffos db.
+ * @returns {string}
+ */
+function get_filename(file) {
+    return file.name.split('.')[0];
+}
+
+
+/**
+ * Given a file path, upload the file to Soffos and get its reference document_id in addition to the 
+ * converted text.
+ * @class
+ * @alias _SoffosPipelines.FileIngestPipeline
+ */
+class FileIngestPipeline extends Pipeline {
+    /**
+     * @param {string} [name] - The name of this pipeline. Will be used to reference this pipeline
+     *  if this pipeline is used as a Service inside another pipeline.
+     * @param {Object} [kwargs] - Include other needed properties like apiKey
+     */
+    constructor(name=null, kwargs={}) {
+        const file_converter = new FileConverterService();
+        file_converter.setInputConfigs(
+            &quot;file_converter&quot;,
+            new InputConfig(&quot;user_input&quot;, &quot;file&quot;),
+            new InputConfig(&quot;user_input&quot;, &quot;normalize&quot;)
+        );
+        const document_ingest = new DocumentsIngestService();
+        document_ingest.setInputConfigs(
+            &quot;doc_ingest&quot;,
+            new InputConfig(&quot;user_input&quot;, &quot;file&quot;, get_filename),
+            new InputConfig(&quot;file_converter&quot;, &quot;text&quot;)
+        );
+        return super([file_converter, document_ingest], false, name, kwargs);
+    }
+
+    /**
+     * Start the pipeline processes.
+     */
+    async call(user, file, normalize='0', execution_code=null) {
+        let payload = {
+            &quot;user&quot;: user,
+            &quot;file&quot;: file,
+            &quot;normalize&quot;: normalize,
+            &quot;execution_code&quot;: execution_code
+        }
+        return await this.run(payload);
+    }
+
+}
+
+</code></pre>
+<p>When you do this, you can easily reuse your pipeline like this:</p>
+<pre class="prettyprint source"><code>import { FileIngestPipeline } from &quot;./your_directory/your_file.js&quot;;
+
+let pipe = new FileIngestPipeline(&quot;myPipe&quot;, {apiKey: my_apiKey});
+
+let the_file = &lt;the file as path or blob>;
+let result = await pipe.call(&quot;client_id&quot;, the_file, 0);
+console.log(JSON.stringify(result, null, 2));
+
+// on your successive calls:
+result = await pipe.call(&quot;client2&quot;, other_file, 0);
+console.log(JSON.stringify(result, null, 2));
+</code></pre>
+<h3>Use Defaults</h3>
+<p>When you are well versed by the output of the Services, you can create a pipeline without defining all the required arguments of each Service if you know that the previous Services or user_input will provide it. If you know this, just put &quot;default&quot; in the argument. Take note that the user_input or previous Services' outputs should contain the same property / fieldname. There are special cases where the previous Service's output has &quot;document_id&quot; and the current Service requires &quot;document_ids&quot;; this is already handled and can be defaulted. The same with required &quot;document_text&quot; and available &quot;text&quot;. Also required &quot;context&quot; and available &quot;text&quot;.</p>
+<p>Example:</p>
+<pre class="prettyprint source"><code>import { SoffosPipeline, InputConfig } from &quot;soffosai&quot;; 
+import { SoffosServices } from &quot;soffosai&quot;;
+
+
+function get_content(value) {
+    let combined_text = &quot;&quot;;
+    for (let item of value) {
+        combined_text += item.content;
+    }
+    return combined_text
+}
+
+docSearch = new SoffosServices.DocumentsSearchService();
+docSearch.setInpugConfigs(
+    &quot;search&quot;,
+    null,
+    null,
+    &quot;default&quot;// automatically get this value from the output of previous Services or user_input with
+                      // the same property / fieldname.
+);
+
+qa = new SoffosServices.QuestionAnsweringService();
+qa.setInputConfigs(
+    &quot;qa&quot;,
+    &quot;default&quot;,// take the value for this argument from previous Services or from the user_input
+    new InputConfig(&quot;search&quot;, &quot;passage&quot;, get_content)
+);
+const AskFromDocument = new SoffosPipeline(
+    [
+        docSearch,
+        qa
+    ],
+    true, // this is the **use_defaults** argument. defaults to **false** if not provided. 
+         // You can only use the &quot;**default**&quot; keyword on arguments to mean &quot;default this value&quot; if this 
+         //is **true**.  if use_defaults is false, it will be taken as literal string &quot;default&quot;.
+    &quot;myPipe&quot;,
+    {apiKey: my_apiKey}
+);
+
+let input = {
+    &quot;user&quot;: &quot;client_id&quot;, // This is the UUID of your clients. The API will accept any string
+    &quot;document_ids&quot;: [&quot;1d77babf8164427cad8276ba944e6cbc&quot;],
+    &quot;question&quot;: &quot;who is Neo?&quot;
+}
+let result2 = await AskFromDocument.run(input);
+console.log(JSON.stringify(result2, null, 2));
+</code></pre>
+<h3>Predefined Pipelines</h3>
+<ul>
+<li>Soffos will add more predefined pipelines for you.
+You can use them like this:</li>
+</ul>
+<pre class="prettyprint source"><code>import { SoffosPipelines } from &quot;soffosai&quot;;
+
+let pipe = new SoffosPipelines.FileIngestPipeline(&quot;myPipe&quot;, {apiKey: my_apiKey});
+result = await pipe.call(&quot;client_id2&quot;, the_file)
+console.log(JSON.stringify(result, null, 2));
+</code></pre>
+<p>Take note of the difference in names:</p>
+<ul>
+<li>SoffosPipeline is the pipeline Superclass while</li>
+<li>SoffosPipelines is the namespace for all Soffos Pipelines including SoffosPipeline as SoffosPipelines.SoffosPipeline.</li>
+</ul></article>
+    </section>
+
+
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="SoffosServices.AnswerScoringService.html">AnswerScoringService</a></li><li><a href="SoffosServices.DocumentsDeleteService.html">DocumentsDeleteService</a></li><li><a href="SoffosServices.DocumentsIngestService.html">DocumentsIngestService</a></li><li><a href="SoffosServices.DocumentsSearchService.html">DocumentsSearchService</a></li><li><a href="SoffosServices.EmailAnalysisService.html">EmailAnalysisService</a></li><li><a href="SoffosServices.EmotionDetectionService.html">EmotionDetectionService</a></li><li><a href="SoffosServices.FileConverterService.html">FileConverterService</a></li><li><a href="SoffosServices.LanguageDetectionService.html">LanguageDetectionService</a></li><li><a href="SoffosServices.LetsDiscussCreateService.html">LetsDiscussCreateService</a></li><li><a href="SoffosServices.LetsDiscussDeleteService.html">LetsDiscussDeleteService</a></li><li><a href="SoffosServices.LetsDiscussRetrieveService.html">LetsDiscussRetrieveService</a></li><li><a href="SoffosServices.LetsDiscussService.html">LetsDiscussService</a></li><li><a href="SoffosServices.LogicalErrorDetectionService.html">LogicalErrorDetectionService</a></li><li><a href="SoffosServices.MicrolessonService.html">MicrolessonService</a></li><li><a href="SoffosServices.NamedEntityRecognitionService.html">NamedEntityRecognitionService</a></li><li><a href="SoffosServices.ParaphraseService.html">ParaphraseService</a></li><li><a href="SoffosServices.ProfanityService.html">ProfanityService</a></li><li><a href="SoffosServices.QuestionAndAnswerGenerationService.html">QuestionAndAnswerGenerationService</a></li><li><a href="SoffosServices.QuestionAnsweringService.html">QuestionAnsweringService</a></li><li><a href="SoffosServices.ReviewTaggerService.html">ReviewTaggerService</a></li><li><a href="SoffosServices.SentimentAnalysisService.html">SentimentAnalysisService</a></li><li><a href="SoffosServices.SimplifyService.html">SimplifyService</a></li><li><a href="SoffosServices.SummarizationService.html">SummarizationService</a></li><li><a href="SoffosServices.TableGeneratorService.html">TableGeneratorService</a></li><li><a href="SoffosServices.TagGenerationService.html">TagGenerationService</a></li><li><a href="SoffosServices.TranscriptCorrectionService.html">TranscriptCorrectionService</a></li><li><a href="-_InputConfig.html">_InputConfig</a></li><li><a href="-_SoffosPipelines.AskADocumentPipeline.html">AskADocumentPipeline</a></li><li><a href="-_SoffosPipelines.FileIngestPipeline.html">FileIngestPipeline</a></li></ul><h3>Global</h3><ul><li><a href="global.html#_createInputConfig">_createInputConfig</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Thu Oct 26 2023 17:37:45 GMT+0800 (Singapore Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

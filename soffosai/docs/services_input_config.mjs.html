@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: services/input_config.mjs</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: services/input_config.mjs</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @class
+ * @alias _InputConfig
+ */
+class InputConfig {
+    /**
+     * Input Configuration for Pipeline Services.
+     * When sequencing Services within a Pipeline this helps configure which Node's output is used as
+     * which Node's input.
+     * 
+     * @param {string} source The name of the SoffosAIService or SoffosPipeline from 
+     *                  where the input of the current SoffosAIService should be taken from.
+     *                  It can also be "user_input" if the input will come from the user and 
+     *                  not from a Service/SoffosPipeline.
+     * @param {string} field The name of the output field of the "source".
+     * @param {function} pre_process (optional) A function to preprocess the data from source[field].
+    */
+    constructor(source, field, pre_process=null){
+        this.source = source;
+        this.field = field;
+        this.pre_process = pre_process;
+        if(pre_process){
+            if(typeof pre_process !== 'function'){
+                throw TypeError("pre_process should be callable.");
+            }
+        }
+    }
+}
+
+
+/**
+ * Create Configuration for Pipeline Services.
+ * When sequencing Services within a Pipeline this helps configure which Node's output is used as
+ * which Node's input. 
+ * @function
+ * @alias _createInputConfig
+ * @param {string} source The name of the SoffosAIService or SoffosPipeline from 
+ *                  where the input of the current SoffosAIService should be taken from.
+ *                  It can also be "user_input" if the input will come from the user and 
+ *                  not from a Service/SoffosPipeline.
+ * @param {string} field The name of the output field of the "source".
+ * @param {function} pre_process (optional) A function to preprocess the data from source[field].
+ */ 
+function createInputConfig(source, field, pre_process=null) {
+    let _config = {
+        source: source,
+        field: field
+    };
+    if (pre_process){
+        if(typeof pre_process !== 'function'){
+            throw TypeError("pre_process should be callable.");
+        } else {
+            _config.pre_process = pre_process;
+        }
+    }
+
+    return _config
+}
+
+export {InputConfig, createInputConfig}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="SoffosServices.AnswerScoringService.html">AnswerScoringService</a></li><li><a href="SoffosServices.DocumentsDeleteService.html">DocumentsDeleteService</a></li><li><a href="SoffosServices.DocumentsIngestService.html">DocumentsIngestService</a></li><li><a href="SoffosServices.DocumentsSearchService.html">DocumentsSearchService</a></li><li><a href="SoffosServices.EmailAnalysisService.html">EmailAnalysisService</a></li><li><a href="SoffosServices.EmotionDetectionService.html">EmotionDetectionService</a></li><li><a href="SoffosServices.FileConverterService.html">FileConverterService</a></li><li><a href="SoffosServices.LanguageDetectionService.html">LanguageDetectionService</a></li><li><a href="SoffosServices.LetsDiscussCreateService.html">LetsDiscussCreateService</a></li><li><a href="SoffosServices.LetsDiscussDeleteService.html">LetsDiscussDeleteService</a></li><li><a href="SoffosServices.LetsDiscussRetrieveService.html">LetsDiscussRetrieveService</a></li><li><a href="SoffosServices.LetsDiscussService.html">LetsDiscussService</a></li><li><a href="SoffosServices.LogicalErrorDetectionService.html">LogicalErrorDetectionService</a></li><li><a href="SoffosServices.MicrolessonService.html">MicrolessonService</a></li><li><a href="SoffosServices.NamedEntityRecognitionService.html">NamedEntityRecognitionService</a></li><li><a href="SoffosServices.ParaphraseService.html">ParaphraseService</a></li><li><a href="SoffosServices.ProfanityService.html">ProfanityService</a></li><li><a href="SoffosServices.QuestionAndAnswerGenerationService.html">QuestionAndAnswerGenerationService</a></li><li><a href="SoffosServices.QuestionAnsweringService.html">QuestionAnsweringService</a></li><li><a href="SoffosServices.ReviewTaggerService.html">ReviewTaggerService</a></li><li><a href="SoffosServices.SentimentAnalysisService.html">SentimentAnalysisService</a></li><li><a href="SoffosServices.SimplifyService.html">SimplifyService</a></li><li><a href="SoffosServices.SummarizationService.html">SummarizationService</a></li><li><a href="SoffosServices.TableGeneratorService.html">TableGeneratorService</a></li><li><a href="SoffosServices.TagGenerationService.html">TagGenerationService</a></li><li><a href="SoffosServices.TranscriptCorrectionService.html">TranscriptCorrectionService</a></li><li><a href="-_InputConfig.html">_InputConfig</a></li><li><a href="-_SoffosPipelines.AskADocumentPipeline.html">AskADocumentPipeline</a></li><li><a href="-_SoffosPipelines.FileIngestPipeline.html">FileIngestPipeline</a></li></ul><h3>Global</h3><ul><li><a href="global.html#_createInputConfig">_createInputConfig</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Thu Oct 26 2023 17:37:45 GMT+0800 (Singapore Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

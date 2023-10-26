@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: pipelines/basic_pipelines/ask_a_document.mjs</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: pipelines/basic_pipelines/ask_a_document.mjs</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { Pipeline } from "./../pipeline.mjs";
+import { DocumentsSearchService, QuestionAnsweringService, InputConfig, createInputConfig } from "./../../services/index.mjs";
+
+/**
+ * The document search service provides "passages" which is a list of contents plus some more description.
+ * In order to get the content, iterate through the passages and concatenate it.
+ * @private
+ * @param {Array.&lt;object>} value 
+ * @returns {string}
+ */
+function getContent(passages) {
+    let combined_text = "";
+        for (let passage of passages) {
+            combined_text += passage.content;
+        }
+    return combined_text
+}
+
+/**
+ * When you already have a document uploaded to Soffos, use its document_id and ask questions about the doc.
+ * @class
+ * @alias _SoffosPipelines.AskADocumentPipeline
+ */
+class AskADocumentPipeline extends Pipeline {
+    /**
+     * @param {string} name - The name of this pipeline. Will be used to reference this pipeline
+     *  if this pipeline is used as a Node inside another pipeline.
+     * @param {Object} kwargs - Include other needed properties like apiKey
+     */
+    constructor(name=null, kwargs={}){
+        let d_node = new DocumentsSearchService();
+        d_node.setInputConfigs(
+                "search", null, null, createInputConfig("user_input", "doc_ids")
+        );
+        
+        let qa_node = new QuestionAnsweringService();
+        qa_node.setInputConfigs(
+                "qa",
+                createInputConfig("user_input", "question"),
+                createInputConfig("search", "passages", getContent)
+        );
+                
+        let services = [d_node, qa_node];
+        return super(services, false, name, kwargs);
+    }
+
+    /**
+     * Start the pipeline processes.
+     * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
+     * the api is an application (app) and that app has users. Soffos API will accept any string.
+     * @param {Array.&lt;string>} doc_ids - the document IDs of included document.
+     * @param {string} question - The question about the document.
+     * @param {string} [execution_code=null] - If this process should be tracked so it can be
+     * terminated via terminate() method, execution_code should be provided to reference this pipeline call.
+     * @returns {Object}
+     * {&lt;br>
+     *  search: {
+     *      passages: "List of passages",
+     *  }, &lt;br>
+     *  qa: {
+     *      answer: "The answer to the query."
+     *  }&lt;br>
+     * } 
+     * @example
+     * let pipe = new AskADocumentPipeline("my_pipeline", {apiKey: my_apiKey});
+     * // On this test, the API key used must have access to document "1d77babf8164427cad8276ba944e6cbc"
+     * // Please ingest a document first and replace the document_id here.
+     * let result = await pipe.call("client_id", ["1d77babf8164427cad8276ba944e6cbc"], "Who is Neo?");
+     * console.log(JSON.stringify(result, null, 2)); 
+     */
+    async call(user, doc_ids, question, execution_code=null) {
+        let payload = {
+            "user": user,
+            "doc_ids": doc_ids,
+            "question": question,
+            "execution_code": execution_code
+        }
+        return await this.run(payload);
+    }
+
+}
+
+export default AskADocumentPipeline</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="SoffosServices.AnswerScoringService.html">AnswerScoringService</a></li><li><a href="SoffosServices.DocumentsDeleteService.html">DocumentsDeleteService</a></li><li><a href="SoffosServices.DocumentsIngestService.html">DocumentsIngestService</a></li><li><a href="SoffosServices.DocumentsSearchService.html">DocumentsSearchService</a></li><li><a href="SoffosServices.EmailAnalysisService.html">EmailAnalysisService</a></li><li><a href="SoffosServices.EmotionDetectionService.html">EmotionDetectionService</a></li><li><a href="SoffosServices.FileConverterService.html">FileConverterService</a></li><li><a href="SoffosServices.LanguageDetectionService.html">LanguageDetectionService</a></li><li><a href="SoffosServices.LetsDiscussCreateService.html">LetsDiscussCreateService</a></li><li><a href="SoffosServices.LetsDiscussDeleteService.html">LetsDiscussDeleteService</a></li><li><a href="SoffosServices.LetsDiscussRetrieveService.html">LetsDiscussRetrieveService</a></li><li><a href="SoffosServices.LetsDiscussService.html">LetsDiscussService</a></li><li><a href="SoffosServices.LogicalErrorDetectionService.html">LogicalErrorDetectionService</a></li><li><a href="SoffosServices.MicrolessonService.html">MicrolessonService</a></li><li><a href="SoffosServices.NamedEntityRecognitionService.html">NamedEntityRecognitionService</a></li><li><a href="SoffosServices.ParaphraseService.html">ParaphraseService</a></li><li><a href="SoffosServices.ProfanityService.html">ProfanityService</a></li><li><a href="SoffosServices.QuestionAndAnswerGenerationService.html">QuestionAndAnswerGenerationService</a></li><li><a href="SoffosServices.QuestionAnsweringService.html">QuestionAnsweringService</a></li><li><a href="SoffosServices.ReviewTaggerService.html">ReviewTaggerService</a></li><li><a href="SoffosServices.SentimentAnalysisService.html">SentimentAnalysisService</a></li><li><a href="SoffosServices.SimplifyService.html">SimplifyService</a></li><li><a href="SoffosServices.SummarizationService.html">SummarizationService</a></li><li><a href="SoffosServices.TableGeneratorService.html">TableGeneratorService</a></li><li><a href="SoffosServices.TagGenerationService.html">TagGenerationService</a></li><li><a href="SoffosServices.TranscriptCorrectionService.html">TranscriptCorrectionService</a></li><li><a href="-_InputConfig.html">_InputConfig</a></li><li><a href="-_SoffosPipelines.AskADocumentPipeline.html">AskADocumentPipeline</a></li><li><a href="-_SoffosPipelines.FileIngestPipeline.html">FileIngestPipeline</a></li></ul><h3>Global</h3><ul><li><a href="global.html#_createInputConfig">_createInputConfig</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Thu Oct 26 2023 17:37:45 GMT+0800 (Singapore Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

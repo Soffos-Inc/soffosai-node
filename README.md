@@ -12,9 +12,10 @@ Sign up for a [Free Trial](https://platform.soffos.ai) and start building your f
 Join our Discord channel: [SoffosAI](https://discord.gg/Q2yTEuFG2B)
 
 # Soffosai Node JS (Alpha)
-Javascript SDK for Soffos.ai API
-Note that this is in Alpha. If you do not need file management, please use the Soffosai JS package for now:
-`npm install soffosai`
+Javascript SDK (backend use) for Soffos.ai API
+
+## Installation
+`npm install soffosai-node`
 
 ## API Keys
 - Create an account at [Soffos platform](https://platform.soffos.ai) or [login](https://platform.soffos.ai/login).
@@ -24,17 +25,20 @@ Note that this is in Alpha. If you do not need file management, please use the S
   - An API key will automatically be provided for you on Project creation but you can still create more when your account is no longer on trial.
 - Protect this API Key as it will incur charges.
 - You can also save your API Key into your environment variables with variable name = SOFFOSAI_API_KEY
-- To set your api key:
+- To set your API key:
     When you initialize a service, include it on key word arguments:
     ```
+    import { SoffosServices } from "soffosai";
+
     let service = new SoffosServices.AmbiguityDetectionService({apiKey: my_apiKey});
     ```
-    OR
-    set it in your environment variable with variable name = SOFFOSAI_API_KEY
+    OR set your API key globally:
+    ```
+    import { SoffosServices, SoffosConfig } from "soffosai";
 
-## Installation
-`npm install soffosai-node`
-
+    SoffosConfig.apiKey = "<your API key>";
+    let service = new SoffosServices.AmbiguityDetectionService();
+    ```
 
 ## SoffosAIService
 The SoffosAIService class handles validation and execution of specified endpoint vs payload.
