@@ -12,7 +12,8 @@ Sign up for a [Free Trial](https://platform.soffos.ai) and start building your f
 Join our Discord channel: [SoffosAI](https://discord.gg/Q2yTEuFG2B)
 
 # Soffosai Node JS (Alpha)
-Javascript SDK (backend use) for Soffos.ai API
+- Javascript SDK (backend use) for Soffos.ai API
+- [Detailed Documentaton](https://soffos-inc.github.io/soffosai-node)
 
 ## Installation
 `npm install soffosai-node`
