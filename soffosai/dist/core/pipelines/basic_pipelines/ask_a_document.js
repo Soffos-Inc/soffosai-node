@@ -67,9 +67,9 @@ var AskADocumentPipeline = /*#__PURE__*/function (_Pipeline) {
     var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
     var kwargs = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
     _classCallCheck(this, AskADocumentPipeline);
-    var d_node = new _index.DocumentsSearchService();
+    var d_node = new _index.DocumentsSearchService(kwargs);
     d_node.setInputConfigs("search", null, null, (0, _index.createInputConfig)("user_input", "doc_ids"));
-    var qa_node = new _index.QuestionAnsweringService();
+    var qa_node = new _index.QuestionAnsweringService(kwargs);
     qa_node.setInputConfigs("qa", (0, _index.createInputConfig)("user_input", "question"), (0, _index.createInputConfig)("search", "passages", getContent));
     var services = [d_node, qa_node];
     return _possibleConstructorReturn(_this, _this = _super.call(this, services, false, name, kwargs));

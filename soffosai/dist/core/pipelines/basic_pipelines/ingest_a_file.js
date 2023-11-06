@@ -51,9 +51,9 @@ var FileIngestPipeline = /*#__PURE__*/function (_Pipeline) {
     var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
     var kwargs = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
     _classCallCheck(this, FileIngestPipeline);
-    var file_converter = new _index.FileConverterService();
+    var file_converter = new _index.FileConverterService(kwargs);
     file_converter.setInputConfigs("file_converter", new _index.InputConfig("user_input", "file"), new _index.InputConfig("user_input", "normalize"));
-    var document_ingest = new _index.DocumentsIngestService();
+    var document_ingest = new _index.DocumentsIngestService(kwargs);
     document_ingest.setInputConfigs("doc_ingest", new _index.InputConfig("user_input", "file", get_filename), new _index.InputConfig("file_converter", "text"));
     return _possibleConstructorReturn(_this, _this = _super.call(this, [file_converter, document_ingest], false, name, kwargs));
   }

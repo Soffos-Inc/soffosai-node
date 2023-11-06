@@ -28,12 +28,12 @@ class AskADocumentPipeline extends Pipeline {
      * @param {Object} kwargs - Include other needed properties like apiKey
      */
     constructor(name=null, kwargs={}){
-        let d_node = new DocumentsSearchService();
+        let d_node = new DocumentsSearchService(kwargs);
         d_node.setInputConfigs(
                 "search", null, null, createInputConfig("user_input", "doc_ids")
         );
         
-        let qa_node = new QuestionAnsweringService();
+        let qa_node = new QuestionAnsweringService(kwargs);
         qa_node.setInputConfigs(
                 "qa",
                 createInputConfig("user_input", "question"),

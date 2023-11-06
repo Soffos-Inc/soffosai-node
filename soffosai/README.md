@@ -156,13 +156,13 @@ class FileIngestPipeline extends Pipeline {
      * @param {Object} [kwargs] - Include other needed properties like apiKey
      */
     constructor(name=null, kwargs={}) {
-        const file_converter = new FileConverterService();
+        const file_converter = new FileConverterService(kwargs);
         file_converter.setInputConfigs(
             "file_converter",
             new InputConfig("user_input", "file"),
             new InputConfig("user_input", "normalize")
         );
-        const document_ingest = new DocumentsIngestService();
+        const document_ingest = new DocumentsIngestService(kwargs);
         document_ingest.setInputConfigs(
             "doc_ingest",
             new InputConfig("user_input", "file", get_filename),
@@ -219,7 +219,7 @@ function get_content(value) {
     return combined_text
 }
 
-docSearch = new SoffosServices.DocumentsSearchService();
+docSearch = new SoffosServices.DocumentsSearchService({apiKey: my_apiKey});
 docSearch.setInpugConfigs(
     "search",
     null,
@@ -228,7 +228,7 @@ docSearch.setInpugConfigs(
                       // the same property / fieldname.
 );
 
-qa = new SoffosServices.QuestionAnsweringService();
+qa = new SoffosServices.QuestionAnsweringService({apiKey: my_apiKey});
 qa.setInputConfigs(
     "qa",
     "default",// take the value for this argument from previous Services or from the user_input
