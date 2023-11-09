@@ -9,7 +9,26 @@ import { FileConverterService, DocumentsIngestService, InputConfig } from "../..
  * @returns {string}
  */
 function get_filename(file) {
-    return file.name.split('.')[0];
+    
+    if (file.name) {
+        return file.name.split('.')[0];
+    }else if (typeof file === "string"){
+        let parts = [];
+        let last_part = ""
+        if (file.includes("\\")){
+            parts = file.split("\\");
+            last_part = parts.pop();
+            return last_part.split(".")[0]
+        }else if (file.includes("/")) {
+            parts = file.split("/")
+            last_part = parts.pop()
+            return last_part.split(".")[0]
+        }else{
+            return file.split(".")[0]
+        }
+    }else{
+        throw Error("Cannot get the filename of the document to be ingested.");
+    }
 }
 
 

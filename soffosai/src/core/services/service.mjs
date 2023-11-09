@@ -245,8 +245,10 @@ class SoffosAIService {
             return {status: error.response.status, error: error.response.data};
           } else if (error.request) {
             console.log(error.request);
+            return {code: error.code, error: error.message};
           } else {
             console.log('Error', error.message);
+            return {code: error.code, error: error.message};
           }
         }
     }

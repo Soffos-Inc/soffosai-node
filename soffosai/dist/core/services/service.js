@@ -352,7 +352,7 @@ var SoffosAIService = /*#__PURE__*/function () {
               console.log('Request failed');
               return _context2.abrupt("return", response.data);
             case 28:
-              _context2.next = 37;
+              _context2.next = 43;
               break;
             case 30:
               _context2.prev = 30;
@@ -366,12 +366,22 @@ var SoffosAIService = /*#__PURE__*/function () {
                 error: _context2.t0.response.data
               });
             case 36:
-              if (_context2.t0.request) {
-                console.log(_context2.t0.request);
-              } else {
-                console.log('Error', _context2.t0.message);
+              if (!_context2.t0.request) {
+                _context2.next = 41;
+                break;
               }
-            case 37:
+              console.log(_context2.t0.request);
+              return _context2.abrupt("return", {
+                code: _context2.t0.code,
+                error: _context2.t0.message
+              });
+            case 41:
+              console.log('Error', _context2.t0.message);
+              return _context2.abrupt("return", {
+                code: _context2.t0.code,
+                error: _context2.t0.message
+              });
+            case 43:
             case "end":
               return _context2.stop();
           }

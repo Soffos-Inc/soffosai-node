@@ -55,10 +55,11 @@ var Pipeline = /*#__PURE__*/function () {
     var name = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
     var kwargs = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
     _classCallCheck(this, Pipeline);
+    var apiKey = null;
     if (kwargs.apiKey) {
-      var _apiKey = kwargs.apiKey;
+      apiKey = kwargs.apiKey;
     } else {
-      var _apiKey2 = _config.SoffosConfig.apiKey;
+      apiKey = _config.SoffosConfig.apiKey;
     }
     if (!apiKey) {
       throw TypeError("API key not provided.");
@@ -117,34 +118,23 @@ var Pipeline = /*#__PURE__*/function () {
     key: "run",
     value: function () {
       var _run = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(user_input) {
-        var original_user_input, pipelineStartEvent, stages, executionCode, infos, total_cost, i, index_from_execution, index_from_termination, stage, _response, pipeOutput, key, subkey, temp_payload, payload, _i, _Object$entries, _Object$entries$_i, _key, notation, input_dict, value, response, exec_code_index, pipelineEndEvent;
+        var original_user_input, stages, executionCode, infos, total_cost, i, index_from_execution, index_from_termination, stage, _response, pipeOutput, key, subkey, temp_payload, payload, _i, _Object$entries, _Object$entries$_i, _key, notation, input_dict, value, response, exec_code_index;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
-              // dispatch soffosai:pipeline-start event
               original_user_input = user_input;
-              pipelineStartEvent = new CustomEvent("soffosai:pipeline-start", {
-                detail: user_input
-              });
-              try {
-                window.dispatchEvent(pipelineStartEvent);
-              } catch (error) {
-                if (error instanceof ReferenceError) {
-                  console.log('Will not dispatch an Event outside of a DOM.');
-                }
-              }
               if ((0, _type_classifications.isDictObject)(user_input)) {
-                _context.next = 5;
+                _context.next = 3;
                 break;
               }
               throw new Error("Invalid user input.");
-            case 5:
+            case 3:
               if ("user" in user_input) {
-                _context.next = 7;
+                _context.next = 5;
                 break;
               }
               throw new ReferenceError("'user' is not defined in user_input.");
-            case 7:
+            case 5:
               if ("text" in user_input) {
                 user_input.document_text = this._input.text;
               }
@@ -158,32 +148,32 @@ var Pipeline = /*#__PURE__*/function () {
               }
               executionCode = user_input.executionCode;
               if (!(executionCode != null && executionCode != undefined)) {
-                _context.next = 18;
+                _context.next = 16;
                 break;
               }
               executionCode = this.apiKey + executionCode;
               if (!this._executionCodes.includes(executionCode)) {
-                _context.next = 17;
+                _context.next = 15;
                 break;
               }
               return _context.abrupt("return", {
                 "error": "You are still using this execution code in a current pipeline run."
               });
-            case 17:
+            case 15:
               this._executionCodes.push(executionCode);
-            case 18:
+            case 16:
               infos = {};
               this.validate_pipeline(stages, user_input);
               infos.user_input = user_input;
               total_cost = 0.00; // Execute per stage:
               i = 0;
-            case 23:
+            case 21:
               if (!(i < stages.length)) {
-                _context.next = 83;
+                _context.next = 81;
                 break;
               }
               if (!this._termination_codes.includes(executionCode)) {
-                _context.next = 33;
+                _context.next = 31;
                 break;
               }
               // remove the execution code from both termination codes and execution codes
@@ -201,16 +191,16 @@ var Pipeline = /*#__PURE__*/function () {
               infos.warning = "This Soffos Pipeline run is prematurely terminated.";
               infos.user_input = original_user_input;
               return _context.abrupt("return", infos);
-            case 33:
+            case 31:
               stage = stages[i];
               console.log("Running ".concat(stage.name));
               if (!(stage instanceof Pipeline)) {
-                _context.next = 45;
+                _context.next = 43;
                 break;
               }
-              _context.next = 38;
+              _context.next = 36;
               return stage.run(user_input);
-            case 38:
+            case 36:
               _response = _context.sent;
               console.log("Response ready for ".concat(stage.name, "."));
               pipeOutput = {};
@@ -233,14 +223,14 @@ var Pipeline = /*#__PURE__*/function () {
                 }
               }
               infos[stage.name] = pipeOutput;
-              return _context.abrupt("continue", 80);
-            case 45:
+              return _context.abrupt("continue", 78);
+            case 43:
               temp_payload = stage.source;
               payload = {};
               _i = 0, _Object$entries = Object.entries(temp_payload);
-            case 48:
+            case 46:
               if (!(_i < _Object$entries.length)) {
-                _context.next = 68;
+                _context.next = 66;
                 break;
               }
               _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2), _key = _Object$entries$_i[0], notation = _Object$entries$_i[1];
@@ -255,65 +245,65 @@ var Pipeline = /*#__PURE__*/function () {
                 notation = input_dict;
               }
               if (!is_service_input(notation)) {
-                _context.next = 64;
+                _context.next = 62;
                 break;
               }
               // value is a reference to a service or user input
               value = infos[notation.source][notation.field];
               if (!("pre_process" in notation)) {
-                _context.next = 61;
+                _context.next = 59;
                 break;
               }
               if (!(notation.pre_process instanceof Function)) {
-                _context.next = 58;
+                _context.next = 56;
                 break;
               }
               payload[_key] = notation.pre_process(value);
-              _context.next = 59;
+              _context.next = 57;
               break;
-            case 58:
+            case 56:
               throw new Error("pre_process value should be a function");
-            case 59:
-              _context.next = 62;
+            case 57:
+              _context.next = 60;
               break;
-            case 61:
+            case 59:
               // no pre-processing required
               payload[_key] = value;
-            case 62:
-              _context.next = 65;
+            case 60:
+              _context.next = 63;
               break;
-            case 64:
+            case 62:
               // notation is a constant
               payload[_key] = notation;
-            case 65:
+            case 63:
               _i++;
-              _context.next = 48;
+              _context.next = 46;
               break;
-            case 68:
+            case 66:
               if (!('user' in payload)) {
                 payload.user = user_input.user;
               }
               payload.apiKey = this.apiKey;
-              _context.next = 72;
+              _context.next = 70;
               return stage.getResponse(payload);
-            case 72:
+            case 70:
               response = _context.sent;
-              if (!("error" in response || !(0, _type_classifications.isDictObject)(response))) {
-                _context.next = 77;
+              if (!(response.error || !(0, _type_classifications.isDictObject)(response))) {
+                _context.next = 75;
                 break;
               }
               infos[stage.name] = response;
               console.log(response);
               return _context.abrupt("return", infos);
-            case 77:
+            case 75:
               console.log("Response ready for ".concat(stage.name));
               infos[stage.name] = response;
               total_cost += response.cost.total_cost;
-            case 80:
+            case 78:
               i++;
-              _context.next = 23;
+              _context.next = 21;
               break;
-            case 83:
+            case 81:
               infos.total_call_cost = total_cost;
 
               // remove the execution code from the executionCodes in effect Array.
@@ -321,19 +311,8 @@ var Pipeline = /*#__PURE__*/function () {
               if (exec_code_index > -1) {
                 this._executionCodes.splice(exec_code_index, 1);
               }
-              // dispatch soffosai:pipeline-end event
-              pipelineEndEvent = new CustomEvent("soffosai:pipeline-end", {
-                detail: infos
-              });
-              try {
-                window.dispatchEvent(pipelineEndEvent);
-              } catch (error) {
-                if (error instanceof ReferenceError) {
-                  console.log('Will not dispatch an Event outside of a DOM.');
-                }
-              }
               return _context.abrupt("return", infos);
-            case 89:
+            case 85:
             case "end":
               return _context.stop();
           }
@@ -423,7 +402,7 @@ var Pipeline = /*#__PURE__*/function () {
             var required_key = notation.field;
             if (reference_service_name == "user_input") {
               var input_datatype = (0, _type_classifications.get_userinput_datatype)(user_input[required_key]);
-              if (required_data_type != input_datatype) {
+              if (required_data_type != input_datatype && required_data_type != 'null') {
                 error_messages.push("On ".concat(stage.name, " service: ").concat(required_data_type, " required on user_input '").concat(required_key, "' field but ").concat(input_datatype, " is provided."));
               }
             } else {
@@ -442,7 +421,7 @@ var Pipeline = /*#__PURE__*/function () {
                     if (output_datatype == 'null') {
                       error_messages.push("On ".concat(stage.name, " service: the reference service '").concat(reference_service_name, "' does not have ").concat(required_key, " key on its output."));
                     }
-                    if (required_data_type != output_datatype) {
+                    if (required_data_type != output_datatype && required_data_type != 'null') {
                       error_messages.push("On ".concat(stage.name, " service: The input datatype required for field ").concat(key, " is ").concat(required_data_type, ". This does not match the datatype to be given by service ").concat(subservice.name, "'s ").concat(notation.field, " field which is ").concat(output_datatype, "."));
                     }
                     break;
@@ -458,7 +437,7 @@ var Pipeline = /*#__PURE__*/function () {
               }
             }
           } else {
-            if ((0, _type_classifications.get_userinput_datatype)(notation) == required_data_type) {
+            if ((0, _type_classifications.get_userinput_datatype)(notation) == required_data_type || required_data_type == 'null') {
               stage._payload[key] = notation;
             } else {
               error_messages.push("On ".concat(stage.name, " service: ").concat(key, " requires ").concat(required_data_type, " but ").concat(_typeof(notation), " is provided."));

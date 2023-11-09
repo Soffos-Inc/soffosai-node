@@ -30,10 +30,11 @@ class Pipeline {
      * @param {Object} [ kwargs={} ]
      */
     constructor (services, use_defaults=false, name=null, kwargs={}) {
+        let apiKey=null;
         if (kwargs.apiKey){
-            const apiKey = kwargs.apiKey;
+            apiKey = kwargs.apiKey;
           } else {
-            const apiKey = SoffosConfig.apiKey
+            apiKey = SoffosConfig.apiKey
           }
     
           if (!apiKey){
@@ -79,16 +80,7 @@ class Pipeline {
      * @returns {object} The response object from soffosai.
      */
     async run(user_input) {
-        // dispatch soffosai:pipeline-start event
         const original_user_input = user_input;
-        const pipelineStartEvent = new CustomEvent("soffosai:pipeline-start", {detail: user_input});
-        try{
-            window.dispatchEvent(pipelineStartEvent);
-          }catch (error) {
-            if (error instanceof ReferenceError) {
-              console.log('Will not dispatch an Event outside of a DOM.');
-            }
-          }
         if (!isDictObject(user_input)) {
             throw new Error("Invalid user input.");
         }
@@ -208,7 +200,7 @@ class Pipeline {
             payload.apiKey = this.apiKey;
 
             let response = await stage.getResponse(payload);
-            if ("error" in response || !isDictObject(response)) {
+            if (response.error || !isDictObject(response)) {
                 infos[stage.name] = response;
                 console.log(response);
                 return infos;
@@ -225,15 +217,6 @@ class Pipeline {
         if (exec_code_index > -1){
             this._executionCodes.splice(exec_code_index,1);
         }
-        // dispatch soffosai:pipeline-end event
-        const pipelineEndEvent = new CustomEvent("soffosai:pipeline-end", {detail: infos});
-        try{
-            window.dispatchEvent(pipelineEndEvent);
-          }catch (error) {
-            if (error instanceof ReferenceError) {
-              console.log('Will not dispatch an Event outside of a DOM.');
-            }
-          }
         
         return infos
     }
@@ -309,7 +292,7 @@ class Pipeline {
                     let required_key = notation.field;
                     if (reference_service_name == "user_input") {
                         let input_datatype = get_userinput_datatype(user_input[required_key])
-                        if (required_data_type != input_datatype) {
+                        if (required_data_type != input_datatype && required_data_type != 'null') {
                             error_messages.push(`On ${stage.name} service: ${required_data_type} required on user_input '${required_key}' field but ${input_datatype} is provided.`)
                         }
                     } else {
@@ -324,7 +307,7 @@ class Pipeline {
                                 if (output_datatype == 'null') {
                                     error_messages.push(`On ${stage.name} service: the reference service '${reference_service_name}' does not have ${required_key} key on its output.`);
                                 }
-                                if (required_data_type != output_datatype) {
+                                if (required_data_type != output_datatype && required_data_type != 'null') {
                                     error_messages.push(`On ${stage.name} service: The input datatype required for field ${key} is ${required_data_type}. This does not match the datatype to be given by service ${subservice.name}'s ${notation.field} field which is ${output_datatype}.`);
                                 }
                                 break;
@@ -336,7 +319,7 @@ class Pipeline {
                     }
                     
                 } else {
-                    if (get_userinput_datatype(notation) == required_data_type) {
+                    if (get_userinput_datatype(notation) == required_data_type || required_data_type == 'null') {
                         stage._payload[key] = notation;
                     } else {
                         error_messages.push(`On ${stage.name} service: ${key} requires ${required_data_type} but ${typeof notation} is provided.`)
