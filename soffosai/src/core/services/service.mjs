@@ -216,19 +216,27 @@ class SoffosAIService {
           headers["x-api-key"] = this._apikey;
           // response = await axios.post(url, data, {headers: headers});
         } else {
-          const formData = new FormData();
+          let form = new FormData();
           Object.keys(data).forEach(key=>{
             if (key=='file'){
-              if (typeof data[key] === 'string') formData.append(key, createReadStream(data[key]));
-              else formData.append(key, data[key]);
+              if (typeof data[key] === 'string') {
+                form.append(key, createReadStream(data[key]));
+
+              } else if(data[key].path) { 
+                // if data[key] is file object attached by multer
+                form.append(key, createReadStream(data[key].path),  { filename: data[key].originalname, contentType: data[key].mimetype });
+              
+              } else {
+                form.append(key, data[key]);
+              }
 
             } else {
-              formData.append(key, data[key]);
+              form.append(key, data[key]);
             }
           });
-          headers = formData.getHeaders();
+          headers = form.getHeaders();
           headers["x-api-key"] = this._apikey;
-          data = formData;
+          data = form;
         }
 
         try {

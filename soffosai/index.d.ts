@@ -1,6 +1,6 @@
 import { SoffosAIService, SoffosPipelines, SoffosServices } from "./src/app.mjs";
 
-declare module 'soffosai' {
+declare module 'soffosai-node' {
     export var apiKey: string;
     export const ServiceString: string;
 

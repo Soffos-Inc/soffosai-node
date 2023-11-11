@@ -2,6 +2,8 @@
 ## Notice:
 To all who installed soffosai package lower than 0.0.4, please reinstall/update your package.
 
+# 0.2.3
+- Express.js with Multer file handling support
 
 # 0.2.2
 - bugfixes
