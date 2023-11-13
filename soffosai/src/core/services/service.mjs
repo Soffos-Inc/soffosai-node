@@ -273,7 +273,7 @@ class SoffosAIService {
           if (rawPayload[k] != null) { // if the value is null, we don't pass it to the payload
               payload[k] = rawPayload[k];
   
-              if (k === "document_name") {
+              if (k === "document_name" || k === "chatbot_name") {
                   payload["name"] = rawPayload[k];
               } else if (k === "question") {
                   payload["message"] = rawPayload[k];

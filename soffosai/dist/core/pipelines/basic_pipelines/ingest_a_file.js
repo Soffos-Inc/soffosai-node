@@ -31,6 +31,8 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function get_filename(file) {
   if (file.name) {
     return file.name.split('.')[0];
+  } else if (file.originalname) {
+    return file.originalname.split('.')[0]; // Express.js with Multer Middleware support
   } else if (typeof file === "string") {
     var parts = [];
     var last_part = "";

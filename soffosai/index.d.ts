@@ -156,6 +156,298 @@ declare module 'soffosai-node' {
 
 
         /**
+         * Transcribes the given audio. It also detects the language, detects number of
+         * speakers, and diarizes. "file" or "url" is required, but not both should be
+         * provided.
+         * @class
+         * @alias SoffosServices.AudioConverterService
+         */
+         export class AudioConverterService {
+            constructor(kwargs?: {});
+        
+            /**
+             * @param {string} user - The ID of the user accessing the Soffos API.
+             * This string will be used for throttling and profanity tracking.
+             * Soffos assumes that the owner of the api is an application (app) and that app has users.
+             * Soffos API will accept any string."
+             * @param {(object|string)} [file=null] - The ID of the user accessing the Soffos API.
+             * This string will be used for throttling and profanity tracking.
+             * Soffos assumes that the owner of the api is an application (app) and that app has users.
+             * Soffos API will accept any string."
+             * @param {string} [url=null] - The ID of the user accessing the Soffos API.
+             * This string will be used for throttling and profanity tracking.
+             * Soffos assumes that the owner of the api is an application (app) and that app has users.
+             * Soffos API will accept any string."
+             * @param {string} [model=null] - The ID of the user accessing the Soffos API.
+             * This string will be used for throttling and profanity tracking.
+             * Soffos assumes that the owner of the api is an application (app) and that app has users.
+             * Soffos API will accept any string."
+             * @returns {Promise<Object>} 
+             * number_of_speakers - The number of speakers detected.
+             * transcripts - The transcription of the audio file or url.
+             * language - The detected language used by the speakers.
+             * error -      * Description missing.
+             * @example
+             * Examples are available at "https://github.com/Soffos-Inc/soffosai-js/tree/master/samples"
+             */
+            call(user:string, file?: object|string, url?:string, model?:string): Promise<object>;
+
+            /**
+             * @param {string} name - Reference name of this Service.
+             *  It will be used by the Pipeline to reference this Service.
+             * @param {(string|File|ReadableStream|InputConfig)} [file=null] - The audio file to be transcribed.
+             * @param {(string|InputConfig)} [url=null] - The location of the audio file to be transcribed. Make sure it
+             * can be accessed publicly. If not, include the athentication
+             * strings of the url.
+             * @param {(string|InputConfig)} [model=null] - The model to be used by the audio converter. Can be 'nova 2' or
+             * 'whisper'. Defaults to 'nova 2'.
+             */
+            setInputConfigs(name:string, file?:string|File|ReadableStream|InputConfig, url?:string|InputConfig, model?:string|InputConfig): null;
+        }
+
+
+        /**
+        * Creates a chatbot and returns its ID. The id will later be used to allow users
+        * to interact with it.
+        * @class
+        * @alias SoffosServices.ChatBotCreateService
+        */
+       export class ChatBotCreateService {
+            constructor(kwargs?: {});
+
+            /**
+             * @param {string} user - The ID of the user accessing the Soffos API.
+             * This string will be used for throttling and profanity tracking.
+             * Soffos assumes that the owner of the api is an application (app) and that app has users.
+             * Soffos API will accept any string."
+             * @param {string} role - A description of your bot's purpose. You may also describe its
+             * tone when responding. The system may not be able to follow
+             * complex instructions specified in this field.
+             * @param {string} chatbot_name - The name/identity of your chatbot.
+             * @param {string} [chatbot_id=null] - The chatbot's id. Provided when you create the chatbot. If you
+             * provide this, the chatbot with this ID's will be updated. The
+             * role and name will be updated.
+             * @returns {Promise<Object>} 
+             * chatbot_id - The chatbot's id. Provided when you create the chatbot. If you
+             * provide this, the chatbot with this ID's will be updated. The
+             * role and name will be updated.
+             * @example
+             * Examples are available at "https://github.com/Soffos-Inc/soffosai-js/tree/master/samples"
+             */
+            call(user:string, role:string, chatbot_name:string, chatbot_id?:string): Promise<Object>;
+
+            /**
+             * @param {string} name - Reference name of this Service.
+             *  It will be used by the Pipeline to reference this Service.
+             * @param {(string|InputConfig)} role - A description of your bot's purpose. You may also describe its
+             * tone when responding. The system may not be able to follow
+             * complex instructions specified in this field.
+             * @param {(string|InputConfig)} chatbot_name - The name/identity of your chatbot.
+             * @param {(string|InputConfig)} [chatbot_id=null] - The chatbot's id. Provided when you create the chatbot. If you
+             * provide this, the chatbot with this ID's will be updated. The
+             * role and name will be updated.
+             */
+            setInputConfigs(name:string, role:string|InputConfig, chatbot_name:string|InputConfig, chatbot_id?:string|InputConfig): null;
+       }
+
+
+       /**
+         * The Chatbot module enables you to create custom chatbots. You can give it a
+         * name, a purpose and connect it to your document repository so that it informs
+         * its responses to users from your ingested documents.
+         * @class
+         * @alias SoffosServices.ChatBotService
+         */
+        export class ChatBotService {
+            constructor(kwargs?:{});
+
+            /**
+             * @param {string} user - The ID of the user accessing the Soffos API.
+             * This string will be used for throttling and profanity tracking.
+             * Soffos assumes that the owner of the api is an application (app) and that app has users.
+             * Soffos API will accept any string."
+             * @param {string} message - The user's message to the chatbot
+             * @param {string} chatbot_id - The chatbot's id.
+             * @param {string} user_id - A unique user id. It is recommended that your provide a UUID.
+             * @param {string} mode - The value can only be one of: open, closed, hybrid.
+             * @param {string} [session_id=null] - Pass the ids of the documents that you wish to inform your bot
+             * with for the specific user/session. Applicable for closed and
+             * hybrid modes as described above.
+             * @param {Array} [previous_messages=null] - Pass the ids of the documents that you wish to inform your bot
+             * with for the specific user/session. Applicable for closed and
+             * hybrid modes as described above.
+             * @param {Array} [bot_document_ids=null] - Pass the ids of the documents that you wish to inform your bot
+             * with for the specific user/session. Applicable for closed and
+             * hybrid modes as described above.
+             * @param {Array} [context_document_ids=null] - Pass the ids of the documents that you wish to inform your bot
+             * with for the specific user/session. Applicable for closed and
+             * hybrid modes as described above.
+             * @returns {Promise<Object>} 
+             * response - The agent's response
+             * session_name - The session's name which is generated after 3 interactions.
+             * messages - A list of the conversation's messages so far.
+             * context - The context that was made available to the agent for responding
+             * to the user's last message.
+             * @example
+             * Examples are available at "https://github.com/Soffos-Inc/soffosai-js/tree/master/samples"
+             */
+            call(user: string, message:string, chatbot_id:string, user_id:string, mode:string, session_id?:string, previous_messages?:string[], bot_document_ids?:string[], context_document_ids?:string[]): Promise<Object>;
+
+            /**
+             * @param {string} name - Reference name of this Service.
+             *  It will be used by the Pipeline to reference this Service.
+             * @param {(string|InputConfig)} message - The user's message to the chatbot
+             * @param {(string|InputConfig)} chatbot_id - The chatbot's id.
+             * @param {(string|InputConfig)} user_id - A unique user id. It is recommended that your provide a UUID.
+             * @param {(string|InputConfig)} mode - The value can only be one of: open, closed, hybrid.
+             * @param {(string|InputConfig)} [session_id=null] - Pass the ids of the documents that you wish to inform your bot
+             * with for the specific user/session. Applicable for closed and
+             * hybrid modes as described above.
+             * @param {(Array|InputConfig)} [previous_messages=null] - Pass the ids of the documents that you wish to inform your bot
+             * with for the specific user/session. Applicable for closed and
+             * hybrid modes as described above.
+             * @param {(Array|InputConfig)} [bot_document_ids=null] - Pass the ids of the documents that you wish to inform your bot
+             * with for the specific user/session. Applicable for closed and
+             * hybrid modes as described above.
+             * @param {(Array|InputConfig)} [context_document_ids=null] - Pass the ids of the documents that you wish to inform your bot
+             * with for the specific user/session. Applicable for closed and
+             * hybrid modes as described above.
+             */
+            setInputConfigs(name:string, message:string|InputConfig, chatbot_id:string|InputConfig, user_id:string|InputConfig, mode:string|InputConfig, session_id?:string|InputConfig, previous_messages?:string[]|InputConfig, bot_document_ids?:string[]|InputConfig, context_document_ids?:string[]|InputConfig): null;
+        }
+
+        /**
+         * Get user sessions
+         * @class
+         * @alias SoffosServices.ChatBotGetUserSessionsService
+         */
+        export class ChatBotGetUserSessionsService {
+            constructor(kwargs?:{});
+
+            /**
+             * @param {string} user - The ID of the user accessing the Soffos API.
+             * This string will be used for throttling and profanity tracking.
+             * Soffos assumes that the owner of the api is an application (app) and that app has users.
+             * Soffos API will accept any string."
+             * @param {string} chatbot_id - The chatbot's id.
+             * @param {string} user_id - A unique user id. It is recommended that your provide a UUID.
+             * @param {Array} [session_ids=null] - Specify the id of the sessions you need to get.
+             * @returns {Promise<Object>} 
+             * sessions -      * Description missing.
+             * @example
+             * Examples are available at "https://github.com/Soffos-Inc/soffosai-js/tree/master/samples"
+             */
+            call(user:string, chatbot_id:string, user_id:string, session_ids?:string[]): Promise<Object>;
+
+            /**
+             * @param {string} name - Reference name of this Service.
+             *  It will be used by the Pipeline to reference this Service.
+             * @param {(string|InputConfig)} chatbot_id - The chatbot's id.
+             * @param {(string|InputConfig)} user_id - A unique user id. It is recommended that your provide a UUID.
+             * @param {(Array|InputConfig)} [session_ids=null] - Specify the id of the sessions you need to get.
+             */
+            setInputConfigs(name:string, chatbot_id:string|InputConfig, user_id:string|InputConfig, session_ids?:string[]|InputConfig): null;
+        }
+
+        /**
+         * Delete user sessions
+         * @class
+         * @alias SoffosServices.ChatBotDeleteUserSessionsService
+         */
+        export class ChatBotDeleteUserSessionsService {
+            constructor(kwargs?:{});
+
+            /**
+             * @param {string} user - The ID of the user accessing the Soffos API.
+             * This string will be used for throttling and profanity tracking.
+             * Soffos assumes that the owner of the api is an application (app) and that app has users.
+             * Soffos API will accept any string."
+             * @param {string} chatbot_id - The chatbot's id.
+             * @param {string} user_id - A unique user id. It is recommended that your provide a UUID.
+             * @param {Array} [session_ids=null] - List of the ids of the user sessions to be deleted.
+             * @returns {Promise<Object>} 
+             * success - Determines if the API call is successful or not.
+             * @example
+             * Examples are available at "https://github.com/Soffos-Inc/soffosai-js/tree/master/samples"
+             */
+            call(user:string, chatbot_id:string, user_id:string, session_ids?:string[]):Promise<Object>;
+
+            /**
+             * @param {string} name - Reference name of this Service.
+             *  It will be used by the Pipeline to reference this Service.
+             * @param {(string|InputConfig)} chatbot_id - The chatbot's id.
+             * @param {(string|InputConfig)} user_id - A unique user id. It is recommended that your provide a UUID.
+             * @param {(Array|InputConfig)} [session_ids=null] - List of the ids of the user sessions to be deleted.
+             */
+            setInputConfigs(name:string, chatbot_id:string|InputConfig, user_id:string|InputConfig, session_ids?:string[]|InputConfig): null;
+        }
+
+
+        /**
+         * This endpoint allows you to get the information of previously created chatbots.
+         * @class
+         * @alias SoffosServices.ChatBotsGetService
+         */
+        export class ChatBotsGetService {
+            constructor(kwargs?:{});
+
+            /**
+             * @param {string} user - The ID of the user accessing the Soffos API.
+             * This string will be used for throttling and profanity tracking.
+             * Soffos assumes that the owner of the api is an application (app) and that app has users.
+             * Soffos API will accept any string."
+             * @param {Array} [chatbot_ids=null] - Specify the id of the chatbots you need to see the details for.
+             * Don't pass this parameter if you wish to see all your created
+             * chatbots.
+             * @returns {Promise<Object>} 
+             * chatbots - A list of dictionaries with details about your chatbots.
+             * @example
+             * Examples are available at "https://github.com/Soffos-Inc/soffosai-js/tree/master/samples"
+             */
+            call(user:string, chatbot_ids?:string[]): Promise<Object>;
+
+            /**
+             * @param {string} name - Reference name of this Service.
+             *  It will be used by the Pipeline to reference this Service.
+             * @param {(Array|InputConfig)} [chatbot_ids=null] - Specify the id of the chatbots you need to see the details for.
+             * Don't pass this parameter if you wish to see all your created
+             * chatbots.
+             */
+            setInputConfigs(name:string, chatbot_ids?:string[]|InputConfig): null;
+        }
+
+        /**
+         * Deleting a chatbot will also delete all the conversation history for that
+         * chatbot.
+         * @class
+         * @alias SoffosServices.ChatBotsDeleteService
+         */
+         export class ChatBotsDeleteService {
+            constructor(kwargs?:{});
+
+            /**
+             * @param {string} user - The ID of the user accessing the Soffos API.
+             * This string will be used for throttling and profanity tracking.
+             * Soffos assumes that the owner of the api is an application (app) and that app has users.
+             * Soffos API will accept any string."
+             * @param {Array} chatbot_ids - List of the ids of the chatbots to be deleted.
+             * @returns {Promise<Object>} 
+             * success - Determines if the API call is successful or not.
+             * @example
+             * Examples are available at "https://github.com/Soffos-Inc/soffosai-js/tree/master/samples"
+             */
+            call(user:string, chatbot_ids:string[]): Promise<Object>;
+
+            /**
+             * @param {string} name - Reference name of this Service.
+             *  It will be used by the Pipeline to reference this Service.
+             * @param {(Array|InputConfig)} chatbot_ids - List of the ids of the chatbots to be deleted.
+             */
+            setInputConfigs(name:string, chatbot_ids:string[]|InputConfig): null;
+        }
+
+
+        /**
          * The Documents Ingest module enables ingestion of content into Soffos.
          * Takes in the text and gives the document_id to reference the text in Soffos database.
          */

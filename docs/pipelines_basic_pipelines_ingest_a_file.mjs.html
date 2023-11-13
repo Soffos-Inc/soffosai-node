@@ -36,8 +36,31 @@ import { FileConverterService, DocumentsIngestService, InputConfig } from "../..
  * @param {Blob} file - The file that is being converted to text and saved to Soffos db.
  * @returns {string}
  */
-function get_filename(file) {
-    return file.name.split('.')[0];
+ function get_filename(file) {
+    
+    if (file.name) {
+        return file.name.split('.')[0];
+
+    } else if (file.originalname) {
+        return file.originalname.split('.')[0]; // Express.js with Multer Middleware support
+
+    }else if (typeof file === "string"){
+        let parts = [];
+        let last_part = ""
+        if (file.includes("\\")){
+            parts = file.split("\\");
+            last_part = parts.pop();
+            return last_part.split(".")[0]
+        }else if (file.includes("/")) {
+            parts = file.split("/")
+            last_part = parts.pop()
+            return last_part.split(".")[0]
+        }else{
+            return file.split(".")[0]
+        }
+    }else{
+        throw Error("Cannot get the filename of the document to be ingested.");
+    }
 }
 
 
@@ -54,13 +77,13 @@ class FileIngestPipeline extends Pipeline {
      * @param {Object} [kwargs] - Include other needed properties like apiKey
      */
     constructor(name=null, kwargs={}) {
-        const file_converter = new FileConverterService();
+        const file_converter = new FileConverterService(kwargs);
         file_converter.setInputConfigs(
             "file_converter",
             new InputConfig("user_input", "file"),
             new InputConfig("user_input", "normalize")
         );
-        const document_ingest = new DocumentsIngestService();
+        const document_ingest = new DocumentsIngestService(kwargs);
         document_ingest.setInputConfigs(
             "doc_ingest",
             new InputConfig("user_input", "file", get_filename),
@@ -120,13 +143,13 @@ export default FileIngestPipeline;</code></pre>
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="SoffosServices.AnswerScoringService.html">AnswerScoringService</a></li><li><a href="SoffosServices.DocumentsDeleteService.html">DocumentsDeleteService</a></li><li><a href="SoffosServices.DocumentsIngestService.html">DocumentsIngestService</a></li><li><a href="SoffosServices.DocumentsSearchService.html">DocumentsSearchService</a></li><li><a href="SoffosServices.EmailAnalysisService.html">EmailAnalysisService</a></li><li><a href="SoffosServices.EmotionDetectionService.html">EmotionDetectionService</a></li><li><a href="SoffosServices.FileConverterService.html">FileConverterService</a></li><li><a href="SoffosServices.LanguageDetectionService.html">LanguageDetectionService</a></li><li><a href="SoffosServices.LetsDiscussCreateService.html">LetsDiscussCreateService</a></li><li><a href="SoffosServices.LetsDiscussDeleteService.html">LetsDiscussDeleteService</a></li><li><a href="SoffosServices.LetsDiscussRetrieveService.html">LetsDiscussRetrieveService</a></li><li><a href="SoffosServices.LetsDiscussService.html">LetsDiscussService</a></li><li><a href="SoffosServices.LogicalErrorDetectionService.html">LogicalErrorDetectionService</a></li><li><a href="SoffosServices.MicrolessonService.html">MicrolessonService</a></li><li><a href="SoffosServices.NamedEntityRecognitionService.html">NamedEntityRecognitionService</a></li><li><a href="SoffosServices.ParaphraseService.html">ParaphraseService</a></li><li><a href="SoffosServices.ProfanityService.html">ProfanityService</a></li><li><a href="SoffosServices.QuestionAndAnswerGenerationService.html">QuestionAndAnswerGenerationService</a></li><li><a href="SoffosServices.QuestionAnsweringService.html">QuestionAnsweringService</a></li><li><a href="SoffosServices.ReviewTaggerService.html">ReviewTaggerService</a></li><li><a href="SoffosServices.SentimentAnalysisService.html">SentimentAnalysisService</a></li><li><a href="SoffosServices.SimplifyService.html">SimplifyService</a></li><li><a href="SoffosServices.SummarizationService.html">SummarizationService</a></li><li><a href="SoffosServices.TableGeneratorService.html">TableGeneratorService</a></li><li><a href="SoffosServices.TagGenerationService.html">TagGenerationService</a></li><li><a href="SoffosServices.TranscriptCorrectionService.html">TranscriptCorrectionService</a></li><li><a href="-_InputConfig.html">_InputConfig</a></li><li><a href="-_SoffosPipelines.AskADocumentPipeline.html">AskADocumentPipeline</a></li><li><a href="-_SoffosPipelines.FileIngestPipeline.html">FileIngestPipeline</a></li></ul><h3>Global</h3><ul><li><a href="global.html#_createInputConfig">_createInputConfig</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="SoffosServices.AnswerScoringService.html">AnswerScoringService</a></li><li><a href="SoffosServices.AudioConverterService.html">AudioConverterService</a></li><li><a href="SoffosServices.ChatBotCreateService.html">ChatBotCreateService</a></li><li><a href="SoffosServices.ChatBotDeleteUserSessionsService.html">ChatBotDeleteUserSessionsService</a></li><li><a href="SoffosServices.ChatBotGetUserSessionsService.html">ChatBotGetUserSessionsService</a></li><li><a href="SoffosServices.ChatBotService.html">ChatBotService</a></li><li><a href="SoffosServices.ChatBotsDeleteService.html">ChatBotsDeleteService</a></li><li><a href="SoffosServices.ChatBotsGetService.html">ChatBotsGetService</a></li><li><a href="SoffosServices.DocumentsDeleteService.html">DocumentsDeleteService</a></li><li><a href="SoffosServices.DocumentsIngestService.html">DocumentsIngestService</a></li><li><a href="SoffosServices.DocumentsSearchService.html">DocumentsSearchService</a></li><li><a href="SoffosServices.EmailAnalysisService.html">EmailAnalysisService</a></li><li><a href="SoffosServices.EmotionDetectionService.html">EmotionDetectionService</a></li><li><a href="SoffosServices.FileConverterService.html">FileConverterService</a></li><li><a href="SoffosServices.LanguageDetectionService.html">LanguageDetectionService</a></li><li><a href="SoffosServices.LetsDiscussCreateService.html">LetsDiscussCreateService</a></li><li><a href="SoffosServices.LetsDiscussDeleteService.html">LetsDiscussDeleteService</a></li><li><a href="SoffosServices.LetsDiscussRetrieveService.html">LetsDiscussRetrieveService</a></li><li><a href="SoffosServices.LetsDiscussService.html">LetsDiscussService</a></li><li><a href="SoffosServices.LogicalErrorDetectionService.html">LogicalErrorDetectionService</a></li><li><a href="SoffosServices.MicrolessonService.html">MicrolessonService</a></li><li><a href="SoffosServices.NamedEntityRecognitionService.html">NamedEntityRecognitionService</a></li><li><a href="SoffosServices.ParaphraseService.html">ParaphraseService</a></li><li><a href="SoffosServices.ProfanityService.html">ProfanityService</a></li><li><a href="SoffosServices.QuestionAndAnswerGenerationService.html">QuestionAndAnswerGenerationService</a></li><li><a href="SoffosServices.QuestionAnsweringService.html">QuestionAnsweringService</a></li><li><a href="SoffosServices.ReviewTaggerService.html">ReviewTaggerService</a></li><li><a href="SoffosServices.SentimentAnalysisService.html">SentimentAnalysisService</a></li><li><a href="SoffosServices.SimplifyService.html">SimplifyService</a></li><li><a href="SoffosServices.SummarizationService.html">SummarizationService</a></li><li><a href="SoffosServices.TableGeneratorService.html">TableGeneratorService</a></li><li><a href="SoffosServices.TagGenerationService.html">TagGenerationService</a></li><li><a href="SoffosServices.TranscriptCorrectionService.html">TranscriptCorrectionService</a></li><li><a href="-_InputConfig.html">_InputConfig</a></li><li><a href="-_SoffosPipelines.AskADocumentPipeline.html">AskADocumentPipeline</a></li><li><a href="-_SoffosPipelines.FileIngestPipeline.html">FileIngestPipeline</a></li></ul><h3>Global</h3><ul><li><a href="global.html#_createInputConfig">_createInputConfig</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Thu Oct 26 2023 17:37:45 GMT+0800 (Singapore Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Nov 13 2023 20:41:46 GMT+0800 (Singapore Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

@@ -9,6 +9,48 @@ Object.defineProperty(exports, "AnswerScoringService", {
     return _answer_scoring["default"];
   }
 });
+Object.defineProperty(exports, "AudioConverterService", {
+  enumerable: true,
+  get: function get() {
+    return _audio_converter["default"];
+  }
+});
+Object.defineProperty(exports, "ChatBotCreateService", {
+  enumerable: true,
+  get: function get() {
+    return _chat_bot_create["default"];
+  }
+});
+Object.defineProperty(exports, "ChatBotDeleteUserSessionsService", {
+  enumerable: true,
+  get: function get() {
+    return _chat_bot_delete_user_sessions["default"];
+  }
+});
+Object.defineProperty(exports, "ChatBotGetUserSessionsService", {
+  enumerable: true,
+  get: function get() {
+    return _chat_bot_get_user_sessions["default"];
+  }
+});
+Object.defineProperty(exports, "ChatBotService", {
+  enumerable: true,
+  get: function get() {
+    return _chat_bot["default"];
+  }
+});
+Object.defineProperty(exports, "ChatBotsDeleteService", {
+  enumerable: true,
+  get: function get() {
+    return _chat_bots_delete["default"];
+  }
+});
+Object.defineProperty(exports, "ChatBotsGetService", {
+  enumerable: true,
+  get: function get() {
+    return _chat_bots_get["default"];
+  }
+});
 Object.defineProperty(exports, "DocumentsDeleteService", {
   enumerable: true,
   get: function get() {
@@ -178,6 +220,13 @@ Object.defineProperty(exports, "createInputConfig", {
   }
 });
 var _answer_scoring = _interopRequireDefault(require("./answer_scoring.js"));
+var _audio_converter = _interopRequireDefault(require("./audio_converter.js"));
+var _chat_bot_create = _interopRequireDefault(require("./chat_bot_create.js"));
+var _chat_bot_delete_user_sessions = _interopRequireDefault(require("./chat_bot_delete_user_sessions.js"));
+var _chat_bot_get_user_sessions = _interopRequireDefault(require("./chat_bot_get_user_sessions.js"));
+var _chat_bot = _interopRequireDefault(require("./chat_bot.js"));
+var _chat_bots_get = _interopRequireDefault(require("./chat_bots_get.js"));
+var _chat_bots_delete = _interopRequireDefault(require("./chat_bots_delete.js"));
 var _documents = require("./documents.js");
 var _email_analysis = _interopRequireDefault(require("./email_analysis.js"));
 var _emotion_detection = _interopRequireDefault(require("./emotion_detection.js"));

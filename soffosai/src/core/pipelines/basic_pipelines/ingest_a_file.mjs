@@ -8,10 +8,14 @@ import { FileConverterService, DocumentsIngestService, InputConfig } from "../..
  * @param {Blob} file - The file that is being converted to text and saved to Soffos db.
  * @returns {string}
  */
-function get_filename(file) {
+ function get_filename(file) {
     
     if (file.name) {
         return file.name.split('.')[0];
+
+    } else if (file.originalname) {
+        return file.originalname.split('.')[0]; // Express.js with Multer Middleware support
+
     }else if (typeof file === "string"){
         let parts = [];
         let last_part = ""

@@ -1,4 +1,11 @@
 import AnswerScoringService from './answer_scoring.mjs';
+import AudioConverterService from './audio_converter.mjs';
+import ChatBotCreateService from './chat_bot_create.mjs';
+import ChatBotDeleteUserSessionsService from './chat_bot_delete_user_sessions.mjs';
+import ChatBotGetUserSessionsService from './chat_bot_get_user_sessions.mjs';
+import ChatBotService from './chat_bot.mjs';
+import ChatBotsGetService from './chat_bots_get.mjs';
+import ChatBotsDeleteService from './chat_bots_delete.mjs';
 import { DocumentsIngestService, DocumentsSearchService, DocumentsDeleteService } from './documents.mjs';
 import EmailAnalysisService from './email_analysis.mjs';
 import EmotionDetectionService from './emotion_detection.mjs';
@@ -30,6 +37,13 @@ import {InputConfig, createInputConfig} from './input_config.mjs';
 
 export {
     AnswerScoringService,
+    AudioConverterService,
+    ChatBotCreateService,
+    ChatBotDeleteUserSessionsService,
+    ChatBotGetUserSessionsService,
+    ChatBotService,
+    ChatBotsDeleteService,
+    ChatBotsGetService,
     DocumentsIngestService, 
     DocumentsSearchService, 
     DocumentsDeleteService,

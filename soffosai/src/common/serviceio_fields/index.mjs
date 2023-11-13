@@ -1,5 +1,12 @@
 import ServiceIO from './service_io.mjs';
 import AnswerScoringIO from './answer_scoring_io.mjs';
+import AudioConverterIO from './audio_converter.mjs';
+import ChatBotCreateIO from './chat_bot_create.mjs';
+import ChatBotDeleteUserSessionsIO from './chat_bot_delete_user_sessions.mjs';
+import ChatBotGetUserSessionsIO from './chat_bot_get_user_sessions.mjs';
+import ChatBotIO from './chat_bot.mjs';
+import ChatBotsDeleteIO from './chat_bots_delete.mjs';
+import ChatBotsGetIO from './chat_bots_get.mjs';
 import { DocumentsIngestIO, DocumentSearchIO, DocumentDeleteIO } from './documents_io.mjs';
 import EmailAnalysisIO from './email_analysis_io.mjs';
 import EmotionDetectionIO from './emotion_detection_io.mjs';
@@ -23,6 +30,13 @@ import TranscriptCorrectionIO from './transcript_correction_io.mjs';
 
 export {
   ServiceIO,
+  AudioConverterIO,
+  ChatBotCreateIO,
+  ChatBotDeleteUserSessionsIO,
+  ChatBotGetUserSessionsIO,
+  ChatBotIO,
+  ChatBotsDeleteIO, 
+  ChatBotsGetIO,
   AnswerScoringIO,
   DocumentsIngestIO,
   DocumentSearchIO,
