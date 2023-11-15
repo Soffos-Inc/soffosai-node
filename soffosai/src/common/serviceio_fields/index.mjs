@@ -27,6 +27,7 @@ import SummarizationIO from './summarization_io.mjs';
 import TableGeneratorIO from './table_generator_io.mjs';
 import TagGenerationIO from './tag_generation_io.mjs';
 import TranscriptCorrectionIO from './transcript_correction_io.mjs';
+import WebsiteConverterIO from './website_converter.mjs';
 
 export {
   ServiceIO,
@@ -63,4 +64,5 @@ export {
   TableGeneratorIO,
   TagGenerationIO,
   TranscriptCorrectionIO,
+  WebsiteConverterIO,
 };

@@ -7,7 +7,7 @@ exports.ServiceString = exports.SOFFOS_SERVICE_URL = exports.SERVICES_LIST = exp
 var SOFFOS_SERVICE_URL = "https://api.soffos.ai/service/";
 // const SOFFOS_SERVICE_URL = "http://localhost:8000/service/";
 exports.SOFFOS_SERVICE_URL = SOFFOS_SERVICE_URL;
-var SERVICES_LIST = ['answer-scoring', 'audio-converter', 'chatbot/create', 'chatbot', 'chatbot/get', 'chatbot/delete', 'chatbot/sessions/get', 'chatbot/sessions/delete', 'discuss/create', 'discuss', 'discuss/count', 'discuss/delete', 'documents/ingest', 'documents/delete', 'documents/search', 'email-analysis', 'emotion-detection', 'file-converter', 'flashcard-generation', 'intent-classification/confirmation', 'intent-classification', 'language-detection', 'logical-error-detection', 'microlesson', 'ner', 'paraphrase', 'profanity', 'qna-generation', 'question-answering', 'review-tagger', 'search-recommendations', 'sentiment-analysis', 'simplify', 'string-similarity', 'summarization', 'table-generator', 'tag', 'transcript-correction', 'batch-service'];
+var SERVICES_LIST = ['answer-scoring', 'audio-converter', 'chatbot/create', 'chatbot', 'chatbot/get', 'chatbot/delete', 'chatbot/sessions/get', 'chatbot/sessions/delete', 'discuss/create', 'discuss', 'discuss/count', 'discuss/delete', 'documents/ingest', 'documents/delete', 'documents/search', 'email-analysis', 'emotion-detection', 'file-converter', 'flashcard-generation', 'intent-classification/confirmation', 'intent-classification', 'language-detection', 'logical-error-detection', 'microlesson', 'ner', 'paraphrase', 'profanity', 'qna-generation', 'question-answering', 'review-tagger', 'search-recommendations', 'sentiment-analysis', 'simplify', 'string-similarity', 'summarization', 'table-generator', 'tag', 'transcript-correction', 'website-converter', 'batch-service'];
 exports.SERVICES_LIST = SERVICES_LIST;
 var ServiceString = {
   /*
@@ -50,6 +50,7 @@ var ServiceString = {
   TABLE_GENERATOR: 'table-generator',
   TAG_GENERATION: 'tag',
   TRANSCRIPTION_CORRECTION: 'transcript-correction',
+  WEBSITE_CONVERTER: 'website-converter',
   BATCH_SERVICE: 'batch-service'
 };
 exports.ServiceString = ServiceString;

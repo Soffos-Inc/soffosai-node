@@ -31,6 +31,7 @@ import SummarizationService from './summarization.mjs';
 import TableGeneratorService from './table_generator.mjs';
 import TagGenerationService from './tag_generation.mjs';
 import TranscriptCorrectionService from './transcript_correction.mjs';
+import WebsiteConverterService from './website_converter.mjs';
 
 import { SoffosAIService } from './service.mjs';
 import {InputConfig, createInputConfig} from './input_config.mjs';
@@ -69,6 +70,7 @@ export {
     TableGeneratorService,
     TagGenerationService,
     TranscriptCorrectionService,
+    WebsiteConverterService,
 
     SoffosAIService,
     InputConfig,

@@ -213,6 +213,12 @@ Object.defineProperty(exports, "TranscriptCorrectionService", {
     return _transcript_correction["default"];
   }
 });
+Object.defineProperty(exports, "WebsiteConverterService", {
+  enumerable: true,
+  get: function get() {
+    return _website_converter["default"];
+  }
+});
 Object.defineProperty(exports, "createInputConfig", {
   enumerable: true,
   get: function get() {
@@ -247,6 +253,7 @@ var _summarization = _interopRequireDefault(require("./summarization.js"));
 var _table_generator = _interopRequireDefault(require("./table_generator.js"));
 var _tag_generation = _interopRequireDefault(require("./tag_generation.js"));
 var _transcript_correction = _interopRequireDefault(require("./transcript_correction.js"));
+var _website_converter = _interopRequireDefault(require("./website_converter.js"));
 var _service = require("./service.js");
 var _input_config = require("./input_config.js");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
