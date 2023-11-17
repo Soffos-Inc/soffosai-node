@@ -1,5 +1,5 @@
 const SOFFOS_SERVICE_URL = "https://api.soffos.ai/service/";
-// const SOFFOS_SERVICE_URL = "http://localhost:8000/service/";
+
 
 const SERVICES_LIST = [
   'answer-scoring',
