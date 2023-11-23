@@ -36,7 +36,7 @@ class EmotionDetectionService extends SoffosAIService {
      * span_start: The starting character index of the span in the original input text.<br>
      * span_end: The ending character index of the span in the original input text.<br>
      * @example
-     * import { SoffosServices } from "soffosai";
+     * import { SoffosServices } from "soffosai-node";
      * 
      * const my_apiKey = "Token <put your api key here>";
      * const service = new SoffosServices.EmotionDetectionService({apiKey:my_apiKey});

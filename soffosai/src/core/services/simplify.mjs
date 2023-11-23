@@ -26,7 +26,7 @@ class SimplifyService extends SoffosAIService {
      * paraphrase - the paraphrased text <br>
      * "simplify": true
      * @example:
-     * import { SoffosServices } from "soffosai";
+     * import { SoffosServices } from "soffosai-node";
      * 
      * const my_apiKey = "Token <put your api key here>";
      * const service = new SoffosServices.SimplifyService({apiKey:my_apiKey});

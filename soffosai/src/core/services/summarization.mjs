@@ -32,7 +32,7 @@ class SummarizationService extends SoffosAIService {
      * error - string <br>
      * When the specified sent_length is larger than the number of sentences, the service will return a 403 error along with a json with the error field and the error message.
      * @example
-     * import { SoffosServices } from "soffosai";
+     * import { SoffosServices } from "soffosai-node";
      * 
      * const my_apiKey = "Token <put your api key here>";
      * const service = new SoffosServices.SummarizationService({apiKey:my_apiKey});

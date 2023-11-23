@@ -32,7 +32,7 @@ class EmailAnalysisService extends SoffosAIService {
         urgency string
         dates string list<br>
      * @example
-     * import { SoffosServices } from "soffosai";
+     * import { SoffosServices } from "soffosai-node";
      * 
      * const my_apiKey = "Token <put your api key here>";
      * const service = new SoffosServices.EmailAnalysisService({apiKey:my_apiKey});

@@ -36,7 +36,7 @@ class SentimentAnalysisService extends SoffosAIService {
      * sentiment_overall - dictionary <br>
      * Contains the overall negative, neutral and positive score for the provided text.<br>
      * @example
-     * import { SoffosServices } from "soffosai";
+     * import { SoffosServices } from "soffosai-node";
      * 
      * const my_apiKey = "Token <put your api key here>";
      * const service = new SoffosServices.SentimentAnalysisService({apiKey:my_apiKey});

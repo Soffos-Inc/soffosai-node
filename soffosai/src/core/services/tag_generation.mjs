@@ -32,7 +32,7 @@ class TagGenerationService extends SoffosAIService {
      * tags - dictionary dictionary<br>
      * A dictionary containing the tags grouped by the type of tag. A confidence score is provided also for each tag. <br>
      * @example
-     * import { SoffosServices } from "soffosai";
+     * import { SoffosServices } from "soffosai-node";
      * 
      * const my_apiKey = "Token <put your api key here>";
      * const service = new SoffosServices.TagGenerationService({apiKey:my_apiKey});

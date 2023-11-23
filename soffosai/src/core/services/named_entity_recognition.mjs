@@ -35,7 +35,7 @@ class NamedEntityRecognitionService extends SoffosAIService {
      * tag: Label of the entity.<br>
      * count: Number of occurrences of the entity in the text.<br>
      * @example
-     * import { SoffosServices } from "soffosai";
+     * import { SoffosServices } from "soffosai-node";
      * 
      * const my_apiKey = "Token <put your api key here>";
      * const service = new SoffosServices.NamedEntityRecognitionService({apiKey:my_apiKey});

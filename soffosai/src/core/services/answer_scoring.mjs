@@ -42,7 +42,7 @@ class AnswerScoringService extends SoffosAIService {
      * A value between 0 and 1 indicating the correctness of the answer.<br>
      * reasoning string - A concise explanation of how the AI arrived to the predicted score. <br>
      * @example
-     * import { SoffosServices } from "soffosai";
+     * import { SoffosServices } from "soffosai-node";
      * 
      * const my_apiKey = "Token <put your api key here>";
      * const service = new SoffosServices.AnswerScoringService({apiKey:my_apiKey});

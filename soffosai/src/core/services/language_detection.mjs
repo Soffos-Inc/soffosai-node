@@ -24,7 +24,7 @@ class LanguageDetectionService extends SoffosAIService {
      * language - string<br>
      * The language code of the detected language. <br>
      * @example
-     * import { SoffosServices } from "soffosai";
+     * import { SoffosServices } from "soffosai-node";
      * 
      * const my_apiKey = "Token <put your api key here>";
      * const service = new SoffosServices.LanguageDetectionService({apiKey:my_apiKey});

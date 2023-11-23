@@ -24,7 +24,7 @@ class MicrolessonService extends SoffosAIService {
      * microlesson - string<br>
      * A concise, structured microlesson containing a summary, key points, learning objectives and tasks. <br>
      * @example
-     * import { SoffosServices } from "soffosai";
+     * import { SoffosServices } from "soffosai-node";
      * 
      * const my_apiKey = "Token <put your api key here>";
      * const service = new SoffosServices.MicrolessonService({apiKey:my_apiKey});

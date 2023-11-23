@@ -33,7 +33,7 @@ class TableGeneratorService extends SoffosAIService {
      * table: The table in a raw markdown or CSV formatted string. <br>
      * note: Useful notes for table interpretation.<br>
      * @example
-     * import { SoffosServices } from "soffosai";
+     * import { SoffosServices } from "soffosai-node";
      * 
      * const my_apiKey = "Token <put your api key here>";
      * const service = new SoffosServices.TableGeneratorService({apiKey:my_apiKey});

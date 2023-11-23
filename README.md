@@ -29,7 +29,7 @@ Join our Discord channel: [SoffosAI](https://discord.gg/Q2yTEuFG2B)
 - To set your API key:
     When you initialize a service, include it on key word arguments:
     ```
-    import { SoffosServices } from "soffosai";
+    import { SoffosServices } from "soffosai-node";
 
     let service = new SoffosServices.AmbiguityDetectionService({apiKey: my_apiKey});
     ```
@@ -95,7 +95,7 @@ Here is the list of SoffosAIService Subclasses:
 - Syntax:
 ```
 // Import the Soffos Service you need
-import { SoffosServices } from "soffosai";
+import { SoffosServices } from "soffosai-node";
 
 //Instantiate the SoffosAIService that you need:
 let service = new SoffosServices.TagGenerationService({apiKey: my_apiKey});
@@ -149,7 +149,7 @@ console.log(JSON.stringify(response, null, 2));
 To make your Pipeline more maintainable and easy to use, create a subclass:
 ```
 import { SoffosPipeline, InputConfig } from "soffosai";
-import { SoffosServices } from "soffosai";
+import { SoffosServices } from "soffosai-node";
 
 
 /**
@@ -228,7 +228,7 @@ When you are well versed by the output of the Services, you can create a pipelin
 Example:
 ```
 import { SoffosPipeline, InputConfig } from "soffosai"; 
-import { SoffosServices } from "soffosai";
+import { SoffosServices } from "soffosai-node";
 
 
 function get_content(value) {
