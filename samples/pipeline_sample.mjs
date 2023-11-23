@@ -1,4 +1,4 @@
-import { SoffosPipeline, SoffosAIServices } from "soffosai";
+import { SoffosPipeline, SoffosAIServices } from "soffosai-node";
 
 /**
  * The document search service provides "passages" which is a list of contents plus some more description.

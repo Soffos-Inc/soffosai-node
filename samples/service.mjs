@@ -1,4 +1,4 @@
-import { SoffosServices } from "soffosai";
+import { SoffosServices } from "soffosai-node";
 
 
 const service = new SoffosServices.FileConverterService();

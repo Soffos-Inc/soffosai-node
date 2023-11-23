@@ -1,6 +1,6 @@
 // needs React.js or other frontend js library or framework
 // assuming you have a file field with id="my_file" and a button with id="sendFileBtn"
-import { SoffosServices } from 'soffosai'; // will not work if used directly to html. Please use the soffosai.bundle.js if you need to use soffosai directly to html.
+import { SoffosServices } from 'soffosai-node'; // will not work if used directly to html. Please use the soffosai.bundle.js if you need to use soffosai directly to html.
 const my_apiKey = 'Token <put your api key here>';
 
 async function sendFile() {
