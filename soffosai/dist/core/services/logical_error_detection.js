@@ -53,7 +53,7 @@ var LogicalErrorDetectionService = /*#__PURE__*/function (_SoffosAIService) {
    * end: Ending chracter index in the original text.<br>
    * explanation: The reasoning behind why the text span is illogical.<br>
    * @example
-   * import { SoffosServices } from "soffosai";
+   * import { SoffosServices } from "soffosai-node";
    * 
    * const my_apiKey = "Token <put your api key here>";
    * const service = new SoffosServices.LogicalErrorDetectionService({apiKey:my_apiKey});

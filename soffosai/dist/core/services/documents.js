@@ -65,7 +65,7 @@ var DocumentsIngestService = /*#__PURE__*/function (_SoffosAIService) {
    * The unique id of the ingested document. It's crucial to store the document_id in order 
    * to be able to reference this document later on when calling other modules.
    * @example
-   * import { SoffosServices } from "soffosai";
+   * import { SoffosServices } from "soffosai-node";
    * 
    * const my_apiKey = "Token <put your api key here>";
    * 
@@ -218,7 +218,7 @@ var DocumentsSearchService = /*#__PURE__*/function (_SoffosAIService2) {
    * scores: Dictionary containing the matching score of this passage to the query for each method that matched it. <br>
    * meta: Dictionary with the metadata that were provided when the passage's origin document was ingested. <br>
    * @example
-   * import { SoffosServices } from "soffosai";
+   * import { SoffosServices } from "soffosai-node";
    * 
    * const my_apiKey = "Token <put your api key here>";
    * const service = new SoffosServices.DocumentsSearchService({apiKey:my_apiKey});
@@ -363,7 +363,7 @@ var DocumentsDeleteService = /*#__PURE__*/function (_SoffosAIService3) {
    * @returns {Promise<Object>} 
    * success = true if operation succeded
    * @example
-   * import { SoffosServices } from "soffosai";
+   * import { SoffosServices } from "soffosai-node";
    * 
    * const my_apiKey = "Token <put your api key here>";
    * const service = new SoffosServices.DocumentsDeleteService({apiKey:my_apiKey});

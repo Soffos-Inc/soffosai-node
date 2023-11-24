@@ -50,7 +50,7 @@ var ParaphraseService = /*#__PURE__*/function (_SoffosAIService) {
    * @returns {Promise<Object>} 
    * paraphrase
    * @example
-   * import { SoffosServices } from "soffosai";
+   * import { SoffosServices } from "soffosai-node";
    * 
    * const my_apiKey = "Token <put your api key here>";
    * const service = new SoffosServices.ParaphraseService({apiKey:my_apiKey});

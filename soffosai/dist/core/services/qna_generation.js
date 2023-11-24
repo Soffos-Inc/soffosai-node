@@ -60,7 +60,7 @@ var QuestionAndAnswerGenerationService = /*#__PURE__*/function (_SoffosAIService
    * chunks - dictionary list <br>
    * A list of dictionaries representing the chunks as they were split from the original according to the splitting parameters given in the request. Each dictionary contains the fields text, index as well as the span_start and span_end fields which are the starting and ending position of the chunk in the originally provided text.
    * @example
-   * import { SoffosServices } from "soffosai";
+   * import { SoffosServices } from "soffosai-node";
    * 
    * const my_apiKey = "Token <put your api key here>";
    * const service = new SoffosServices.QuestionAndAnswerGenerationService({apiKey:my_apiKey});

@@ -56,7 +56,7 @@ var ProfanityService = /*#__PURE__*/function (_SoffosAIService) {
    * span_start: The starting character index of the profanity in the original text.<br>
    * span_end: The ending character index of the profanity in the original text.<br>
    * @example
-   * import { SoffosServices } from "soffosai";
+   * import { SoffosServices } from "soffosai-node";
    * 
    * const my_apiKey = "Token <put your api key here>";
    * const service = new SoffosServices.ProfanityService({apiKey:my_apiKey});

@@ -56,7 +56,7 @@ var ReviewTaggerService = /*#__PURE__*/function (_SoffosAIService) {
    * fault - string <br>
    * The fault (or strength) of the object, e.g. "loose" or "broken". <br>
    * @example
-   * import { SoffosServices } from "soffosai";
+   * import { SoffosServices } from "soffosai-node";
    * 
    * const my_apiKey = "Token <put your api key here>";
    * const service = new SoffosServices.ReviewTaggerService({apiKey:my_apiKey});

@@ -53,7 +53,7 @@ var LetsDiscussCreateService = /*#__PURE__*/function (_SoffosAIService) {
    * session_id - string
    * The unique id of the conversation session. It's crucial to store the session_id in order to make queries.
    * @example
-   * import { SoffosServices } from "soffosai";
+   * import { SoffosServices } from "soffosai-node";
    * 
    * const my_apiKey = "Token <put your api key here>";
    * const service = new SoffosServices.LetsDiscussCreateService({apiKey:my_apiKey});
@@ -136,7 +136,7 @@ var LetsDiscussService = /*#__PURE__*/function (_SoffosAIService2) {
    * A list of dictionaries representing all the messages exchanged between the user and the system for the specific session. The messages are sorted in chronological order. <br>
    * Each dictionary contains the following fields: text: The message. source: The source of the message, which is either the user or Soffos.
    * @example
-   * import { SoffosServices } from "soffosai";
+   * import { SoffosServices } from "soffosai-node";
    * 
    * const my_apiKey = "Token <put your api key here>";
    * const service = new SoffosServices.LetsDiscussService({apiKey:my_apiKey});
@@ -245,7 +245,7 @@ var LetsDiscussRetrieveService = /*#__PURE__*/function (_SoffosAIService3) {
    * session_id: Session's ID. <br>
    * messages: If return_messages is true, this list will contain a list of dictionaries representing the interactions between the system and the user. Each dictionary contains the user's query, the system's response and the interaction's ID as message_id, which is an integer indicating their order.
    * @example
-   * import { SoffosServices } from "soffosai";
+   * import { SoffosServices } from "soffosai-node";
    * 
    * const my_apiKey = "Token <put your api key here>";
    * const service = new SoffosServices.LetsDiscussRetrieveService({apiKey:my_apiKey});
@@ -334,7 +334,7 @@ var LetsDiscussDeleteService = /*#__PURE__*/function (_SoffosAIService4) {
    * success - boolean <br>
    * Indicates whether the sessions have been successfuly deleted.
    * @example
-   * import { SoffosServices } from "soffosai";
+   * import { SoffosServices } from "soffosai-node";
    * 
    * const my_apiKey = "Token <put your api key here>";
    * const service = new SoffosServices.LetsDiscussDeleteService({apiKey:my_apiKey});

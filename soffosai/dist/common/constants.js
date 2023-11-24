@@ -5,7 +5,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.ServiceString = exports.SOFFOS_SERVICE_URL = exports.SERVICES_LIST = exports.FORM_DATA_REQUIRED = void 0;
 var SOFFOS_SERVICE_URL = "https://api.soffos.ai/service/";
-// const SOFFOS_SERVICE_URL = "http://localhost:8000/service/";
 exports.SOFFOS_SERVICE_URL = SOFFOS_SERVICE_URL;
 var SERVICES_LIST = ['answer-scoring', 'audio-converter', 'chatbot/create', 'chatbot', 'chatbot/get', 'chatbot/delete', 'chatbot/sessions/get', 'chatbot/sessions/delete', 'discuss/create', 'discuss', 'discuss/count', 'discuss/delete', 'documents/ingest', 'documents/delete', 'documents/search', 'email-analysis', 'emotion-detection', 'file-converter', 'flashcard-generation', 'intent-classification/confirmation', 'intent-classification', 'language-detection', 'logical-error-detection', 'microlesson', 'ner', 'paraphrase', 'profanity', 'qna-generation', 'question-answering', 'review-tagger', 'search-recommendations', 'sentiment-analysis', 'simplify', 'string-similarity', 'summarization', 'table-generator', 'tag', 'transcript-correction', 'website-converter', 'batch-service'];
 exports.SERVICES_LIST = SERVICES_LIST;

@@ -52,7 +52,7 @@ var TranscriptCorrectionService = /*#__PURE__*/function (_SoffosAIService) {
    * correction - string<br>
    * Corrected text. <br>
    * @example
-   * import { SoffosServices } from "soffosai";
+   * import { SoffosServices } from "soffosai-node";
    * 
    * const my_apiKey = "Token <put your api key here>";
    * const service = new SoffosServices.TranscriptCorrectionService({apiKey:my_apiKey});

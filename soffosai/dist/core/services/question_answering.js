@@ -80,7 +80,7 @@ var QuestionAnsweringService = /*#__PURE__*/function (_SoffosAIService) {
    * span: A list with the start and end character index of the sentence within context.
    * sentence: The sentence text.<br>
    * @example
-   * import { SoffosServices } from "soffosai";
+   * import { SoffosServices } from "soffosai-node";
    * 
    * const my_apiKey = "Token <put your api key here>";
    * const service = new SoffosServices.QuestionAnsweringService({apiKey:my_apiKey});
