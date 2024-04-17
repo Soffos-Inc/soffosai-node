@@ -1,7 +1,7 @@
-import { SoffosServices } from "soffosai-node";
+import { SoffosServices, SoffosConfig } from "soffosai-node";
 
 const my_apiKey = "Token <put your api key here>";
-
+SoffosConfig.apiKey = my_apiKey;
 let service = new SoffosServices.ImageAnalysisService();
 let output = await service.call(
     "franco",
