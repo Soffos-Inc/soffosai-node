@@ -31,12 +31,13 @@ var EmotionDetectionIO = /*#__PURE__*/function (_ServiceIO) {
     _this = _super.call(this);
     _this.service = _constants.ServiceString.EMOTION_DETECTION;
     _this.required_input_fields = ["text"];
-    _this.optional_input_fields = ["sentence_split", "sentence_overlap", "emotion_choices"];
+    _this.optional_input_fields = ["sentence_split", "sentence_overlap", "emotion_choices", "engine"];
     _this.input_structure = {
       "sentence_split": "number",
       "sentence_overlap": 'boolean',
       "text": "string",
-      "emotion_choices": 'array'
+      "emotion_choices": 'array',
+      "engine": "string"
     };
     _this.output_structure = {
       "spans": [{

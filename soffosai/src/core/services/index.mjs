@@ -1,4 +1,5 @@
 import AnswerScoringService from './answer_scoring.mjs';
+import AssessmentGeneratorService from './assessment_generator.mjs';
 import AudioConverterService from './audio_converter.mjs';
 import ChatBotCreateService from './chat_bot_create.mjs';
 import ChatBotDeleteUserSessionsService from './chat_bot_delete_user_sessions.mjs';
@@ -10,6 +11,8 @@ import { DocumentsIngestService, DocumentsSearchService, DocumentsDeleteService 
 import EmailAnalysisService from './email_analysis.mjs';
 import EmotionDetectionService from './emotion_detection.mjs';
 import FileConverterService from './file_converter.mjs';
+import ImageAnalysisService from './image_analysis.mjs';
+import ImageGenerationService from './image_generation.mjs';
 import LanguageDetectionService from './language_detection.mjs';
 import {
     LetsDiscussCreateService,
@@ -19,6 +22,7 @@ import {
 } from './lets_discuss.mjs';
 import LogicalErrorDetectionService from './logical_error_detection.mjs';
 import MicrolessonService from './microlesson.mjs';
+import MultipleChoiceQnAGeneratorService from './multiple_choice_qn_a_generator.mjs';
 import NamedEntityRecognitionService from './named_entity_recognition.mjs';
 import ParaphraseService from './paraphrase.mjs';
 import ProfanityService from './profanity.mjs';
@@ -38,6 +42,7 @@ import {InputConfig, createInputConfig} from './input_config.mjs';
 
 export {
     AnswerScoringService,
+    AssessmentGeneratorService,
     AudioConverterService,
     ChatBotCreateService,
     ChatBotDeleteUserSessionsService,
@@ -50,6 +55,8 @@ export {
     DocumentsDeleteService,
     EmailAnalysisService,
     EmotionDetectionService,
+    ImageAnalysisService,
+    ImageGenerationService,
     FileConverterService,
     LanguageDetectionService,
     LetsDiscussCreateService,
@@ -58,6 +65,7 @@ export {
     LetsDiscussDeleteService,
     LogicalErrorDetectionService,
     MicrolessonService,
+    MultipleChoiceQnAGeneratorService,
     NamedEntityRecognitionService,
     ParaphraseService,
     ProfanityService,

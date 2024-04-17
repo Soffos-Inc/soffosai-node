@@ -9,6 +9,12 @@ Object.defineProperty(exports, "AnswerScoringService", {
     return _answer_scoring["default"];
   }
 });
+Object.defineProperty(exports, "AssessmentGeneratorService", {
+  enumerable: true,
+  get: function get() {
+    return _assessment_generator["default"];
+  }
+});
 Object.defineProperty(exports, "AudioConverterService", {
   enumerable: true,
   get: function get() {
@@ -87,6 +93,18 @@ Object.defineProperty(exports, "FileConverterService", {
     return _file_converter["default"];
   }
 });
+Object.defineProperty(exports, "ImageAnalysisService", {
+  enumerable: true,
+  get: function get() {
+    return _image_analysis["default"];
+  }
+});
+Object.defineProperty(exports, "ImageGenerationService", {
+  enumerable: true,
+  get: function get() {
+    return _image_generation["default"];
+  }
+});
 Object.defineProperty(exports, "InputConfig", {
   enumerable: true,
   get: function get() {
@@ -133,6 +151,12 @@ Object.defineProperty(exports, "MicrolessonService", {
   enumerable: true,
   get: function get() {
     return _microlesson["default"];
+  }
+});
+Object.defineProperty(exports, "MultipleChoiceQnAGeneratorService", {
+  enumerable: true,
+  get: function get() {
+    return _multiple_choice_qn_a_generator["default"];
   }
 });
 Object.defineProperty(exports, "NamedEntityRecognitionService", {
@@ -226,6 +250,7 @@ Object.defineProperty(exports, "createInputConfig", {
   }
 });
 var _answer_scoring = _interopRequireDefault(require("./answer_scoring.js"));
+var _assessment_generator = _interopRequireDefault(require("./assessment_generator.js"));
 var _audio_converter = _interopRequireDefault(require("./audio_converter.js"));
 var _chat_bot_create = _interopRequireDefault(require("./chat_bot_create.js"));
 var _chat_bot_delete_user_sessions = _interopRequireDefault(require("./chat_bot_delete_user_sessions.js"));
@@ -237,10 +262,13 @@ var _documents = require("./documents.js");
 var _email_analysis = _interopRequireDefault(require("./email_analysis.js"));
 var _emotion_detection = _interopRequireDefault(require("./emotion_detection.js"));
 var _file_converter = _interopRequireDefault(require("./file_converter.js"));
+var _image_analysis = _interopRequireDefault(require("./image_analysis.js"));
+var _image_generation = _interopRequireDefault(require("./image_generation.js"));
 var _language_detection = _interopRequireDefault(require("./language_detection.js"));
 var _lets_discuss = require("./lets_discuss.js");
 var _logical_error_detection = _interopRequireDefault(require("./logical_error_detection.js"));
 var _microlesson = _interopRequireDefault(require("./microlesson.js"));
+var _multiple_choice_qn_a_generator = _interopRequireDefault(require("./multiple_choice_qn_a_generator.js"));
 var _named_entity_recognition = _interopRequireDefault(require("./named_entity_recognition.js"));
 var _paraphrase = _interopRequireDefault(require("./paraphrase.js"));
 var _profanity = _interopRequireDefault(require("./profanity.js"));

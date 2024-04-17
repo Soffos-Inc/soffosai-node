@@ -29,12 +29,13 @@ var TagGenerationIO = /*#__PURE__*/function (_ServiceIO) {
     _this = _super.call(this);
     _this.service = _constants.ServiceString.TAG_GENERATION;
     _this.required_input_fields = ["text"];
-    _this.optional_input_fields = ["types", "n"];
+    _this.optional_input_fields = ["types", "n", "engine"];
     _this.input_structure = {
       "text": "string",
       "types": ["string", "string", "string"],
       // can only take a subset of ["topic", "domain", "audience", "entity"]
-      "n": "number"
+      "n": "number",
+      "engine": "string"
     };
     _this.output_structure = {
       "tags": {

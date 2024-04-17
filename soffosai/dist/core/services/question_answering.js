@@ -61,6 +61,7 @@ var QuestionAnsweringService = /*#__PURE__*/function (_SoffosAIService) {
    * @param {string} [generic_responses=false] - In addition to checking for ambiguity or query type, this module performs other checks such as profanity, language, etc.. If the input query fails in one of these checks, it will reject the query by responding with a message that points out the issue.
    * When true, the module will respond with a generic message without giving the reason as to why the message was rejected, which is the same behavior as when it cannot find an answer to the query in the provided context.
    * @param {Object.<string, string>} meta
+   * @param {string} [engine=null] - The LLM engine to be used.
    * @returns {Promise<Object>} 
    * answer - string<br>
    * The answer to the query. In cases where the query failed a check, and depending on the above explained parameters, this will be a message that indicates that an answer could not be retrieved. <br>
@@ -129,6 +130,7 @@ var QuestionAnsweringService = /*#__PURE__*/function (_SoffosAIService) {
       var check_query_type = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : true;
       var generic_responses = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : false;
       var meta = arguments.length > 7 && arguments[7] !== undefined ? arguments[7] : undefined;
+      var engine = arguments.length > 8 && arguments[8] !== undefined ? arguments[8] : null;
       var payload = {
         "user": user,
         "question": question,
@@ -139,6 +141,7 @@ var QuestionAnsweringService = /*#__PURE__*/function (_SoffosAIService) {
       if (document_text) payload.document_text = document_text;
       if (document_ids) payload.document_ids = document_ids;
       if (meta) payload.meta = meta;
+      if (engine) payload.engine = engine;
       payload['message'] = question;
       return _get(_getPrototypeOf(QuestionAnsweringService.prototype), "call", this).call(this, payload);
     }
@@ -159,6 +162,7 @@ var QuestionAnsweringService = /*#__PURE__*/function (_SoffosAIService) {
      * Set to false only when you wish the module to attempt to answer the query regardless of its type or syntactical quality.
      * @param {boolean|InputConfig} generic_responses
      * @param {object|InputConfig} meta
+     * @param {string} [engine=null] - The LLM engine to be used.
      */
   }, {
     key: "setInputConfigs",
@@ -169,6 +173,7 @@ var QuestionAnsweringService = /*#__PURE__*/function (_SoffosAIService) {
       var check_query_type = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : true;
       var generic_responses = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : false;
       var meta = arguments.length > 7 && arguments[7] !== undefined ? arguments[7] : undefined;
+      var engine = arguments.length > 8 && arguments[8] !== undefined ? arguments[8] : null;
       var source = {
         message: question,
         // special handling, message is unclear so question is used
@@ -180,6 +185,7 @@ var QuestionAnsweringService = /*#__PURE__*/function (_SoffosAIService) {
       if (document_text) source.document_text = document_text;
       if (document_ids) source.document_ids = document_ids;
       if (meta) source.meta = meta;
+      if (engine) source.engine = engine;
       return _get(_getPrototypeOf(QuestionAnsweringService.prototype), "setInputConfigs", this).call(this, name, source);
     }
   }]);

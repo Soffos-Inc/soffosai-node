@@ -45,6 +45,7 @@ var EmailAnalysisService = /*#__PURE__*/function (_SoffosAIService) {
    * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
    * the api is an application (app) and that app has users. Soffos API will accept any string.
    * @param {string} text - The e-mail body text.
+   * @param {string} [engine=null] - The LLM engine to be used.
    * @returns {Promise<Object>} 
    * analysis - dictionary<br>
    * A dictionary containing the following key information: <br>
@@ -127,10 +128,12 @@ var EmailAnalysisService = /*#__PURE__*/function (_SoffosAIService) {
   _createClass(EmailAnalysisService, [{
     key: "call",
     value: function call(user, text) {
+      var engine = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
       var payload = {
         "user": user,
         "text": text
       };
+      if (engine) payload.engine = engine;
       return _get(_getPrototypeOf(EmailAnalysisService.prototype), "call", this).call(this, payload);
     }
 
@@ -138,13 +141,16 @@ var EmailAnalysisService = /*#__PURE__*/function (_SoffosAIService) {
      * @param {string} name - Reference name of this Service.
      *  It will be used by the Pipeline to reference this Service.
      * @param {string|InputConfig} text - The e-mail body text.
+     * @param {string} [engine=null] - The LLM engine to be used.
      */
   }, {
     key: "setInputConfigs",
     value: function setInputConfigs(name, text) {
+      var engine = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
       var source = {
         text: text
       };
+      if (engine) source.engine = engine;
       return _get(_getPrototypeOf(EmailAnalysisService.prototype), "setInputConfigs", this).call(this, name, source);
     }
   }]);

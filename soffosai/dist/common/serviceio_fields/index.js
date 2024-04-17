@@ -9,6 +9,12 @@ Object.defineProperty(exports, "AnswerScoringIO", {
     return _answer_scoring_io["default"];
   }
 });
+Object.defineProperty(exports, "AssessmentGeneratorIO", {
+  enumerable: true,
+  get: function get() {
+    return _assessment_generator["default"];
+  }
+});
 Object.defineProperty(exports, "AudioConverterIO", {
   enumerable: true,
   get: function get() {
@@ -87,6 +93,18 @@ Object.defineProperty(exports, "FileConverterIO", {
     return _file_converter_io["default"];
   }
 });
+Object.defineProperty(exports, "ImageAnalysisIO", {
+  enumerable: true,
+  get: function get() {
+    return _image_analysis["default"];
+  }
+});
+Object.defineProperty(exports, "ImageGenerationIO", {
+  enumerable: true,
+  get: function get() {
+    return _image_generation["default"];
+  }
+});
 Object.defineProperty(exports, "LanguageDetectionIO", {
   enumerable: true,
   get: function get() {
@@ -127,6 +145,12 @@ Object.defineProperty(exports, "MicrolessonIO", {
   enumerable: true,
   get: function get() {
     return _microlesson_io["default"];
+  }
+});
+Object.defineProperty(exports, "MultipleChoiceQnAGeneratorIO", {
+  enumerable: true,
+  get: function get() {
+    return _multiple_choice_qn_a_generator["default"];
   }
 });
 Object.defineProperty(exports, "NamedEntityRecognitionIO", {
@@ -215,6 +239,7 @@ Object.defineProperty(exports, "WebsiteConverterIO", {
 });
 var _service_io = _interopRequireDefault(require("./service_io.js"));
 var _answer_scoring_io = _interopRequireDefault(require("./answer_scoring_io.js"));
+var _assessment_generator = _interopRequireDefault(require("./assessment_generator.js"));
 var _audio_converter = _interopRequireDefault(require("./audio_converter.js"));
 var _chat_bot_create = _interopRequireDefault(require("./chat_bot_create.js"));
 var _chat_bot_delete_user_sessions = _interopRequireDefault(require("./chat_bot_delete_user_sessions.js"));
@@ -225,11 +250,14 @@ var _chat_bots_get = _interopRequireDefault(require("./chat_bots_get.js"));
 var _documents_io = require("./documents_io.js");
 var _email_analysis_io = _interopRequireDefault(require("./email_analysis_io.js"));
 var _emotion_detection_io = _interopRequireDefault(require("./emotion_detection_io.js"));
+var _image_analysis = _interopRequireDefault(require("./image_analysis.js"));
+var _image_generation = _interopRequireDefault(require("./image_generation.js"));
 var _file_converter_io = _interopRequireDefault(require("./file_converter_io.js"));
 var _language_detection_io = _interopRequireDefault(require("./language_detection_io.js"));
 var _lets_discuss_io = require("./lets_discuss_io.js");
 var _logical_error_detection_io = _interopRequireDefault(require("./logical_error_detection_io.js"));
 var _microlesson_io = _interopRequireDefault(require("./microlesson_io.js"));
+var _multiple_choice_qn_a_generator = _interopRequireDefault(require("./multiple_choice_qn_a_generator.js"));
 var _named_entity_recognition_io = _interopRequireDefault(require("./named_entity_recognition_io.js"));
 var _paraphrase_io = _interopRequireDefault(require("./paraphrase_io.js"));
 var _simplify_io = _interopRequireDefault(require("./simplify_io.js"));

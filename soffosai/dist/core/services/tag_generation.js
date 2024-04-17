@@ -53,6 +53,7 @@ var TagGenerationService = /*#__PURE__*/function (_SoffosAIService) {
    * audience: Tags relating to the type of audience the text is intended for.
    * entity: Entities such as people, places, products, etc. mentioned in the text.
    * @param {number} [n=10] - The number of tags to be generated for each of the specified tag types.
+   * @param {string} [engine=null] - The LLM engine to be used.
    * @returns {Promise<Object>} 
    * tags - dictionary dictionary<br>
    * A dictionary containing the tags grouped by the type of tag. A confidence score is provided also for each tag. <br>
@@ -146,6 +147,7 @@ var TagGenerationService = /*#__PURE__*/function (_SoffosAIService) {
     value: function call(user, text) {
       var types = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : ["topic"];
       var n = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 10;
+      var engine = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
       /*
           Note: List of types of keywords to extract. Supported types:
             topic: Tags relating to the subject matter of the text. 
@@ -166,6 +168,7 @@ var TagGenerationService = /*#__PURE__*/function (_SoffosAIService) {
         "types": types,
         "n": n
       };
+      if (engine) payload.engine = engine;
       return _get(_getPrototypeOf(TagGenerationService.prototype), "call", this).call(this, payload);
     }
 
@@ -179,17 +182,20 @@ var TagGenerationService = /*#__PURE__*/function (_SoffosAIService) {
      * audience: Tags relating to the type of audience the text is intended for.
      * entity: Entities such as people, places, products, etc. mentioned in the text.
      * @param {number|InputConfig} n - The number of tags to be generated for each of the specified tag types.
+     * @param {string} [engine=null] - The LLM engine to be used.
      */
   }, {
     key: "setInputConfigs",
     value: function setInputConfigs(name, text) {
       var types = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : ["topic"];
       var n = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 10;
+      var engine = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
       var source = {
         text: text,
         types: types,
         n: n
       };
+      if (engine) source.engine = engine;
       return _get(_getPrototypeOf(TagGenerationService.prototype), "setInputConfigs", this).call(this, name, source);
     }
   }]);

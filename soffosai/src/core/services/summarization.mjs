@@ -26,6 +26,7 @@ class SummarizationService extends SoffosAIService {
      * the api is an application (app) and that app has users. Soffos API will accept any string.
      * @param {string} text - Text to be summarized.
      * @param {number} sent_length - The desired sentence length of the summary. The service will respond with a 403 error if the value is larger than the number of sentences in the text.
+     * @param {string} [engine=null] - The LLM engine to be used.
      * @returns {Promise<Object>} 
      * summary - string<br>
      * The summary. <br>
@@ -57,12 +58,13 @@ class SummarizationService extends SoffosAIService {
      * //     "unit_price": "0.000050"
      * // }
      */
-    call(user, text, sent_length) {
+    call(user, text, sent_length, engine=null) {
       let payload = {
         "user": user,
         "text": text,
         "sent_length": sent_length
       };
+      if (engine) payload.engine = engine;
       return super.call(payload);
     }
 
@@ -71,12 +73,14 @@ class SummarizationService extends SoffosAIService {
      *  It will be used by the Pipeline to reference this Service.
      * @param {string|InputConfig} text - Text to be summarized.
      * @param {number|InputConfig} sent_length - The desired sentence length of the summary. The service will respond with a 403 error if the value is larger than the number of sentences in the text.
+     * @param {string} [engine=null] - The LLM engine to be used.
      */
-    setInputConfigs(name, text, sent_length) {
+    setInputConfigs(name, text, sent_length, engine=null) {
       let source = {
         text: text,
         sent_length: sent_length
       };
+      if (engine) source.engine = engine;
       
       return super.setInputConfigs(name, source);
     }

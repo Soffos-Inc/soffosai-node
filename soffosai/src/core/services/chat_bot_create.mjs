@@ -64,7 +64,7 @@ class ChatBotCreateService extends SoffosAIService {
         "role": role,
         "chatbot_name": chatbot_name
       };
-      if (chatbot_id) payload.chatbot_id = chatbot_id;
+      if (chatbot_id) source.chatbot_id = chatbot_id;
       return super.setInputConfigs(name, source);
     }
 }

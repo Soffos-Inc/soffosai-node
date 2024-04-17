@@ -53,7 +53,7 @@ class ChatBotGetUserSessionsService extends SoffosAIService {
         "chatbot_id": chatbot_id,
         "user_id": user_id
       };
-      if (session_ids) payload.session_ids = session_ids;
+      if (session_ids) source.session_ids = session_ids;
       return super.setInputConfigs(name, source);
     }
 }

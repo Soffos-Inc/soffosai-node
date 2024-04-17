@@ -25,7 +25,8 @@ class TableGeneratorService extends SoffosAIService {
      * the api is an application (app) and that app has users. Soffos API will accept any string.
      * @param {string} text - Text to extract tables from.
      * @param {string} [table_format="markdown"] - A string indicating the table output format.
-     * Formats supported:
+     * Formats supported: "markdown", "csv"
+     * @param {string} [engine=null] - The LLM engine to be used.
      * @returns {Promise<Object>} 
      * tables - dictionary list<br>
      * A list of dictionaries representing tables. Each dictionary contains the following fields: <br>
@@ -66,7 +67,7 @@ class TableGeneratorService extends SoffosAIService {
      * //     "unit_price": "0.000050"
      * // }
      */
-    call(user, text, table_format='markdown') {
+    call(user, text, table_format='markdown', engine=null) {
       if (!TABLE_FORMATS.includes(table_format)){
         throw new Error(`${table_format} is not a supported format. Please choose from ${TABLE_FORMATS}.`)
       }
@@ -75,6 +76,7 @@ class TableGeneratorService extends SoffosAIService {
         "text": text,
         "table_format": table_format
       };
+      if (engine) payload.engine = engine;
       return super.call(payload);
     }
 
@@ -84,12 +86,14 @@ class TableGeneratorService extends SoffosAIService {
      * @param {string|InputConfig} text - Text to extract tables from.
      * @param {string|InputConfig} [table_format='markdown'] - A string indicating the table output format.
      * Formats supported: "CSV", 'markdown'
+     * @param {string} [engine=null] - The LLM engine to be used.
      */
-    setInputConfigs(name, text, table_format='markdown') {
+    setInputConfigs(name, text, table_format='markdown', engine=null) {
       let source = {
         text: text,
         table_format: table_format
       };
+      if (engine) source.engine = engine;
       
       return super.setInputConfigs(name, source);
     }

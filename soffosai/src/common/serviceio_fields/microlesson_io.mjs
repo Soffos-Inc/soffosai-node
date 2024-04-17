@@ -6,6 +6,7 @@ class MicrolessonIO extends ServiceIO {
     super();
     this.service = ServiceString.MICROLESSON;
     this.required_input_fields = ["content"];
+    this.optional_input_fields = ["engine"];
     this.input_structure = {
       "content": [
         {
@@ -13,7 +14,8 @@ class MicrolessonIO extends ServiceIO {
           "text": "string"
         }
       ],
-      "user": "string"
+      "user": "string", 
+      "engine": "string"
     };
     this.output_structure = {
       "microlesson": "string"

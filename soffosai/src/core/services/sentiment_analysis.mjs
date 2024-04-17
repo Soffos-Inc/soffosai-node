@@ -26,6 +26,7 @@ class SentimentAnalysisService extends SoffosAIService {
      * @param {boolean} [sentence_overlap=false] - Whether to overlap adjacent chunks by 1 sentence.
      * For example, with sentence_split 3 and sentence_overlap=true :
      * [[s1, s2, s3], [s3, s4, s5], [s5, s6, s7]]
+     * @param {string} [engine=null] - The LLM engine to be used.
      * @returns {Promise<Object>} 
      * sentiment_breakdown - dictionary list <br>
      * A list of dictionaries representing the score of each segment of text. Each dictionary contains the following fields: <br>
@@ -75,13 +76,14 @@ class SentimentAnalysisService extends SoffosAIService {
      * //     "unit_price": "0.000050"
      * // }
      */
-    call(user, text, sentence_split=4, sentence_overlap=false) {
+    call(user, text, sentence_split=4, sentence_overlap=false, engine=null) {
       let payload = {
         "user": user,
         "text": text,
         "sentence_split": sentence_split,
         "sentence_overlap": sentence_overlap
       };
+      if (engine) payload.engine = engine;
      return super.call(payload);
     }
 
@@ -93,13 +95,15 @@ class SentimentAnalysisService extends SoffosAIService {
      * @param {boolean|InputConfig} [sentence_overlap=false] - Whether to overlap adjacent chunks by 1 sentence.
      * For example, with sentence_split 3 and sentence_overlap=true :
      * [[s1, s2, s3], [s3, s4, s5], [s5, s6, s7]]
+     * @param {string} [engine=null] - The LLM engine to be used.
      */
-    setInputConfigs(name, text, sentence_split=4, sentence_overlap=false) {
+    setInputConfigs(name, text, sentence_split=4, sentence_overlap=false, engine=null) {
       let source = {
         text: text,
         sentence_split: sentence_split,
         sentence_overlap: sentence_overlap
       };
+      if (engine) source.engine = engine;
       
       return super.InputConfig(name, source);
     }

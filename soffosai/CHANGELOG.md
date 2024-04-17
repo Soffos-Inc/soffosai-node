@@ -2,6 +2,13 @@
 ## Notice:
 To all who installed soffosai package lower than 0.0.4, please reinstall/update your package.
 
+## 0.2.9
+- Strict LLM Selection Feature
+- AssessmentGeneratorService
+- ImageGenerationService
+- ImageAnalysisService
+- MultipleChoiceQnAGeneratorService
+
 ## 0.2.8
 - bugfix: samples
 

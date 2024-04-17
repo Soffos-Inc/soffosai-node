@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: services/multiple_choice_qn_a_generator.mjs</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: services/multiple_choice_qn_a_generator.mjs</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { SoffosAIService } from './service.mjs';
+import { ServiceString } from '../../common/constants.mjs';
+import { MultipleChoiceQnAGeneratorIO } from '../../common/serviceio_fields/index.mjs';
+import { InputConfig } from './input_config.mjs';
+
+
+/**
+ * Accepts a context and generates Multiple-Choice Question and Answer sets
+ * @class
+ * @alias SoffosServices.MultipleChoiceQnAGeneratorService
+ */
+class MultipleChoiceQnAGeneratorService extends SoffosAIService {
+    constructor(kwargs = {}) {
+      const service = ServiceString.MULTIPLE_CHOICE_QN_A_GENERATOR;
+      super(service, kwargs);
+      this._serviceio = new MultipleChoiceQnAGeneratorIO();
+    }
+  
+    /**
+     * @param {string} user - The ID of the user accessing the Soffos API.
+     * This string will be used for throttling and profanity tracking.
+     * Soffos assumes that the owner of the api is an application (app) and that app has users.
+     * Soffos API will accept any string."
+     * @param {string} context - the prompt to be sent to the LLM
+     * @param {number} num_questions - the location of the image to be processed
+     * @param {number} num_choices - the location of the image to be processed
+     * @param {string} [engine=null] - The LLM engine to be used.
+     * @returns {Promise&lt;Object>} 
+     * qna_sets - The question and answer sets
+     * @example
+     * Examples are available at "https://github.com/Soffos-Inc/soffosai-js/tree/master/samples"
+     */
+    call(user, context, num_questions, num_choices, engine=null) {
+      let payload = {
+        "user": user,
+        "context": context,
+        "num_questions": num_questions,
+        "num_choices": num_choices
+      };
+      if (engine) payload.engine = engine;
+
+      return super.call(payload);
+    }
+
+
+    /**
+     * @param {string} name - Reference name of this Service.
+     *  It will be used by the Pipeline to reference this Service.
+     * @param {(string|InputConfig)} context - the prompt to be sent to the LLM
+     * @param {(number|InputConfig)} num_questions - the location of the image to be processed
+     * @param {(number|InputConfig)} num_choices - the location of the image to be processed
+     * @param {(string|InputConfig)} [engine=null] - The LLM engine to be used.
+     */
+    setInputConfigs(name, context, num_questions, num_choices, engine=null) {
+      let source = {
+        "context": context,
+        "num_questions": num_questions,
+        "num_choices": num_choices
+      };
+      if (engine) source.engine = engine;
+      return super.setInputConfigs(name, source);
+    }
+}
+
+export default MultipleChoiceQnAGeneratorService</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="SoffosServices.AnswerScoringService.html">AnswerScoringService</a></li><li><a href="SoffosServices.AssessmentGeneratorService.html">AssessmentGeneratorService</a></li><li><a href="SoffosServices.AudioConverterService.html">AudioConverterService</a></li><li><a href="SoffosServices.ChatBotCreateService.html">ChatBotCreateService</a></li><li><a href="SoffosServices.ChatBotDeleteUserSessionsService.html">ChatBotDeleteUserSessionsService</a></li><li><a href="SoffosServices.ChatBotGetUserSessionsService.html">ChatBotGetUserSessionsService</a></li><li><a href="SoffosServices.ChatBotService.html">ChatBotService</a></li><li><a href="SoffosServices.ChatBotsDeleteService.html">ChatBotsDeleteService</a></li><li><a href="SoffosServices.ChatBotsGetService.html">ChatBotsGetService</a></li><li><a href="SoffosServices.DocumentsDeleteService.html">DocumentsDeleteService</a></li><li><a href="SoffosServices.DocumentsIngestService.html">DocumentsIngestService</a></li><li><a href="SoffosServices.DocumentsSearchService.html">DocumentsSearchService</a></li><li><a href="SoffosServices.EmailAnalysisService.html">EmailAnalysisService</a></li><li><a href="SoffosServices.EmotionDetectionService.html">EmotionDetectionService</a></li><li><a href="SoffosServices.FileConverterService.html">FileConverterService</a></li><li><a href="SoffosServices.ImageAnalysisService.html">ImageAnalysisService</a></li><li><a href="SoffosServices.ImageGenerationService.html">ImageGenerationService</a></li><li><a href="SoffosServices.LanguageDetectionService.html">LanguageDetectionService</a></li><li><a href="SoffosServices.LetsDiscussCreateService.html">LetsDiscussCreateService</a></li><li><a href="SoffosServices.LetsDiscussDeleteService.html">LetsDiscussDeleteService</a></li><li><a href="SoffosServices.LetsDiscussRetrieveService.html">LetsDiscussRetrieveService</a></li><li><a href="SoffosServices.LetsDiscussService.html">LetsDiscussService</a></li><li><a href="SoffosServices.LogicalErrorDetectionService.html">LogicalErrorDetectionService</a></li><li><a href="SoffosServices.MicrolessonService.html">MicrolessonService</a></li><li><a href="SoffosServices.MultipleChoiceQnAGeneratorService.html">MultipleChoiceQnAGeneratorService</a></li><li><a href="SoffosServices.NamedEntityRecognitionService.html">NamedEntityRecognitionService</a></li><li><a href="SoffosServices.ParaphraseService.html">ParaphraseService</a></li><li><a href="SoffosServices.ProfanityService.html">ProfanityService</a></li><li><a href="SoffosServices.QuestionAndAnswerGenerationService.html">QuestionAndAnswerGenerationService</a></li><li><a href="SoffosServices.QuestionAnsweringService.html">QuestionAnsweringService</a></li><li><a href="SoffosServices.ReviewTaggerService.html">ReviewTaggerService</a></li><li><a href="SoffosServices.SentimentAnalysisService.html">SentimentAnalysisService</a></li><li><a href="SoffosServices.SimplifyService.html">SimplifyService</a></li><li><a href="SoffosServices.SummarizationService.html">SummarizationService</a></li><li><a href="SoffosServices.TableGeneratorService.html">TableGeneratorService</a></li><li><a href="SoffosServices.TagGenerationService.html">TagGenerationService</a></li><li><a href="SoffosServices.TranscriptCorrectionService.html">TranscriptCorrectionService</a></li><li><a href="SoffosServices.WebsiteConverterService.html">WebsiteConverterService</a></li><li><a href="-_InputConfig.html">_InputConfig</a></li><li><a href="-_SoffosPipelines.AskADocumentPipeline.html">AskADocumentPipeline</a></li><li><a href="-_SoffosPipelines.FileIngestPipeline.html">FileIngestPipeline</a></li></ul><h3>Global</h3><ul><li><a href="global.html#_createInputConfig">_createInputConfig</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Wed Apr 17 2024 19:03:51 GMT+0800 (Philippine Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

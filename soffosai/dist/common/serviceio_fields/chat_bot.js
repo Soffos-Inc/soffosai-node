@@ -29,7 +29,7 @@ var ChatBotIO = /*#__PURE__*/function (_ServiceIO) {
     _this = _super.call(this);
     _this.service = _constants.ServiceString.CHAT_BOT;
     _this.required_input_fields = ["message", "chatbot_id", "user_id", "mode"];
-    _this.optional_input_fields = ["session_id", "previous_messages", "bot_document_ids", "context_document_ids"];
+    _this.optional_input_fields = ["session_id", "previous_messages", "bot_document_ids", "context_document_ids", "engine"];
     _this.input_structure = {
       "session_id": "string",
       "message": "string",
@@ -38,7 +38,8 @@ var ChatBotIO = /*#__PURE__*/function (_ServiceIO) {
       "user_id": "string",
       "mode": "string",
       "bot_document_ids": ['string', 'string'],
-      "context_document_ids": ['string', 'string']
+      "context_document_ids": ['string', 'string'],
+      "engine": "string"
     };
     _this.output_structure = {
       "response": "string",

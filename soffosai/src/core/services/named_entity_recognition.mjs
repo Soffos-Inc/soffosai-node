@@ -23,6 +23,7 @@ class NamedEntityRecognitionService extends SoffosAIService {
      * the api is an application (app) and that app has users. Soffos API will accept any string.
      * @param {string} text - Input text to be analyzed for named entities.
      * @param {Object.<string, string>} [labels] - When providing labels, the module will extract entities that match your labels and descriptions. This gives enough flexibility to deal with any use-case.
+     * @param {string} [engine=null] - The LLM engine to be used.
      * @returns {Promise<Object>}
      * named_entities - dictionary list<br>
      * A list of dictionaries representing identified named entities. Each dictionary contains the following fields: <br>
@@ -105,7 +106,7 @@ class NamedEntityRecognitionService extends SoffosAIService {
      * //     "unit_price": "0.000050"
      * // }
      */
-    call(user, text, labels=undefined) {
+    call(user, text, labels=undefined, engine=null) {
       let payload = {
         "user": user,
         "text": text
@@ -113,7 +114,8 @@ class NamedEntityRecognitionService extends SoffosAIService {
       if (labels) payload.labels = labels;
       if ((labels == undefined) && Object.keys(this.labels).length > 0){
         payload['labels'] = this.labels;
-      }
+      };
+      if (engine) payload.engine = engine;
       return super.call(payload);
     }
 
@@ -131,12 +133,14 @@ class NamedEntityRecognitionService extends SoffosAIService {
      *  It will be used by the Pipeline to reference this Service.
      * @param {string|InputConfig} text - Input text to be analyzed for named entities.
      * @param {Object.<string, string>|InputConfig} labels - When providing labels, the module will extract entities that match your labels and descriptions. This gives enough flexibility to deal with any use-case.
+     * @param {string} [engine=null] - The LLM engine to be used.
      */
-    setInputConfigs(name, text, labels=undefined) {
+    setInputConfigs(name, text, labels=undefined, engine=null) {
       let source = {
         text: text
       };
       if (labels) source.labels = labels;
+      if (engine) source.engine = engine;
       return super.setInputConfigs(name, source);
   }
 }

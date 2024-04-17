@@ -7,7 +7,7 @@ class ChatBotIO extends ServiceIO {
     super();
     this.service = ServiceString.CHAT_BOT;
     this.required_input_fields = ["message","chatbot_id","user_id","mode"];
-    this.optional_input_fields = ["session_id","previous_messages","bot_document_ids","context_document_ids"];
+    this.optional_input_fields = ["session_id","previous_messages","bot_document_ids","context_document_ids","engine"];
     this.input_structure = {
         "session_id": "string", 
         "message": "string", 
@@ -16,7 +16,8 @@ class ChatBotIO extends ServiceIO {
         "user_id": "string", 
         "mode": "string", 
         "bot_document_ids": ['string', 'string'], 
-        "context_document_ids": ['string', 'string']
+        "context_document_ids": ['string', 'string'], 
+        "engine": "string"
     };
     this.output_structure = {
         "response": "string",

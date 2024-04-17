@@ -51,6 +51,7 @@ var SentimentAnalysisService = /*#__PURE__*/function (_SoffosAIService) {
    * @param {boolean} [sentence_overlap=false] - Whether to overlap adjacent chunks by 1 sentence.
    * For example, with sentence_split 3 and sentence_overlap=true :
    * [[s1, s2, s3], [s3, s4, s5], [s5, s6, s7]]
+   * @param {string} [engine=null] - The LLM engine to be used.
    * @returns {Promise<Object>} 
    * sentiment_breakdown - dictionary list <br>
    * A list of dictionaries representing the score of each segment of text. Each dictionary contains the following fields: <br>
@@ -105,12 +106,14 @@ var SentimentAnalysisService = /*#__PURE__*/function (_SoffosAIService) {
     value: function call(user, text) {
       var sentence_split = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 4;
       var sentence_overlap = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
+      var engine = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
       var payload = {
         "user": user,
         "text": text,
         "sentence_split": sentence_split,
         "sentence_overlap": sentence_overlap
       };
+      if (engine) payload.engine = engine;
       return _get(_getPrototypeOf(SentimentAnalysisService.prototype), "call", this).call(this, payload);
     }
 
@@ -122,17 +125,20 @@ var SentimentAnalysisService = /*#__PURE__*/function (_SoffosAIService) {
      * @param {boolean|InputConfig} [sentence_overlap=false] - Whether to overlap adjacent chunks by 1 sentence.
      * For example, with sentence_split 3 and sentence_overlap=true :
      * [[s1, s2, s3], [s3, s4, s5], [s5, s6, s7]]
+     * @param {string} [engine=null] - The LLM engine to be used.
      */
   }, {
     key: "setInputConfigs",
     value: function setInputConfigs(name, text) {
       var sentence_split = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 4;
       var sentence_overlap = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
+      var engine = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
       var source = {
         text: text,
         sentence_split: sentence_split,
         sentence_overlap: sentence_overlap
       };
+      if (engine) source.engine = engine;
       return _get(_getPrototypeOf(SentimentAnalysisService.prototype), "InputConfig", this).call(this, name, source);
     }
   }]);

@@ -6,13 +6,14 @@ Object.defineProperty(exports, "__esModule", {
 exports.ServiceString = exports.SOFFOS_SERVICE_URL = exports.SERVICES_LIST = exports.FORM_DATA_REQUIRED = void 0;
 var SOFFOS_SERVICE_URL = "https://api.soffos.ai/service/";
 exports.SOFFOS_SERVICE_URL = SOFFOS_SERVICE_URL;
-var SERVICES_LIST = ['answer-scoring', 'audio-converter', 'chatbot/create', 'chatbot', 'chatbot/get', 'chatbot/delete', 'chatbot/sessions/get', 'chatbot/sessions/delete', 'discuss/create', 'discuss', 'discuss/count', 'discuss/delete', 'documents/ingest', 'documents/delete', 'documents/search', 'email-analysis', 'emotion-detection', 'file-converter', 'flashcard-generation', 'intent-classification/confirmation', 'intent-classification', 'language-detection', 'logical-error-detection', 'microlesson', 'ner', 'paraphrase', 'profanity', 'qna-generation', 'question-answering', 'review-tagger', 'search-recommendations', 'sentiment-analysis', 'simplify', 'string-similarity', 'summarization', 'table-generator', 'tag', 'transcript-correction', 'website-converter', 'batch-service'];
+var SERVICES_LIST = ['answer-scoring', 'assessment', 'audio-converter', 'chatbot/create', 'chatbot', 'chatbot/get', 'chatbot/delete', 'chatbot/sessions/get', 'chatbot/sessions/delete', 'discuss/create', 'discuss', 'discuss/count', 'discuss/delete', 'documents/ingest', 'documents/delete', 'documents/search', 'email-analysis', 'emotion-detection', 'file-converter', 'flashcard-generation', 'image-analysis', 'image-generation', 'intent-classification/confirmation', 'intent-classification', 'language-detection', 'logical-error-detection', 'microlesson', 'multiple_choice_qna', 'ner', 'paraphrase', 'profanity', 'qna-generation', 'question-answering', 'review-tagger', 'search-recommendations', 'sentiment-analysis', 'simplify', 'string-similarity', 'summarization', 'table-generator', 'tag', 'transcript-correction', 'website-converter', 'batch-service/'];
 exports.SERVICES_LIST = SERVICES_LIST;
 var ServiceString = {
   /*
   Contains the list of Soffos services as attributes
   */
   ANSWER_SCORING: 'answer-scoring',
+  ASSESSMENT_GENERATOR: 'assessment',
   AUDIO_CONVERTER: 'audio-converter',
   CHAT_BOT_CREATE: 'chatbot/create',
   CHAT_BOT: 'chatbot',
@@ -31,10 +32,13 @@ var ServiceString = {
   EMOTION_DETECTION: 'emotion-detection',
   FILE_CONVERTER: 'file-converter',
   FLASHCARD_GENERATION: 'flashcard-generation',
+  IMAGE_ANALYSIS: 'image-analysis',
+  IMAGE_GENERATION: 'image-generation',
   INTENT_CLASSIFICATION: 'intent-classification',
   LANGUAGE_DETECTION: 'language-detection',
   LOGICAL_ERROR_DETECTION: 'logical-error-detection',
   MICROLESSON: 'microlesson',
+  MULTIPLE_CHOICE_QN_A_GENERATOR: 'multiple_choice_qna',
   NER: 'ner',
   PARAPHRASE: 'paraphrase',
   PROFANITY: 'profanity',
@@ -50,7 +54,7 @@ var ServiceString = {
   TAG_GENERATION: 'tag',
   TRANSCRIPTION_CORRECTION: 'transcript-correction',
   WEBSITE_CONVERTER: 'website-converter',
-  BATCH_SERVICE: 'batch-service'
+  BATCH_SERVICE: 'batch-service2'
 };
 exports.ServiceString = ServiceString;
 var FORM_DATA_REQUIRED = [ServiceString.FILE_CONVERTER, ServiceString.AUDIO_CONVERTER];

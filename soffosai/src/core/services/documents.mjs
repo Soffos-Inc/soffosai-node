@@ -253,7 +253,7 @@ class DocumentsSearchService extends SoffosAIService {
      * the default operation. If no comparison operator is specified, "$eq" 
      * (or "$in" if the comparison value is a list) is used as the default operation.
      * @param {Array.<string>|InputConfig} [document_ids] - Passing document IDs will confine the search to those documents.
-     * @param {number|InputConfig} [top_n_keywords] - The number of document passages to be retrieved using 
+     * @param {number|InputConfig} [top_n_keywords=5] - The number of document passages to be retrieved using 
      * keyword search. The relevancy is calculated algorithmically based on the frequency of the 
      * query words in the ingested passages. Setting this to 0 disables the keyword search. 
      * When query is left null while top_n_keywords is larger than 0, it will simply filter 

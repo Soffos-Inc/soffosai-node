@@ -56,6 +56,7 @@ var EmotionDetectionService = /*#__PURE__*/function (_SoffosAIService) {
    * For example, with sentence_split 3 and sentence_overlap=true :
    * [[s1, s2, s3], [s3, s4, s5], [s5, s6, s7]]
    * @param {Array.<string>} [emotion_choices] - List of emotions to detect in the text. If the field is not provided in the payload, or set as null or empty list, it will default to all emotion choices. Currently supported emotions are listed above in the default emotion values.
+   * @param {string} [engine=null] - The LLM engine to be used.
    * @returns {Promise<Object>} 
    * spans - dictionary list<br>
    * A list of spans resulting from the specified chunking parameters. Each span contains the following fields: <br>
@@ -98,6 +99,7 @@ var EmotionDetectionService = /*#__PURE__*/function (_SoffosAIService) {
       var sentence_split = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 4;
       var sentence_overlap = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
       var emotion_choices = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : _EMOTION_LIST;
+      var engine = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : null;
       var _iterator = _createForOfIteratorHelper(emotion_choices),
         _step;
       try {
@@ -119,6 +121,7 @@ var EmotionDetectionService = /*#__PURE__*/function (_SoffosAIService) {
         "sentence_overlap": sentence_overlap,
         "emotion_choices": emotion_choices
       };
+      if (engine) payload.engine = engine;
       return _get(_getPrototypeOf(EmotionDetectionService.prototype), "call", this).call(this, payload);
     }
 
@@ -131,6 +134,7 @@ var EmotionDetectionService = /*#__PURE__*/function (_SoffosAIService) {
      * For example, with sentence_split 3 and sentence_overlap=true :
      * [[s1, s2, s3], [s3, s4, s5], [s5, s6, s7]]
      * @param {Array.<string>|InputConfig} [emotion_choices=_EMOTION_LIST] - List of emotions to detect in the text. If the field is not provided in the payload, or set as null or empty list, it will default to all emotion choices. Currently supported emotions are listed above in the default emotion values.
+     * @param {string} [engine=null] - The LLM engine to be used.
      */
   }, {
     key: "setInputConfigs",
@@ -138,12 +142,14 @@ var EmotionDetectionService = /*#__PURE__*/function (_SoffosAIService) {
       var sentence_split = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 4;
       var sentence_overlap = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
       var emotion_choices = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : _EMOTION_LIST;
+      var engine = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : null;
       var source = {
         text: text,
         sentence_split: sentence_split,
         sentence_overlap: sentence_overlap,
         emotion_choices: emotion_choices
       };
+      if (engine) source.engine = engine;
       return _get(_getPrototypeOf(EmotionDetectionService.prototype), "setInputConfigs", this).call(this, name, source);
     }
   }]);

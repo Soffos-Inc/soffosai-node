@@ -22,6 +22,7 @@ class ParaphraseService extends SoffosAIService {
      * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
      * the api is an application (app) and that app has users. Soffos API will accept any string.
      * @param {string} text - Text to be paraphrased/simplified.
+     * @param {string} [engine=null] - The LLM engine to be used.
      * @returns {Promise<Object>} 
      * paraphrase
      * @example
@@ -48,11 +49,12 @@ class ParaphraseService extends SoffosAIService {
      * //     "unit_price": "0.000050"
      * // }
      */
-    call(user, text) {
+    call(user, text, engine=null) {
       let payload = {
         "user": user,
         "text": text,
       };
+      if (engine) payload.engine = engine;
       return super.call(payload);
     }
 
@@ -60,11 +62,13 @@ class ParaphraseService extends SoffosAIService {
      * @param {string} name - Reference name of this Service.
      *  It will be used by the Pipeline to reference this Service.
      * @param {string|InputConfig} text - Text to be paraphrased/simplified.
+     * @param {string} [engine=null] - The LLM engine to be used.
      */
-    setInputConfigs(name, text) {
+    setInputConfigs(name, text, engine=null) {
       let source = {
         text: text
       };
+      if (engine) source.engine = engine;
       
       return super.setInputConfigs(name, source);
     }

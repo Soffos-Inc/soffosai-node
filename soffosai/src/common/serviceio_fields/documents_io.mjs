@@ -63,22 +63,6 @@ class DocumentSearchIO extends ServiceIO {
     };
   }
 
-  special_validation(payload) {
-    // if (!payload.hasOwnProperty('query')) {
-    //   if (!payload.hasOwnProperty('filters')) {
-    //     return [false, "If query is not provided, please provide 'filters' argument."]
-    //   }
-    // }
-
-    if (payload.hasOwnProperty('top_n_natural_language')) {
-      if (payload.top_n_natural_language > 0 && !payload.hasOwnProperty('query') && !payload.hasOwnProperty("document_ids")) {
-        return [false, "If document_ids are not defined: query is required if top_n_natural_language is defined and is greater than 0."]
-      }
-    }
-
-    return super.special_validation(payload);
-  }
-
 }
 
 class DocumentDeleteIO extends ServiceIO {

@@ -29,8 +29,10 @@ var TranscriptCorrectionIO = /*#__PURE__*/function (_ServiceIO) {
     _this = _super.call(this);
     _this.service = _constants.ServiceString.TRANSCRIPTION_CORRECTION;
     _this.required_input_fields = ["text"];
+    _this.optional_input_fields = ["engine"];
     _this.input_structure = {
-      "text": "string"
+      "text": "string",
+      "engine": "string"
     };
     _this.output_structure = {
       "correction": "string"

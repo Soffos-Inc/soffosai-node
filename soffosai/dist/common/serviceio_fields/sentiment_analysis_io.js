@@ -29,11 +29,12 @@ var SentimentAnalysisIO = /*#__PURE__*/function (_ServiceIO) {
     _this = _super.call(this);
     _this.service = _constants.ServiceString.SENTIMENT_ANALYSIS;
     _this.required_input_fields = ["text"];
-    _this.optional_input_fields = ["sentence_split", "sentence_overlap"];
+    _this.optional_input_fields = ["sentence_split", "sentence_overlap", "engine"];
     _this.input_structure = {
       "text": "string",
       "sentence_split": "number",
-      "sentence_overlap": "boolean"
+      "sentence_overlap": "boolean",
+      "engine": "string"
     };
     _this.output_structure = {
       "sentiment_breakdown": [{

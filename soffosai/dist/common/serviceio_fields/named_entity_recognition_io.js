@@ -29,10 +29,11 @@ var NamedEntityRecognitionIO = /*#__PURE__*/function (_ServiceIO) {
     _this = _super.call(this);
     _this.service = _constants.ServiceString.NER;
     _this.required_input_fields = ["text"];
-    _this.optional_input_fields = ["labels"];
+    _this.optional_input_fields = ["labels", "engine"];
     _this.input_structure = {
       "text": "string",
-      "labels": "object"
+      "labels": "object",
+      "engine": "string"
     };
     _this.output_structure = {
       "named_entities": [{

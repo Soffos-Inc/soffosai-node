@@ -29,12 +29,14 @@ var MicrolessonIO = /*#__PURE__*/function (_ServiceIO) {
     _this = _super.call(this);
     _this.service = _constants.ServiceString.MICROLESSON;
     _this.required_input_fields = ["content"];
+    _this.optional_input_fields = ["engine"];
     _this.input_structure = {
       "content": [{
         "source": "string",
         "text": "string"
       }],
-      "user": "string"
+      "user": "string",
+      "engine": "string"
     };
     _this.output_structure = {
       "microlesson": "string"

@@ -48,18 +48,12 @@ var AudioConverterService = /*#__PURE__*/function (_SoffosAIService) {
    * This string will be used for throttling and profanity tracking.
    * Soffos assumes that the owner of the api is an application (app) and that app has users.
    * Soffos API will accept any string."
-   * @param {(object|string)} [file=null] - The ID of the user accessing the Soffos API.
-   * This string will be used for throttling and profanity tracking.
-   * Soffos assumes that the owner of the api is an application (app) and that app has users.
-   * Soffos API will accept any string."
-   * @param {string} [url=null] - The ID of the user accessing the Soffos API.
-   * This string will be used for throttling and profanity tracking.
-   * Soffos assumes that the owner of the api is an application (app) and that app has users.
-   * Soffos API will accept any string."
-   * @param {string} [model=null] - The ID of the user accessing the Soffos API.
-   * This string will be used for throttling and profanity tracking.
-   * Soffos assumes that the owner of the api is an application (app) and that app has users.
-   * Soffos API will accept any string."
+   * @param {object|string} [file=null] - The audio file to be transcribed.
+   * @param {string} [url=null] - The location of the audio file to be transcribed. Make sure it
+   * can be accessed publicly. If not, include the athentication
+   * strings of the url.
+   * @param {string} [model=null] - The model to be used by the audio converter. Can be 'nova 2' or
+   * 'whisper'. Defaults to 'nova 2'.
    * @returns {Promise<Object>} 
    * number_of_speakers - The number of speakers detected.
    * transcripts - The transcription of the audio file or url.
@@ -86,7 +80,7 @@ var AudioConverterService = /*#__PURE__*/function (_SoffosAIService) {
     /**
      * @param {string} name - Reference name of this Service.
      *  It will be used by the Pipeline to reference this Service.
-     * @param {(ReadableStream|File|string|InputConfig)} [file=null] - The audio file to be transcribed.
+     * @param {(object|string|InputConfig)} [file=null] - The audio file to be transcribed.
      * @param {(string|InputConfig)} [url=null] - The location of the audio file to be transcribed. Make sure it
      * can be accessed publicly. If not, include the athentication
      * strings of the url.
@@ -100,9 +94,9 @@ var AudioConverterService = /*#__PURE__*/function (_SoffosAIService) {
       var url = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
       var model = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
       var source = {};
-      if (file) payload.file = file;
-      if (url) payload.url = url;
-      if (model) payload.model = model;
+      if (file) source.file = file;
+      if (url) source.url = url;
+      if (model) source.model = model;
       return _get(_getPrototypeOf(AudioConverterService.prototype), "setInputConfigs", this).call(this, name, source);
     }
   }]);

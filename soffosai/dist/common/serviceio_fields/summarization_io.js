@@ -29,9 +29,11 @@ var SummarizationIO = /*#__PURE__*/function (_ServiceIO) {
     _this = _super.call(this);
     _this.service = _constants.ServiceString.SUMMARIZATION;
     _this.required_input_fields = ["sent_length", "text"];
+    _this.optional_input_fields = ["engine"];
     _this.input_structure = {
       "sent_length": "number",
-      "text": "string"
+      "text": "string",
+      "engine": "string"
     };
     _this.output_structure = {
       "summary": "string"

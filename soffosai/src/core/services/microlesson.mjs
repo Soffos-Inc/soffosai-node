@@ -20,6 +20,7 @@ class MicrolessonService extends SoffosAIService {
      * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
      * the api is an application (app) and that app has users. Soffos API will accept any string.
      * @param {Array.<object>} content - A list of dictionaries. Each dictionary should contain the source and text fields, where source is the name of the document/article/website/etc. and text is the actual content. Providing the source names enables the microlesson to include the source for the key points extracted from the content.
+     * @param {string} [engine=null] - The LLM engine to be used.
      * @returns {Promise<Object>} 
      * microlesson - string<br>
      * A concise, structured microlesson containing a summary, key points, learning objectives and tasks. <br>
@@ -86,7 +87,7 @@ class MicrolessonService extends SoffosAIService {
      * //     "unit_price": "0.000050"
      * // }
      */
-    call(user, content=undefined) {
+    call(user, content=undefined, engine=null) {
       if (content != undefined){
         this.content = content;
       }
@@ -95,6 +96,7 @@ class MicrolessonService extends SoffosAIService {
         "content": content
       };
       payload['content'] = this.content;
+      if (engine) payload.engine = engine;
       return super.call(payload);
     }
 
@@ -118,11 +120,13 @@ class MicrolessonService extends SoffosAIService {
      * contain the source and text fields, where source is the name of the
      * document/article/website/etc. and text is the actual content. Providing the source names 
      * enables the microlesson to include the source for the key points extracted from the content.
+     * @param {string} [engine=null] - The LLM engine to be used.
      */
-    setInputConfigs(name, content) {
+    setInputConfigs(name, content, engine=null) {
       let source = {
         content: content
       };
+      if (engine) source.engine = engine;
       return super.setInputConfigs(name, source);
   }
 }

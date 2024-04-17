@@ -51,6 +51,7 @@ var SummarizationService = /*#__PURE__*/function (_SoffosAIService) {
    * the api is an application (app) and that app has users. Soffos API will accept any string.
    * @param {string} text - Text to be summarized.
    * @param {number} sent_length - The desired sentence length of the summary. The service will respond with a 403 error if the value is larger than the number of sentences in the text.
+   * @param {string} [engine=null] - The LLM engine to be used.
    * @returns {Promise<Object>} 
    * summary - string<br>
    * The summary. <br>
@@ -85,11 +86,13 @@ var SummarizationService = /*#__PURE__*/function (_SoffosAIService) {
   _createClass(SummarizationService, [{
     key: "call",
     value: function call(user, text, sent_length) {
+      var engine = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
       var payload = {
         "user": user,
         "text": text,
         "sent_length": sent_length
       };
+      if (engine) payload.engine = engine;
       return _get(_getPrototypeOf(SummarizationService.prototype), "call", this).call(this, payload);
     }
 
@@ -98,14 +101,17 @@ var SummarizationService = /*#__PURE__*/function (_SoffosAIService) {
      *  It will be used by the Pipeline to reference this Service.
      * @param {string|InputConfig} text - Text to be summarized.
      * @param {number|InputConfig} sent_length - The desired sentence length of the summary. The service will respond with a 403 error if the value is larger than the number of sentences in the text.
+     * @param {string} [engine=null] - The LLM engine to be used.
      */
   }, {
     key: "setInputConfigs",
     value: function setInputConfigs(name, text, sent_length) {
+      var engine = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
       var source = {
         text: text,
         sent_length: sent_length
       };
+      if (engine) source.engine = engine;
       return _get(_getPrototypeOf(SummarizationService.prototype), "setInputConfigs", this).call(this, name, source);
     }
   }]);

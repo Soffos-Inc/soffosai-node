@@ -45,6 +45,7 @@ var MicrolessonService = /*#__PURE__*/function (_SoffosAIService) {
    * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
    * the api is an application (app) and that app has users. Soffos API will accept any string.
    * @param {Array.<object>} content - A list of dictionaries. Each dictionary should contain the source and text fields, where source is the name of the document/article/website/etc. and text is the actual content. Providing the source names enables the microlesson to include the source for the key points extracted from the content.
+   * @param {string} [engine=null] - The LLM engine to be used.
    * @returns {Promise<Object>} 
    * microlesson - string<br>
    * A concise, structured microlesson containing a summary, key points, learning objectives and tasks. <br>
@@ -115,6 +116,7 @@ var MicrolessonService = /*#__PURE__*/function (_SoffosAIService) {
     key: "call",
     value: function call(user) {
       var content = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : undefined;
+      var engine = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
       if (content != undefined) {
         this.content = content;
       }
@@ -123,6 +125,7 @@ var MicrolessonService = /*#__PURE__*/function (_SoffosAIService) {
         "content": content
       };
       payload['content'] = this.content;
+      if (engine) payload.engine = engine;
       return _get(_getPrototypeOf(MicrolessonService.prototype), "call", this).call(this, payload);
     }
 
@@ -146,13 +149,16 @@ var MicrolessonService = /*#__PURE__*/function (_SoffosAIService) {
      * contain the source and text fields, where source is the name of the
      * document/article/website/etc. and text is the actual content. Providing the source names 
      * enables the microlesson to include the source for the key points extracted from the content.
+     * @param {string} [engine=null] - The LLM engine to be used.
      */
   }, {
     key: "setInputConfigs",
     value: function setInputConfigs(name, content) {
+      var engine = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
       var source = {
         content: content
       };
+      if (engine) source.engine = engine;
       return _get(_getPrototypeOf(MicrolessonService.prototype), "setInputConfigs", this).call(this, name, source);
     }
   }]);

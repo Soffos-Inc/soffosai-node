@@ -63,6 +63,7 @@ var AnswerScoringService = /*#__PURE__*/function (_SoffosAIService) {
    * @param {string} question - The question to answer.
    * @param {string} user_answer - The user's answer which will be marked.
    * @param {string} [answer] - Optionally provide the expected answer.
+   * @param {string} [engine=null] - The LLM engine to be used.
    * @returns {Promise<Object>}
    * score - float <br>
    * A value between 0 and 1 indicating the correctness of the answer.<br>
@@ -98,6 +99,7 @@ var AnswerScoringService = /*#__PURE__*/function (_SoffosAIService) {
     key: "call",
     value: function call(user, context, question, user_answer) {
       var answer = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
+      var engine = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : null;
       var payload = {
         "user": user,
         "context": context,
@@ -105,6 +107,7 @@ var AnswerScoringService = /*#__PURE__*/function (_SoffosAIService) {
         "user_answer": user_answer
       };
       if (answer) payload.answer = answer;
+      if (engine) payload.engine = engine;
       return _get(_getPrototypeOf(AnswerScoringService.prototype), "call", this).call(this, payload);
     }
 
@@ -115,17 +118,20 @@ var AnswerScoringService = /*#__PURE__*/function (_SoffosAIService) {
      * @param {string|InputConfig} question - The question to answer.
      * @param {string|InputConfig} user_answer - The user's answer which will be marked.
      * @param {string|InputConfig} [answer=null] - Optionally provide the expected answer.
+     * @param {string} [engine=null] - The LLM engine to be used.
      */
   }, {
     key: "setInputConfigs",
     value: function setInputConfigs(name, context, question, user_answer) {
       var answer = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
+      var engine = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : null;
       var source = {
         context: context,
         question: question,
         user_answer: user_answer
       };
       if (answer) source.answer = answer;
+      if (engine) source.engine = engine;
       return _get(_getPrototypeOf(AnswerScoringService.prototype), "setInputConfigs", this).call(this, name, source);
     }
   }]);

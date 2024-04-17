@@ -29,12 +29,13 @@ var AnswerScoringIO = /*#__PURE__*/function (_ServiceIO) {
     _this = _super.call(this);
     _this.service = _constants.ServiceString.ANSWER_SCORING;
     _this.required_input_fields = ["context", "question", "user_answer"];
-    _this.optional_input_fields = ["answer"];
+    _this.optional_input_fields = ["answer", "engine"];
     _this.input_structure = {
       "context": "string",
       "question": "string",
       "answer": "string",
-      "user_answer": "string"
+      "user_answer": "string",
+      "engine": "string"
     };
     _this.output_structure = {
       "score": "number",

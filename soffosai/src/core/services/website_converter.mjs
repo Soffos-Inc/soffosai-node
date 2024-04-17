@@ -41,7 +41,6 @@ class WebsiteConverterService extends SoffosAIService {
         "url": url
       };
 
-
       return super.call(payload);
     }
 

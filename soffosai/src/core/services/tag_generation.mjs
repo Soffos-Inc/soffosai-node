@@ -28,6 +28,7 @@ class TagGenerationService extends SoffosAIService {
      * audience: Tags relating to the type of audience the text is intended for.
      * entity: Entities such as people, places, products, etc. mentioned in the text.
      * @param {number} [n=10] - The number of tags to be generated for each of the specified tag types.
+     * @param {string} [engine=null] - The LLM engine to be used.
      * @returns {Promise<Object>} 
      * tags - dictionary dictionary<br>
      * A dictionary containing the tags grouped by the type of tag. A confidence score is provided also for each tag. <br>
@@ -116,7 +117,7 @@ class TagGenerationService extends SoffosAIService {
      * //     "unit_price": "0.000050"
      * // }
      */
-    call(user, text, types=["topic"], n=10) {
+    call(user, text, types=["topic"], n=10, engine=null) {
         /*
             Note: List of types of keywords to extract. Supported types:
 
@@ -138,6 +139,7 @@ class TagGenerationService extends SoffosAIService {
         "types": types,
         "n": n
       };
+      if (engine) payload.engine = engine;
       return super.call(payload);
     }
 
@@ -151,13 +153,15 @@ class TagGenerationService extends SoffosAIService {
      * audience: Tags relating to the type of audience the text is intended for.
      * entity: Entities such as people, places, products, etc. mentioned in the text.
      * @param {number|InputConfig} n - The number of tags to be generated for each of the specified tag types.
+     * @param {string} [engine=null] - The LLM engine to be used.
      */
-    setInputConfigs(name, text, types=["topic"], n=10) {
+    setInputConfigs(name, text, types=["topic"], n=10, engine=null) {
       let source = {
         text: text,
         types: types,
         n: n
       };
+      if (engine) source.engine = engine;
       
       return super.setInputConfigs(name, source);
   }

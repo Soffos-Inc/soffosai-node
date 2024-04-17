@@ -45,6 +45,7 @@ var LogicalErrorDetectionService = /*#__PURE__*/function (_SoffosAIService) {
    * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
    * the api is an application (app) and that app has users. Soffos API will accept any string.
    * @param {string} text - Input text to analyze for logical errors.
+   * @param {string} [engine=null] - The LLM engine to be used.
    * @returns {Promise<Object>} 
    * logical_errors - dictionary list<br>
    * A list of dictionaries representing detected logical errors. Each dictionary contains the following fields: <br>
@@ -92,10 +93,12 @@ var LogicalErrorDetectionService = /*#__PURE__*/function (_SoffosAIService) {
   _createClass(LogicalErrorDetectionService, [{
     key: "call",
     value: function call(user, text) {
+      var engine = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
       var payload = {
         "user": user,
         "text": text
       };
+      if (engine) payload.engine = engine;
       return _get(_getPrototypeOf(LogicalErrorDetectionService.prototype), "call", this).call(this, payload);
     }
 
@@ -103,13 +106,16 @@ var LogicalErrorDetectionService = /*#__PURE__*/function (_SoffosAIService) {
      * @param {string} name - Reference name of this Service.
      *  It will be used by the Pipeline to reference this Service.
      * @param {string|InputConfig} text - Input text to analyze for logical errors.
+     * @param {string} [engine=null] - The LLM engine to be used.
      */
   }, {
     key: "setInputConfigs",
     value: function setInputConfigs(name, text) {
+      var engine = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
       var source = {
         text: text
       };
+      if (engine) source.engine = engine;
       return _get(_getPrototypeOf(LogicalErrorDetectionService.prototype), "setInputConfigs", this).call(this, name, source);
     }
   }]);

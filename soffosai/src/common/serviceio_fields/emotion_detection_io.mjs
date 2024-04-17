@@ -6,12 +6,13 @@ class EmotionDetectionIO extends ServiceIO {
     super();
     this.service = ServiceString.EMOTION_DETECTION;
     this.required_input_fields = ["text"];
-    this.optional_input_fields = ["sentence_split", "sentence_overlap", "emotion_choices"];
+    this.optional_input_fields = ["sentence_split", "sentence_overlap", "emotion_choices","engine"];
     this.input_structure = {
       "sentence_split": "number",
       "sentence_overlap": 'boolean',
       "text": "string",
-      "emotion_choices": 'array'
+      "emotion_choices": 'array', 
+      "engine": "string"
     };
     this.output_structure = {
       "spans": [

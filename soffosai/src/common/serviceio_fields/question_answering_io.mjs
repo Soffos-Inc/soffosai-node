@@ -8,7 +8,7 @@ class QuestionAnsweringIO extends ServiceIO {
     this.required_input_fields = ["message"];
     this.require_one_of_choices = [["document_text", "document_ids"]];
     this.defaults = ["document_text"];
-    this.optional_input_fields = ["check_ambiguity", "check_query_type", "generic_responses"];
+    this.optional_input_fields = ["check_ambiguity", "check_query_type", "generic_responses", "engine"];
     this.input_structure = {
       "question": "string",
       "message": "string",
@@ -22,7 +22,8 @@ class QuestionAnsweringIO extends ServiceIO {
       "generic_responses": "boolean",
       "meta": {
         "session_id": "string"
-      }
+      }, 
+      "engine": "string"
     };
     this.output_structure = {
       "answer": "string",

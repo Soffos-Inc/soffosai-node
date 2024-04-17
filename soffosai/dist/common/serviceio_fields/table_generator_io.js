@@ -29,10 +29,12 @@ var TableGeneratorIO = /*#__PURE__*/function (_ServiceIO) {
     _this = _super.call(this);
     _this.service = _constants.ServiceString.TABLE_GENERATOR;
     _this.required_input_fields = ["table_format", "text"];
+    _this.optional_input_fields = ["engine"];
     _this.input_structure = {
       "table_format": "string",
       // markdown or CSV
-      "text": "string"
+      "text": "string",
+      "engine": "string"
     };
     _this.output_structure = {
       "tables": [{

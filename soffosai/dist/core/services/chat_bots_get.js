@@ -77,7 +77,7 @@ var ChatBotsGetService = /*#__PURE__*/function (_SoffosAIService) {
     value: function setInputConfigs(name) {
       var chatbot_ids = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
       var source = {};
-      if (chatbot_ids) payload.chatbot_ids = chatbot_ids;
+      if (chatbot_ids) source.chatbot_ids = chatbot_ids;
       return _get(_getPrototypeOf(ChatBotsGetService.prototype), "setInputConfigs", this).call(this, name, source);
     }
   }]);

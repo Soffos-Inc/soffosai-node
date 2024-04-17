@@ -8,8 +8,6 @@ exports.DocumentsIngestIO = exports.DocumentSearchIO = exports.DocumentDeleteIO 
 var _service_io = _interopRequireDefault(require("./service_io.js"));
 var _constants = require("../constants.js");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-function _get() { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get.bind(); } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(arguments.length < 3 ? target : receiver); } return desc.value; }; } return _get.apply(this, arguments); }
-function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
@@ -89,24 +87,7 @@ var DocumentSearchIO = /*#__PURE__*/function (_ServiceIO2) {
     };
     return _this2;
   }
-  _createClass(DocumentSearchIO, [{
-    key: "special_validation",
-    value: function special_validation(payload) {
-      // if (!payload.hasOwnProperty('query')) {
-      //   if (!payload.hasOwnProperty('filters')) {
-      //     return [false, "If query is not provided, please provide 'filters' argument."]
-      //   }
-      // }
-
-      if (payload.hasOwnProperty('top_n_natural_language')) {
-        if (payload.top_n_natural_language > 0 && !payload.hasOwnProperty('query') && !payload.hasOwnProperty("document_ids")) {
-          return [false, "If document_ids are not defined: query is required if top_n_natural_language is defined and is greater than 0."];
-        }
-      }
-      return _get(_getPrototypeOf(DocumentSearchIO.prototype), "special_validation", this).call(this, payload);
-    }
-  }]);
-  return DocumentSearchIO;
+  return _createClass(DocumentSearchIO);
 }(_service_io["default"]);
 exports.DocumentSearchIO = DocumentSearchIO;
 var DocumentDeleteIO = /*#__PURE__*/function (_ServiceIO3) {

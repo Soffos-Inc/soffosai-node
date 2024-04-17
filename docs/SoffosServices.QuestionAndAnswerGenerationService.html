@@ -149,7 +149,7 @@
     
 
     
-    <h4 class="name" id="call"><span class="type-signature"></span>call<span class="signature">(user, text, sentence_split<span class="signature-attributes">opt</span>, sentence_overlap<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise.&lt;Object>}</span></h4>
+    <h4 class="name" id="call"><span class="type-signature"></span>call<span class="signature">(user, text, sentence_split<span class="signature-attributes">opt</span>, sentence_overlap<span class="signature-attributes">opt</span>, engine<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise.&lt;Object>}</span></h4>
     
 
     
@@ -338,6 +338,45 @@
         </tr>
 
     
+
+        <tr>
+            
+                <td class="name"><code>engine</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    null
+                
+                </td>
+            
+
+            <td class="description last">The LLM engine to be used.</td>
+        </tr>
+
+    
     </tbody>
 </table>
 
@@ -375,7 +414,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_qna_generation.mjs.html">services/qna_generation.mjs</a>, <a href="services_qna_generation.mjs.html#line124">line 124</a>
+        <a href="services_qna_generation.mjs.html">services/qna_generation.mjs</a>, <a href="services_qna_generation.mjs.html#line125">line 125</a>
     </li></ul></dd>
     
 
@@ -428,7 +467,7 @@
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>import { SoffosServices } from "soffosai";const my_apiKey = "Token &lt;put your api key here>";const service = new SoffosServices.QuestionAndAnswerGenerationService({apiKey:my_apiKey});let response = await service.call(    "me again",    "AI and specifically NLP is a very powerful component to any application that makes \    it powerful, interesting and creative. However, implementing the NLP components can \    sometimes be hard, or very costly in cases where an NLP engineering team has to be \    hired to build it. Especially, since NLP keeps evolving at an absurd rate, it might \    be impossible for a developer to keep up with the advancements in terms of work that \    needs to be done or money that need to be spent to keep their NLP at a state where it \    can compete with similar apps out there. Here at Soffos we have packaged several \    high-level functionalities as modules, some of which require multiple types of NLP and \    complex logic, for developers to use out-of-the-box, as is, removing the need to develop \    it themselves. Moreover, Soffos continuously updates their modules to match the state of \    the art. Developers will never need to maintain any AI/NLP related component of their \    application. All they need is to be creative, come up with ideas, and combine our modules \    however they desire to come up with amazing intelligent applications.");console.log(JSON.stringify(response, null, 2));    // returns// {//     "qna_list": [//       {//         "question": "What is NLP?",//         "answer": "NLP stands for Natural Language Processing, which is a branch of Artificial Intelligence that deals with understanding and generating human language.",//         "chunk_index": 0//       },//       {//         "question": "What makes NLP powerful?",//         "answer": "NLP is powerful because it can understand and generate human language, which makes it a powerful component to any application.",//         "chunk_index": 0//       },//       {//         "question": "What can be difficult about implementing NLP components?",//         "answer": "Implementing NLP components can be difficult because it can be hard to keep up with the advancements in terms of work that needs to be done or money that need to be spent to keep their NLP at a state where it can compete with similar apps out there.",//         "chunk_index": 0//       },//       {//         "question": "What does Soffos offer developers?",//         "answer": "Soffos offers developers high-level functionalities packaged as modules, which require multiple types of NLP and complex logic, for developers to use out-of-the-box, as is, removing the need to develop it themselves.",//         "chunk_index": 1//       },//       {//         "question": "Does Soffos maintain AI/NLP related components?",//         "answer": "Yes, Soffos continuously updates their modules to match the state of the art and developers will never need to maintain any //   AI/NLP related component of their application.",//         "chunk_index": 1//       },//       {//         "question": "What is required to create intelligent applications?",//         "answer": "Creativity, ideas, and the ability to combine modules.",//         "chunk_index": 2//       }//     ],//     "chunks": [//       {//         "text": "AI and specifically NLP is a very powerful component to any application that makes it powerful, interesting and creative. However, implementing the NLP components can sometimes be hard, or very costly in cases where an NLP engineering team has to be hired to build it. Especially, since NLP keeps evolving at an absurd rate, it might be impossible for a developer to keep up with the advancements in terms of work that needs to be done or money that need to be spent to keep their NLP at a state where it can compete with similar apps out there.",  //         "span_start": 0,//         "span_end": 545,//         "index": 0//       },//       {//         "text": "Here at Soffos we have packaged several high-level functionalities as modules, some of which require multiple types of NLP and complex logic, for developers to use out-of-the-box, as is, removing the need to develop it themselves. Moreover, Soffos continuously updates their modules to match the state of the art. Developers will never need to maintain any AI/NLP related component of their application.",   //         "span_start": 546,//         "span_end": 949,//         "index": 1//       },//       {//         "text": "All they need is to be creative, come up with ideas, and combine our modules however they desire to come up with amazing intelligent applications.",//         "span_start": 950,//         "span_end": 1096,//         "index": 2//       }//     ],//     "cost": {//       "api_call_cost": 0.005,//       "character_volume_cost": 0.05945,//       "total_cost": 0.06445//     },//     "charged_character_count": 1189,//     "unit_price": "0.000050"// }</code></pre>
+    <pre class="prettyprint"><code>import { SoffosServices } from "soffosai-node";const my_apiKey = "Token &lt;put your api key here>";const service = new SoffosServices.QuestionAndAnswerGenerationService({apiKey:my_apiKey});let response = await service.call(    "me again",    "AI and specifically NLP is a very powerful component to any application that makes \    it powerful, interesting and creative. However, implementing the NLP components can \    sometimes be hard, or very costly in cases where an NLP engineering team has to be \    hired to build it. Especially, since NLP keeps evolving at an absurd rate, it might \    be impossible for a developer to keep up with the advancements in terms of work that \    needs to be done or money that need to be spent to keep their NLP at a state where it \    can compete with similar apps out there. Here at Soffos we have packaged several \    high-level functionalities as modules, some of which require multiple types of NLP and \    complex logic, for developers to use out-of-the-box, as is, removing the need to develop \    it themselves. Moreover, Soffos continuously updates their modules to match the state of \    the art. Developers will never need to maintain any AI/NLP related component of their \    application. All they need is to be creative, come up with ideas, and combine our modules \    however they desire to come up with amazing intelligent applications.");console.log(JSON.stringify(response, null, 2));    // returns// {//     "qna_list": [//       {//         "question": "What is NLP?",//         "answer": "NLP stands for Natural Language Processing, which is a branch of Artificial Intelligence that deals with understanding and generating human language.",//         "chunk_index": 0//       },//       {//         "question": "What makes NLP powerful?",//         "answer": "NLP is powerful because it can understand and generate human language, which makes it a powerful component to any application.",//         "chunk_index": 0//       },//       {//         "question": "What can be difficult about implementing NLP components?",//         "answer": "Implementing NLP components can be difficult because it can be hard to keep up with the advancements in terms of work that needs to be done or money that need to be spent to keep their NLP at a state where it can compete with similar apps out there.",//         "chunk_index": 0//       },//       {//         "question": "What does Soffos offer developers?",//         "answer": "Soffos offers developers high-level functionalities packaged as modules, which require multiple types of NLP and complex logic, for developers to use out-of-the-box, as is, removing the need to develop it themselves.",//         "chunk_index": 1//       },//       {//         "question": "Does Soffos maintain AI/NLP related components?",//         "answer": "Yes, Soffos continuously updates their modules to match the state of the art and developers will never need to maintain any //   AI/NLP related component of their application.",//         "chunk_index": 1//       },//       {//         "question": "What is required to create intelligent applications?",//         "answer": "Creativity, ideas, and the ability to combine modules.",//         "chunk_index": 2//       }//     ],//     "chunks": [//       {//         "text": "AI and specifically NLP is a very powerful component to any application that makes it powerful, interesting and creative. However, implementing the NLP components can sometimes be hard, or very costly in cases where an NLP engineering team has to be hired to build it. Especially, since NLP keeps evolving at an absurd rate, it might be impossible for a developer to keep up with the advancements in terms of work that needs to be done or money that need to be spent to keep their NLP at a state where it can compete with similar apps out there.",  //         "span_start": 0,//         "span_end": 545,//         "index": 0//       },//       {//         "text": "Here at Soffos we have packaged several high-level functionalities as modules, some of which require multiple types of NLP and complex logic, for developers to use out-of-the-box, as is, removing the need to develop it themselves. Moreover, Soffos continuously updates their modules to match the state of the art. Developers will never need to maintain any AI/NLP related component of their application.",   //         "span_start": 546,//         "span_end": 949,//         "index": 1//       },//       {//         "text": "All they need is to be creative, come up with ideas, and combine our modules however they desire to come up with amazing intelligent applications.",//         "span_start": 950,//         "span_end": 1096,//         "index": 2//       }//     ],//     "cost": {//       "api_call_cost": 0.005,//       "character_volume_cost": 0.05945,//       "total_cost": 0.06445//     },//     "charged_character_count": 1189,//     "unit_price": "0.000050"// }</code></pre>
 
 
 
@@ -438,7 +477,7 @@
     
 
     
-    <h4 class="name" id="setInputConfigs"><span class="type-signature"></span>setInputConfigs<span class="signature">(name, text, sentence_split<span class="signature-attributes">opt</span>, sentence_overlap<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="setInputConfigs"><span class="type-signature"></span>setInputConfigs<span class="signature">(name, text, sentence_split<span class="signature-attributes">opt</span>, sentence_overlap<span class="signature-attributes">opt</span>, engine<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
     
 
     
@@ -636,6 +675,45 @@
         </tr>
 
     
+
+        <tr>
+            
+                <td class="name"><code>engine</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    null
+                
+                </td>
+            
+
+            <td class="description last">The LLM engine to be used.</td>
+        </tr>
+
+    
     </tbody>
 </table>
 
@@ -673,7 +751,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_qna_generation.mjs.html">services/qna_generation.mjs</a>, <a href="services_qna_generation.mjs.html#line143">line 143</a>
+        <a href="services_qna_generation.mjs.html">services/qna_generation.mjs</a>, <a href="services_qna_generation.mjs.html#line146">line 146</a>
     </li></ul></dd>
     
 
@@ -719,13 +797,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="SoffosServices.AnswerScoringService.html">AnswerScoringService</a></li><li><a href="SoffosServices.AudioConverterService.html">AudioConverterService</a></li><li><a href="SoffosServices.ChatBotCreateService.html">ChatBotCreateService</a></li><li><a href="SoffosServices.ChatBotDeleteUserSessionsService.html">ChatBotDeleteUserSessionsService</a></li><li><a href="SoffosServices.ChatBotGetUserSessionsService.html">ChatBotGetUserSessionsService</a></li><li><a href="SoffosServices.ChatBotService.html">ChatBotService</a></li><li><a href="SoffosServices.ChatBotsDeleteService.html">ChatBotsDeleteService</a></li><li><a href="SoffosServices.ChatBotsGetService.html">ChatBotsGetService</a></li><li><a href="SoffosServices.DocumentsDeleteService.html">DocumentsDeleteService</a></li><li><a href="SoffosServices.DocumentsIngestService.html">DocumentsIngestService</a></li><li><a href="SoffosServices.DocumentsSearchService.html">DocumentsSearchService</a></li><li><a href="SoffosServices.EmailAnalysisService.html">EmailAnalysisService</a></li><li><a href="SoffosServices.EmotionDetectionService.html">EmotionDetectionService</a></li><li><a href="SoffosServices.FileConverterService.html">FileConverterService</a></li><li><a href="SoffosServices.LanguageDetectionService.html">LanguageDetectionService</a></li><li><a href="SoffosServices.LetsDiscussCreateService.html">LetsDiscussCreateService</a></li><li><a href="SoffosServices.LetsDiscussDeleteService.html">LetsDiscussDeleteService</a></li><li><a href="SoffosServices.LetsDiscussRetrieveService.html">LetsDiscussRetrieveService</a></li><li><a href="SoffosServices.LetsDiscussService.html">LetsDiscussService</a></li><li><a href="SoffosServices.LogicalErrorDetectionService.html">LogicalErrorDetectionService</a></li><li><a href="SoffosServices.MicrolessonService.html">MicrolessonService</a></li><li><a href="SoffosServices.NamedEntityRecognitionService.html">NamedEntityRecognitionService</a></li><li><a href="SoffosServices.ParaphraseService.html">ParaphraseService</a></li><li><a href="SoffosServices.ProfanityService.html">ProfanityService</a></li><li><a href="SoffosServices.QuestionAndAnswerGenerationService.html">QuestionAndAnswerGenerationService</a></li><li><a href="SoffosServices.QuestionAnsweringService.html">QuestionAnsweringService</a></li><li><a href="SoffosServices.ReviewTaggerService.html">ReviewTaggerService</a></li><li><a href="SoffosServices.SentimentAnalysisService.html">SentimentAnalysisService</a></li><li><a href="SoffosServices.SimplifyService.html">SimplifyService</a></li><li><a href="SoffosServices.SummarizationService.html">SummarizationService</a></li><li><a href="SoffosServices.TableGeneratorService.html">TableGeneratorService</a></li><li><a href="SoffosServices.TagGenerationService.html">TagGenerationService</a></li><li><a href="SoffosServices.TranscriptCorrectionService.html">TranscriptCorrectionService</a></li><li><a href="SoffosServices.WebsiteConverterService.html">WebsiteConverterService</a></li><li><a href="-_InputConfig.html">_InputConfig</a></li><li><a href="-_SoffosPipelines.AskADocumentPipeline.html">AskADocumentPipeline</a></li><li><a href="-_SoffosPipelines.FileIngestPipeline.html">FileIngestPipeline</a></li></ul><h3>Global</h3><ul><li><a href="global.html#_createInputConfig">_createInputConfig</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="SoffosServices.AnswerScoringService.html">AnswerScoringService</a></li><li><a href="SoffosServices.AssessmentGeneratorService.html">AssessmentGeneratorService</a></li><li><a href="SoffosServices.AudioConverterService.html">AudioConverterService</a></li><li><a href="SoffosServices.ChatBotCreateService.html">ChatBotCreateService</a></li><li><a href="SoffosServices.ChatBotDeleteUserSessionsService.html">ChatBotDeleteUserSessionsService</a></li><li><a href="SoffosServices.ChatBotGetUserSessionsService.html">ChatBotGetUserSessionsService</a></li><li><a href="SoffosServices.ChatBotService.html">ChatBotService</a></li><li><a href="SoffosServices.ChatBotsDeleteService.html">ChatBotsDeleteService</a></li><li><a href="SoffosServices.ChatBotsGetService.html">ChatBotsGetService</a></li><li><a href="SoffosServices.DocumentsDeleteService.html">DocumentsDeleteService</a></li><li><a href="SoffosServices.DocumentsIngestService.html">DocumentsIngestService</a></li><li><a href="SoffosServices.DocumentsSearchService.html">DocumentsSearchService</a></li><li><a href="SoffosServices.EmailAnalysisService.html">EmailAnalysisService</a></li><li><a href="SoffosServices.EmotionDetectionService.html">EmotionDetectionService</a></li><li><a href="SoffosServices.FileConverterService.html">FileConverterService</a></li><li><a href="SoffosServices.ImageAnalysisService.html">ImageAnalysisService</a></li><li><a href="SoffosServices.ImageGenerationService.html">ImageGenerationService</a></li><li><a href="SoffosServices.LanguageDetectionService.html">LanguageDetectionService</a></li><li><a href="SoffosServices.LetsDiscussCreateService.html">LetsDiscussCreateService</a></li><li><a href="SoffosServices.LetsDiscussDeleteService.html">LetsDiscussDeleteService</a></li><li><a href="SoffosServices.LetsDiscussRetrieveService.html">LetsDiscussRetrieveService</a></li><li><a href="SoffosServices.LetsDiscussService.html">LetsDiscussService</a></li><li><a href="SoffosServices.LogicalErrorDetectionService.html">LogicalErrorDetectionService</a></li><li><a href="SoffosServices.MicrolessonService.html">MicrolessonService</a></li><li><a href="SoffosServices.MultipleChoiceQnAGeneratorService.html">MultipleChoiceQnAGeneratorService</a></li><li><a href="SoffosServices.NamedEntityRecognitionService.html">NamedEntityRecognitionService</a></li><li><a href="SoffosServices.ParaphraseService.html">ParaphraseService</a></li><li><a href="SoffosServices.ProfanityService.html">ProfanityService</a></li><li><a href="SoffosServices.QuestionAndAnswerGenerationService.html">QuestionAndAnswerGenerationService</a></li><li><a href="SoffosServices.QuestionAnsweringService.html">QuestionAnsweringService</a></li><li><a href="SoffosServices.ReviewTaggerService.html">ReviewTaggerService</a></li><li><a href="SoffosServices.SentimentAnalysisService.html">SentimentAnalysisService</a></li><li><a href="SoffosServices.SimplifyService.html">SimplifyService</a></li><li><a href="SoffosServices.SummarizationService.html">SummarizationService</a></li><li><a href="SoffosServices.TableGeneratorService.html">TableGeneratorService</a></li><li><a href="SoffosServices.TagGenerationService.html">TagGenerationService</a></li><li><a href="SoffosServices.TranscriptCorrectionService.html">TranscriptCorrectionService</a></li><li><a href="SoffosServices.WebsiteConverterService.html">WebsiteConverterService</a></li><li><a href="-_InputConfig.html">_InputConfig</a></li><li><a href="-_SoffosPipelines.AskADocumentPipeline.html">AskADocumentPipeline</a></li><li><a href="-_SoffosPipelines.FileIngestPipeline.html">FileIngestPipeline</a></li></ul><h3>Global</h3><ul><li><a href="global.html#_createInputConfig">_createInputConfig</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Wed Nov 15 2023 18:24:09 GMT+0800 (Singapore Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Wed Apr 17 2024 19:03:51 GMT+0800 (Philippine Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

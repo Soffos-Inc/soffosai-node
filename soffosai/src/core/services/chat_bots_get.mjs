@@ -50,7 +50,7 @@ class ChatBotsGetService extends SoffosAIService {
       let source = {
 
       };
-      if (chatbot_ids) payload.chatbot_ids = chatbot_ids;
+      if (chatbot_ids) source.chatbot_ids = chatbot_ids;
       return super.setInputConfigs(name, source);
     }
 }

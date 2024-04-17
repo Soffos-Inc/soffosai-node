@@ -93,7 +93,7 @@ var ChatBotCreateService = /*#__PURE__*/function (_SoffosAIService) {
         "role": role,
         "chatbot_name": chatbot_name
       };
-      if (chatbot_id) payload.chatbot_id = chatbot_id;
+      if (chatbot_id) source.chatbot_id = chatbot_id;
       return _get(_getPrototypeOf(ChatBotCreateService.prototype), "setInputConfigs", this).call(this, name, source);
     }
   }]);

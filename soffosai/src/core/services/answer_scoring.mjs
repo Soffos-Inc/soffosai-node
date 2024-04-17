@@ -37,6 +37,7 @@ class AnswerScoringService extends SoffosAIService {
      * @param {string} question - The question to answer.
      * @param {string} user_answer - The user's answer which will be marked.
      * @param {string} [answer] - Optionally provide the expected answer.
+     * @param {string} [engine=null] - The LLM engine to be used.
      * @returns {Promise<Object>}
      * score - float <br>
      * A value between 0 and 1 indicating the correctness of the answer.<br>
@@ -68,7 +69,7 @@ class AnswerScoringService extends SoffosAIService {
      * //     "unit_price": "0.000050"
      * // }
      */
-    call(user, context, question, user_answer, answer=null) {
+    call(user, context, question, user_answer, answer=null, engine=null) {
       let payload = {
         "user": user,
         "context": context,
@@ -76,6 +77,7 @@ class AnswerScoringService extends SoffosAIService {
         "user_answer": user_answer,
       };
       if (answer) payload.answer = answer
+      if (engine) payload.engine = engine;
       return super.call(payload);
     }
 
@@ -86,14 +88,16 @@ class AnswerScoringService extends SoffosAIService {
      * @param {string|InputConfig} question - The question to answer.
      * @param {string|InputConfig} user_answer - The user's answer which will be marked.
      * @param {string|InputConfig} [answer=null] - Optionally provide the expected answer.
+     * @param {string} [engine=null] - The LLM engine to be used.
      */
-    setInputConfigs(name, context, question, user_answer, answer=null) {
+    setInputConfigs(name, context, question, user_answer, answer=null, engine=null) {
       let source = {
           context: context,
           question: question,
           user_answer: user_answer
       }
       if(answer) source.answer = answer;
+      if (engine) source.engine = engine;
       
       return super.setInputConfigs(name, source);
   }

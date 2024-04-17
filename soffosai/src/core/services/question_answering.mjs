@@ -35,6 +35,7 @@ class QuestionAnsweringService extends SoffosAIService {
      * @param {string} [generic_responses=false] - In addition to checking for ambiguity or query type, this module performs other checks such as profanity, language, etc.. If the input query fails in one of these checks, it will reject the query by responding with a message that points out the issue.
      * When true, the module will respond with a generic message without giving the reason as to why the message was rejected, which is the same behavior as when it cannot find an answer to the query in the provided context.
      * @param {Object.<string, string>} meta
+     * @param {string} [engine=null] - The LLM engine to be used.
      * @returns {Promise<Object>} 
      * answer - string<br>
      * The answer to the query. In cases where the query failed a check, and depending on the above explained parameters, this will be a message that indicates that an answer could not be retrieved. <br>
@@ -95,7 +96,7 @@ class QuestionAnsweringService extends SoffosAIService {
      *   
      */
     call(user, question, document_text=undefined, document_ids=undefined, 
-        check_ambiguity=true, check_query_type=true, generic_responses=false, meta=undefined) {
+        check_ambiguity=true, check_query_type=true, generic_responses=false, meta=undefined, engine=null) {
         let payload = {
           "user": user,
           "question": question,
@@ -106,8 +107,9 @@ class QuestionAnsweringService extends SoffosAIService {
         if (document_text) payload.document_text = document_text;
         if (document_ids) payload.document_ids = document_ids;
         if (meta) payload.meta = meta;
-      payload['message'] = question;
-      return super.call(payload);
+        if (engine) payload.engine = engine;
+        payload['message'] = question;
+        return super.call(payload);
     }
 
     /**
@@ -126,9 +128,10 @@ class QuestionAnsweringService extends SoffosAIService {
      * Set to false only when you wish the module to attempt to answer the query regardless of its type or syntactical quality.
      * @param {boolean|InputConfig} generic_responses
      * @param {object|InputConfig} meta
+     * @param {string} [engine=null] - The LLM engine to be used.
      */
     setInputConfigs(name, question, document_text=undefined, document_ids=undefined, 
-      check_ambiguity=true, check_query_type=true, generic_responses=false, meta=undefined) {
+      check_ambiguity=true, check_query_type=true, generic_responses=false, meta=undefined, engine=null) {
       let source = {
         message: question, // special handling, message is unclear so question is used
         check_ambiguity: check_ambiguity,
@@ -139,6 +142,7 @@ class QuestionAnsweringService extends SoffosAIService {
       if (document_text) source.document_text = document_text;
       if (document_ids) source.document_ids = document_ids;
       if (meta) source.meta = meta;
+      if (engine) source.engine = engine;
       return super.setInputConfigs(name, source);
     }
 }

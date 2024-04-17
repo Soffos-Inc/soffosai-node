@@ -6,10 +6,11 @@ class NamedEntityRecognitionIO extends ServiceIO {
     super();
     this.service = ServiceString.NER;
     this.required_input_fields = ["text"];
-    this.optional_input_fields = ["labels"];
+    this.optional_input_fields = ["labels","engine"];
     this.input_structure = {
       "text": "string",
-      "labels": "object"
+      "labels": "object", 
+      "engine": "string"
     };
     this.output_structure = {
       "named_entities": [

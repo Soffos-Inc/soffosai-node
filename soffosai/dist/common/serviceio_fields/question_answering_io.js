@@ -31,7 +31,7 @@ var QuestionAnsweringIO = /*#__PURE__*/function (_ServiceIO) {
     _this.required_input_fields = ["message"];
     _this.require_one_of_choices = [["document_text", "document_ids"]];
     _this.defaults = ["document_text"];
-    _this.optional_input_fields = ["check_ambiguity", "check_query_type", "generic_responses"];
+    _this.optional_input_fields = ["check_ambiguity", "check_query_type", "generic_responses", "engine"];
     _this.input_structure = {
       "question": "string",
       "message": "string",
@@ -43,7 +43,8 @@ var QuestionAnsweringIO = /*#__PURE__*/function (_ServiceIO) {
       "generic_responses": "boolean",
       "meta": {
         "session_id": "string"
-      }
+      },
+      "engine": "string"
     };
     _this.output_structure = {
       "answer": "string",

@@ -48,6 +48,7 @@ var NamedEntityRecognitionService = /*#__PURE__*/function (_SoffosAIService) {
    * the api is an application (app) and that app has users. Soffos API will accept any string.
    * @param {string} text - Input text to be analyzed for named entities.
    * @param {Object.<string, string>} [labels] - When providing labels, the module will extract entities that match your labels and descriptions. This gives enough flexibility to deal with any use-case.
+   * @param {string} [engine=null] - The LLM engine to be used.
    * @returns {Promise<Object>}
    * named_entities - dictionary list<br>
    * A list of dictionaries representing identified named entities. Each dictionary contains the following fields: <br>
@@ -134,6 +135,7 @@ var NamedEntityRecognitionService = /*#__PURE__*/function (_SoffosAIService) {
     key: "call",
     value: function call(user, text) {
       var labels = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : undefined;
+      var engine = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
       var payload = {
         "user": user,
         "text": text
@@ -142,6 +144,8 @@ var NamedEntityRecognitionService = /*#__PURE__*/function (_SoffosAIService) {
       if (labels == undefined && Object.keys(this.labels).length > 0) {
         payload['labels'] = this.labels;
       }
+      ;
+      if (engine) payload.engine = engine;
       return _get(_getPrototypeOf(NamedEntityRecognitionService.prototype), "call", this).call(this, payload);
     }
 
@@ -161,15 +165,18 @@ var NamedEntityRecognitionService = /*#__PURE__*/function (_SoffosAIService) {
      *  It will be used by the Pipeline to reference this Service.
      * @param {string|InputConfig} text - Input text to be analyzed for named entities.
      * @param {Object.<string, string>|InputConfig} labels - When providing labels, the module will extract entities that match your labels and descriptions. This gives enough flexibility to deal with any use-case.
+     * @param {string} [engine=null] - The LLM engine to be used.
      */
   }, {
     key: "setInputConfigs",
     value: function setInputConfigs(name, text) {
       var labels = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : undefined;
+      var engine = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
       var source = {
         text: text
       };
       if (labels) source.labels = labels;
+      if (engine) source.engine = engine;
       return _get(_getPrototypeOf(NamedEntityRecognitionService.prototype), "setInputConfigs", this).call(this, name, source);
     }
   }]);

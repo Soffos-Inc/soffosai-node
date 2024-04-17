@@ -28,6 +28,7 @@ class EmotionDetectionService extends SoffosAIService {
      * For example, with sentence_split 3 and sentence_overlap=true :
      * [[s1, s2, s3], [s3, s4, s5], [s5, s6, s7]]
      * @param {Array.<string>} [emotion_choices] - List of emotions to detect in the text. If the field is not provided in the payload, or set as null or empty list, it will default to all emotion choices. Currently supported emotions are listed above in the default emotion values.
+     * @param {string} [engine=null] - The LLM engine to be used.
      * @returns {Promise<Object>} 
      * spans - dictionary list<br>
      * A list of spans resulting from the specified chunking parameters. Each span contains the following fields: <br>
@@ -64,7 +65,7 @@ class EmotionDetectionService extends SoffosAIService {
      * //     "unit_price": "0.000050"
      * // }
      */
-    call(user, text, sentence_split=4, sentence_overlap=false, emotion_choices=_EMOTION_LIST) {
+    call(user, text, sentence_split=4, sentence_overlap=false, emotion_choices=_EMOTION_LIST, engine=null) {
       for (let emotion of emotion_choices) {
         if ( !_EMOTION_LIST.includes(emotion)){
             throw new Error(`${emotion} is not valid as an emotion_choices element. Please choose from ${_EMOTION_LIST}.`);
@@ -77,6 +78,7 @@ class EmotionDetectionService extends SoffosAIService {
         "sentence_overlap": sentence_overlap,
         "emotion_choices": emotion_choices
       };
+      if (engine) payload.engine = engine;
       return super.call(payload);
     }
 
@@ -89,14 +91,16 @@ class EmotionDetectionService extends SoffosAIService {
      * For example, with sentence_split 3 and sentence_overlap=true :
      * [[s1, s2, s3], [s3, s4, s5], [s5, s6, s7]]
      * @param {Array.<string>|InputConfig} [emotion_choices=_EMOTION_LIST] - List of emotions to detect in the text. If the field is not provided in the payload, or set as null or empty list, it will default to all emotion choices. Currently supported emotions are listed above in the default emotion values.
+     * @param {string} [engine=null] - The LLM engine to be used.
      */
-    setInputConfigs(name, text, sentence_split=4, sentence_overlap=false, emotion_choices=_EMOTION_LIST) {
+    setInputConfigs(name, text, sentence_split=4, sentence_overlap=false, emotion_choices=_EMOTION_LIST, engine=null) {
       let source = {
           text: text,
           sentence_split: sentence_split,
           sentence_overlap: sentence_overlap,
           emotion_choices: emotion_choices
       };
+      if (engine) source.engine = engine;
       return super.setInputConfigs(name, source);
     }
 }

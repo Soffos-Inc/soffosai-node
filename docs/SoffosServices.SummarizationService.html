@@ -149,7 +149,7 @@
     
 
     
-    <h4 class="name" id="call"><span class="type-signature"></span>call<span class="signature">(user, text, sent_length)</span><span class="type-signature"> &rarr; {Promise.&lt;Object>}</span></h4>
+    <h4 class="name" id="call"><span class="type-signature"></span>call<span class="signature">(user, text, sent_length, engine<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise.&lt;Object>}</span></h4>
     
 
     
@@ -177,7 +177,11 @@
         <th>Type</th>
 
         
+        <th>Attributes</th>
+        
 
+        
+        <th>Default</th>
         
 
         <th class="last">Description</th>
@@ -202,7 +206,19 @@
             </td>
 
             
+                <td class="attributes">
+                
 
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
             
 
             <td class="description last">The ID of the user accessing the Soffos API.  Soffos assumes that the owner ofthe api is an application (app) and that app has users. Soffos API will accept any string.</td>
@@ -225,7 +241,19 @@
             </td>
 
             
+                <td class="attributes">
+                
 
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
             
 
             <td class="description last">Text to be summarized.</td>
@@ -248,10 +276,61 @@
             </td>
 
             
+                <td class="attributes">
+                
 
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
             
 
             <td class="description last">The desired sentence length of the summary. The service will respond with a 403 error if the value is larger than the number of sentences in the text.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>engine</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    null
+                
+                </td>
+            
+
+            <td class="description last">The LLM engine to be used.</td>
         </tr>
 
     
@@ -292,7 +371,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_summarization.mjs.html">services/summarization.mjs</a>, <a href="services_summarization.mjs.html#line60">line 60</a>
+        <a href="services_summarization.mjs.html">services/summarization.mjs</a>, <a href="services_summarization.mjs.html#line61">line 61</a>
     </li></ul></dd>
     
 
@@ -345,7 +424,7 @@
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>import { SoffosServices } from "soffosai";const my_apiKey = "Token &lt;put your api key here>";const service = new SoffosServices.SummarizationService({apiKey:my_apiKey});let response = await service.call(    "client 23456",    "Ludwig van Beethoven (baptised 17 December 1770 – 26 March 1827) was a German \    composer and pianist. ... After some months of bedridden illness, he died in 1827. \    Beethoven's works remain mainstays of the classical music repertoire.",    3);console.log(JSON.stringify(response, null, 2));    // returns// {//     "summary": "Ludwig van Beethoven was a German composer and pianist. He composed many works that remain mainstays of the classical music repertoire. After a period of illness, he died in 1827.",//     "cost": {//       "api_call_cost": 0.005,//       "character_volume_cost": 0.0119,//       "total_cost": 0.0169//     },//     "charged_character_count": 238,//     "unit_price": "0.000050"// }</code></pre>
+    <pre class="prettyprint"><code>import { SoffosServices } from "soffosai-node";const my_apiKey = "Token &lt;put your api key here>";const service = new SoffosServices.SummarizationService({apiKey:my_apiKey});let response = await service.call(    "client 23456",    "Ludwig van Beethoven (baptised 17 December 1770 – 26 March 1827) was a German \    composer and pianist. ... After some months of bedridden illness, he died in 1827. \    Beethoven's works remain mainstays of the classical music repertoire.",    3);console.log(JSON.stringify(response, null, 2));    // returns// {//     "summary": "Ludwig van Beethoven was a German composer and pianist. He composed many works that remain mainstays of the classical music repertoire. After a period of illness, he died in 1827.",//     "cost": {//       "api_call_cost": 0.005,//       "character_volume_cost": 0.0119,//       "total_cost": 0.0169//     },//     "charged_character_count": 238,//     "unit_price": "0.000050"// }</code></pre>
 
 
 
@@ -355,7 +434,7 @@
     
 
     
-    <h4 class="name" id="setInputConfigs"><span class="type-signature"></span>setInputConfigs<span class="signature">(name, text, sent_length)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="setInputConfigs"><span class="type-signature"></span>setInputConfigs<span class="signature">(name, text, sent_length, engine<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
     
 
     
@@ -383,7 +462,11 @@
         <th>Type</th>
 
         
+        <th>Attributes</th>
+        
 
+        
+        <th>Default</th>
         
 
         <th class="last">Description</th>
@@ -408,7 +491,19 @@
             </td>
 
             
+                <td class="attributes">
+                
 
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
             
 
             <td class="description last">Reference name of this Service. It will be used by the Pipeline to reference this Service.</td>
@@ -434,7 +529,19 @@
             </td>
 
             
+                <td class="attributes">
+                
 
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
             
 
             <td class="description last">Text to be summarized.</td>
@@ -460,10 +567,61 @@
             </td>
 
             
+                <td class="attributes">
+                
 
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
             
 
             <td class="description last">The desired sentence length of the summary. The service will respond with a 403 error if the value is larger than the number of sentences in the text.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>engine</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    null
+                
+                </td>
+            
+
+            <td class="description last">The LLM engine to be used.</td>
         </tr>
 
     
@@ -504,7 +662,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_summarization.mjs.html">services/summarization.mjs</a>, <a href="services_summarization.mjs.html#line75">line 75</a>
+        <a href="services_summarization.mjs.html">services/summarization.mjs</a>, <a href="services_summarization.mjs.html#line78">line 78</a>
     </li></ul></dd>
     
 
@@ -550,13 +708,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="SoffosServices.AnswerScoringService.html">AnswerScoringService</a></li><li><a href="SoffosServices.AudioConverterService.html">AudioConverterService</a></li><li><a href="SoffosServices.ChatBotCreateService.html">ChatBotCreateService</a></li><li><a href="SoffosServices.ChatBotDeleteUserSessionsService.html">ChatBotDeleteUserSessionsService</a></li><li><a href="SoffosServices.ChatBotGetUserSessionsService.html">ChatBotGetUserSessionsService</a></li><li><a href="SoffosServices.ChatBotService.html">ChatBotService</a></li><li><a href="SoffosServices.ChatBotsDeleteService.html">ChatBotsDeleteService</a></li><li><a href="SoffosServices.ChatBotsGetService.html">ChatBotsGetService</a></li><li><a href="SoffosServices.DocumentsDeleteService.html">DocumentsDeleteService</a></li><li><a href="SoffosServices.DocumentsIngestService.html">DocumentsIngestService</a></li><li><a href="SoffosServices.DocumentsSearchService.html">DocumentsSearchService</a></li><li><a href="SoffosServices.EmailAnalysisService.html">EmailAnalysisService</a></li><li><a href="SoffosServices.EmotionDetectionService.html">EmotionDetectionService</a></li><li><a href="SoffosServices.FileConverterService.html">FileConverterService</a></li><li><a href="SoffosServices.LanguageDetectionService.html">LanguageDetectionService</a></li><li><a href="SoffosServices.LetsDiscussCreateService.html">LetsDiscussCreateService</a></li><li><a href="SoffosServices.LetsDiscussDeleteService.html">LetsDiscussDeleteService</a></li><li><a href="SoffosServices.LetsDiscussRetrieveService.html">LetsDiscussRetrieveService</a></li><li><a href="SoffosServices.LetsDiscussService.html">LetsDiscussService</a></li><li><a href="SoffosServices.LogicalErrorDetectionService.html">LogicalErrorDetectionService</a></li><li><a href="SoffosServices.MicrolessonService.html">MicrolessonService</a></li><li><a href="SoffosServices.NamedEntityRecognitionService.html">NamedEntityRecognitionService</a></li><li><a href="SoffosServices.ParaphraseService.html">ParaphraseService</a></li><li><a href="SoffosServices.ProfanityService.html">ProfanityService</a></li><li><a href="SoffosServices.QuestionAndAnswerGenerationService.html">QuestionAndAnswerGenerationService</a></li><li><a href="SoffosServices.QuestionAnsweringService.html">QuestionAnsweringService</a></li><li><a href="SoffosServices.ReviewTaggerService.html">ReviewTaggerService</a></li><li><a href="SoffosServices.SentimentAnalysisService.html">SentimentAnalysisService</a></li><li><a href="SoffosServices.SimplifyService.html">SimplifyService</a></li><li><a href="SoffosServices.SummarizationService.html">SummarizationService</a></li><li><a href="SoffosServices.TableGeneratorService.html">TableGeneratorService</a></li><li><a href="SoffosServices.TagGenerationService.html">TagGenerationService</a></li><li><a href="SoffosServices.TranscriptCorrectionService.html">TranscriptCorrectionService</a></li><li><a href="SoffosServices.WebsiteConverterService.html">WebsiteConverterService</a></li><li><a href="-_InputConfig.html">_InputConfig</a></li><li><a href="-_SoffosPipelines.AskADocumentPipeline.html">AskADocumentPipeline</a></li><li><a href="-_SoffosPipelines.FileIngestPipeline.html">FileIngestPipeline</a></li></ul><h3>Global</h3><ul><li><a href="global.html#_createInputConfig">_createInputConfig</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="SoffosServices.AnswerScoringService.html">AnswerScoringService</a></li><li><a href="SoffosServices.AssessmentGeneratorService.html">AssessmentGeneratorService</a></li><li><a href="SoffosServices.AudioConverterService.html">AudioConverterService</a></li><li><a href="SoffosServices.ChatBotCreateService.html">ChatBotCreateService</a></li><li><a href="SoffosServices.ChatBotDeleteUserSessionsService.html">ChatBotDeleteUserSessionsService</a></li><li><a href="SoffosServices.ChatBotGetUserSessionsService.html">ChatBotGetUserSessionsService</a></li><li><a href="SoffosServices.ChatBotService.html">ChatBotService</a></li><li><a href="SoffosServices.ChatBotsDeleteService.html">ChatBotsDeleteService</a></li><li><a href="SoffosServices.ChatBotsGetService.html">ChatBotsGetService</a></li><li><a href="SoffosServices.DocumentsDeleteService.html">DocumentsDeleteService</a></li><li><a href="SoffosServices.DocumentsIngestService.html">DocumentsIngestService</a></li><li><a href="SoffosServices.DocumentsSearchService.html">DocumentsSearchService</a></li><li><a href="SoffosServices.EmailAnalysisService.html">EmailAnalysisService</a></li><li><a href="SoffosServices.EmotionDetectionService.html">EmotionDetectionService</a></li><li><a href="SoffosServices.FileConverterService.html">FileConverterService</a></li><li><a href="SoffosServices.ImageAnalysisService.html">ImageAnalysisService</a></li><li><a href="SoffosServices.ImageGenerationService.html">ImageGenerationService</a></li><li><a href="SoffosServices.LanguageDetectionService.html">LanguageDetectionService</a></li><li><a href="SoffosServices.LetsDiscussCreateService.html">LetsDiscussCreateService</a></li><li><a href="SoffosServices.LetsDiscussDeleteService.html">LetsDiscussDeleteService</a></li><li><a href="SoffosServices.LetsDiscussRetrieveService.html">LetsDiscussRetrieveService</a></li><li><a href="SoffosServices.LetsDiscussService.html">LetsDiscussService</a></li><li><a href="SoffosServices.LogicalErrorDetectionService.html">LogicalErrorDetectionService</a></li><li><a href="SoffosServices.MicrolessonService.html">MicrolessonService</a></li><li><a href="SoffosServices.MultipleChoiceQnAGeneratorService.html">MultipleChoiceQnAGeneratorService</a></li><li><a href="SoffosServices.NamedEntityRecognitionService.html">NamedEntityRecognitionService</a></li><li><a href="SoffosServices.ParaphraseService.html">ParaphraseService</a></li><li><a href="SoffosServices.ProfanityService.html">ProfanityService</a></li><li><a href="SoffosServices.QuestionAndAnswerGenerationService.html">QuestionAndAnswerGenerationService</a></li><li><a href="SoffosServices.QuestionAnsweringService.html">QuestionAnsweringService</a></li><li><a href="SoffosServices.ReviewTaggerService.html">ReviewTaggerService</a></li><li><a href="SoffosServices.SentimentAnalysisService.html">SentimentAnalysisService</a></li><li><a href="SoffosServices.SimplifyService.html">SimplifyService</a></li><li><a href="SoffosServices.SummarizationService.html">SummarizationService</a></li><li><a href="SoffosServices.TableGeneratorService.html">TableGeneratorService</a></li><li><a href="SoffosServices.TagGenerationService.html">TagGenerationService</a></li><li><a href="SoffosServices.TranscriptCorrectionService.html">TranscriptCorrectionService</a></li><li><a href="SoffosServices.WebsiteConverterService.html">WebsiteConverterService</a></li><li><a href="-_InputConfig.html">_InputConfig</a></li><li><a href="-_SoffosPipelines.AskADocumentPipeline.html">AskADocumentPipeline</a></li><li><a href="-_SoffosPipelines.FileIngestPipeline.html">FileIngestPipeline</a></li></ul><h3>Global</h3><ul><li><a href="global.html#_createInputConfig">_createInputConfig</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Wed Nov 15 2023 18:24:09 GMT+0800 (Singapore Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Wed Apr 17 2024 19:03:51 GMT+0800 (Philippine Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

@@ -49,6 +49,7 @@ var LetsDiscussCreateService = /*#__PURE__*/function (_SoffosAIService) {
    * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
    * the api is an application (app) and that app has users. Soffos API will accept any string.
    * @param {string} context - The content to discuss about.
+   * @param {string} [engine=null] - The LLM engine to be used.
    * @returns {Promise<Object>} 
    * session_id - string
    * The unique id of the conversation session. It's crucial to store the session_id in order to make queries.
@@ -76,10 +77,12 @@ var LetsDiscussCreateService = /*#__PURE__*/function (_SoffosAIService) {
   _createClass(LetsDiscussCreateService, [{
     key: "call",
     value: function call(user, context) {
+      var engine = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
       var payload = {
         "user": user,
         "context": context
       };
+      if (engine) payload.engine = engine;
       return _get(_getPrototypeOf(LetsDiscussCreateService.prototype), "call", this).call(this, payload);
     }
 
@@ -91,6 +94,7 @@ var LetsDiscussCreateService = /*#__PURE__*/function (_SoffosAIService) {
   }, {
     key: "setInputConfigs",
     value: function setInputConfigs(name, context) {
+      var engine = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
       var source = {
         context: context
       };
@@ -127,6 +131,7 @@ var LetsDiscussService = /*#__PURE__*/function (_SoffosAIService2) {
    * the api is an application (app) and that app has users. Soffos API will accept any string.
    * @param {string} session_id - The ID of the session provided by the /create/ endpoint.
    * @param {string} query - User's message.
+   * @param {string} [engine=null] - The LLM engine to be used.
    * @returns {Promise<Object>} 
    * response - string <br>
    * Module's response to the user's query. <br>
@@ -183,11 +188,13 @@ var LetsDiscussService = /*#__PURE__*/function (_SoffosAIService2) {
   _createClass(LetsDiscussService, [{
     key: "call",
     value: function call(user, session_id, query) {
+      var engine = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
       var payload = {
         "user": user,
         "session_id": session_id,
         "query": query
       };
+      if (engine) payload.engine = engine;
       return _get(_getPrototypeOf(LetsDiscussService.prototype), "call", this).call(this, payload);
     }
 
@@ -196,15 +203,18 @@ var LetsDiscussService = /*#__PURE__*/function (_SoffosAIService2) {
      *  It will be used by the Pipeline to reference this Service.
      * @param {string|InputConfig} session_id - The ID of the session provided by the /create/ endpoint.
      * @param {string|InputConfig} query - User's message.
+     * @param {string} [engine=null] - The LLM engine to be used.
      * @returns {Promise<Object>} 
      */
   }, {
     key: "setInputConfigs",
     value: function setInputConfigs(name, session_id, query) {
+      var engine = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
       var source = {
         session_id: session_id,
         query: query
       };
+      if (engine) source.engine = engine;
       return _get(_getPrototypeOf(LetsDiscussService.prototype), "setInputConfigs", this).call(this, name, source);
     }
   }]);
