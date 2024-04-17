@@ -35,7 +35,7 @@ class AudioConverterService extends SoffosAIService {
      * language - The detected language used by the speakers.
      * error -      * Description missing.
      * @example
-     * Examples are available at "https://github.com/Soffos-Inc/soffosai-js/tree/master/samples"
+     * Examples are available at "https://github.com/Soffos-Inc/soffosai-node/tree/master/samples"
      */
     call(user, file=null, url=null, model=null) {
       let payload = {

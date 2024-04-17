@@ -59,7 +59,7 @@ var ChatBotCreateService = /*#__PURE__*/function (_SoffosAIService) {
    * provide this, the chatbot with this ID's will be updated. The
    * role and name will be updated.
    * @example
-   * Examples are available at "https://github.com/Soffos-Inc/soffosai-js/tree/master/samples"
+   * Examples are available at "https://github.com/Soffos-Inc/soffosai-node/tree/master/samples"
    */
   _createClass(ChatBotCreateService, [{
     key: "call",

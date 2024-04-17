@@ -2,6 +2,8 @@
 ## Notice:
 To all who installed soffosai package lower than 0.0.4, please reinstall/update your package.
 
+## 0.2.11
+- documentation fixes
 
 ## 0.2.10
 - updated Typescript support

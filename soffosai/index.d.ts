@@ -183,7 +183,7 @@ declare module 'soffosai-node' {
              * @returns {Promise<Object>} 
              * qna_sets - The question and answer sets
              * @example
-             * Examples are available at "https://github.com/Soffos-Inc/soffosai-js/tree/master/samples"
+             * Examples are available at "https://github.com/Soffos-Inc/soffosai-node/tree/master/samples"
              */
             call(user:string, context:string, mode?:string, num_questions?:number, num_choices?:number, engine?:string): Promise<object>;
 
@@ -232,7 +232,7 @@ declare module 'soffosai-node' {
              * language - The detected language used by the speakers.
              * error -      * Description missing.
              * @example
-             * Examples are available at "https://github.com/Soffos-Inc/soffosai-js/tree/master/samples"
+             * Examples are available at "https://github.com/Soffos-Inc/soffosai-node/tree/master/samples"
              */
             call(user:string, file?: object, url?:string, model?:string): Promise<object>;
 
@@ -276,7 +276,7 @@ declare module 'soffosai-node' {
              * provide this, the chatbot with this ID's will be updated. The
              * role and name will be updated.
              * @example
-             * Examples are available at "https://github.com/Soffos-Inc/soffosai-js/tree/master/samples"
+             * Examples are available at "https://github.com/Soffos-Inc/soffosai-node/tree/master/samples"
              */
             call(user:string, role:string, chatbot_name:string, chatbot_id?:string): Promise<Object>;
 
@@ -334,7 +334,7 @@ declare module 'soffosai-node' {
              * context - The context that was made available to the agent for responding
              * to the user's last message.
              * @example
-             * Examples are available at "https://github.com/Soffos-Inc/soffosai-js/tree/master/samples"
+             * Examples are available at "https://github.com/Soffos-Inc/soffosai-node/tree/master/samples"
              */
             call(user: string, message:string, chatbot_id:string, user_id:string, mode:string, session_id?:string, previous_messages?:string[], bot_document_ids?:string[], context_document_ids?:string[], engine?:string): Promise<Object>;
 
@@ -382,7 +382,7 @@ declare module 'soffosai-node' {
              * @returns {Promise<Object>} 
              * sessions -      * Description missing.
              * @example
-             * Examples are available at "https://github.com/Soffos-Inc/soffosai-js/tree/master/samples"
+             * Examples are available at "https://github.com/Soffos-Inc/soffosai-node/tree/master/samples"
              */
             call(user:string, chatbot_id:string, user_id:string, session_ids?:string[]): Promise<Object>;
 
@@ -416,7 +416,7 @@ declare module 'soffosai-node' {
              * @returns {Promise<Object>} 
              * success - Determines if the API call is successful or not.
              * @example
-             * Examples are available at "https://github.com/Soffos-Inc/soffosai-js/tree/master/samples"
+             * Examples are available at "https://github.com/Soffos-Inc/soffosai-node/tree/master/samples"
              */
             call(user:string, chatbot_id:string, user_id:string, session_ids?:string[]):Promise<Object>;
 
@@ -450,7 +450,7 @@ declare module 'soffosai-node' {
              * @returns {Promise<Object>} 
              * chatbots - A list of dictionaries with details about your chatbots.
              * @example
-             * Examples are available at "https://github.com/Soffos-Inc/soffosai-js/tree/master/samples"
+             * Examples are available at "https://github.com/Soffos-Inc/soffosai-node/tree/master/samples"
              */
             call(user:string, chatbot_ids?:string[]): Promise<Object>;
 
@@ -483,7 +483,7 @@ declare module 'soffosai-node' {
              * @returns {Promise<Object>} 
              * success - Determines if the API call is successful or not.
              * @example
-             * Examples are available at "https://github.com/Soffos-Inc/soffosai-js/tree/master/samples"
+             * Examples are available at "https://github.com/Soffos-Inc/soffosai-node/tree/master/samples"
              */
             call(user:string, chatbot_ids:string[]): Promise<Object>;
 
@@ -895,7 +895,7 @@ declare module 'soffosai-node' {
              * @returns {Promise<Object>} 
              * analysis - the analysis of the image
              * @example
-             * Examples are available at "https://github.com/Soffos-Inc/soffosai-js/tree/master/samples"
+             * Examples are available at "https://github.com/Soffos-Inc/soffosai-node/tree/master/samples"
              */
             call(user:string, prompt:string, image_url:string, engine?:string): Promise<object>;
 
@@ -934,7 +934,7 @@ declare module 'soffosai-node' {
              * @returns {Promise<Object>} 
              * image_urls - list of image URLs
              * @example
-             * Examples are available at "https://github.com/Soffos-Inc/soffosai-js/tree/master/samples"
+             * Examples are available at "https://github.com/Soffos-Inc/soffosai-node/tree/master/samples"
              */
             call(user:string, prompt:string, size?:string, quality?:string, quantity?:number, engine?:string): Promise<object>;
 
@@ -1405,7 +1405,7 @@ declare module 'soffosai-node' {
              * @returns {Promise<Object>} 
              * qna_sets - The question and answer sets
              * @example
-             * Examples are available at "https://github.com/Soffos-Inc/soffosai-js/tree/master/samples"
+             * Examples are available at "https://github.com/Soffos-Inc/soffosai-node/tree/master/samples"
              */
             call(user:string, context:string, num_questions:number, num_choices:number, engine?:string): Promise<object>;
 
@@ -2388,7 +2388,7 @@ declare module 'soffosai-node' {
              * `external`: Links found on the page that belong to different
              * domains.
              * @example
-             * Examples are available at "https://github.com/Soffos-Inc/soffosai-js/tree/master/samples"
+             * Examples are available at "https://github.com/Soffos-Inc/soffosai-node/tree/master/samples"
              */
             call(user:string, url:string): Promise<object>;
 

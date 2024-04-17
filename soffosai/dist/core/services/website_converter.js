@@ -58,7 +58,7 @@ var WebsiteConverterService = /*#__PURE__*/function (_SoffosAIService) {
    * `external`: Links found on the page that belong to different
    * domains.
    * @example
-   * Examples are available at "https://github.com/Soffos-Inc/soffosai-js/tree/master/samples"
+   * Examples are available at "https://github.com/Soffos-Inc/soffosai-node/tree/master/samples"
    */
   _createClass(WebsiteConverterService, [{
     key: "call",

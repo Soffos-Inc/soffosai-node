@@ -33,7 +33,7 @@ class AssessmentGeneratorService extends SoffosAIService {
      * @returns {Promise<Object>} 
      * qna_sets - The question and answer sets
      * @example
-     * Examples are available at "https://github.com/Soffos-Inc/soffosai-js/tree/master/samples"
+     * Examples are available at "https://github.com/Soffos-Inc/soffosai-node/tree/master/samples"
      */
     call(user, context, mode="short answer", num_questions=10, num_choices=3, engine=null) {
       let payload = {

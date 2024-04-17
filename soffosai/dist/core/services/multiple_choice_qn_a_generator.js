@@ -53,7 +53,7 @@ var MultipleChoiceQnAGeneratorService = /*#__PURE__*/function (_SoffosAIService)
    * @returns {Promise<Object>} 
    * qna_sets - The question and answer sets
    * @example
-   * Examples are available at "https://github.com/Soffos-Inc/soffosai-js/tree/master/samples"
+   * Examples are available at "https://github.com/Soffos-Inc/soffosai-node/tree/master/samples"
    */
   _createClass(MultipleChoiceQnAGeneratorService, [{
     key: "call",

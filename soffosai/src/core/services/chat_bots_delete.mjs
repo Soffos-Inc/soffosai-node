@@ -26,7 +26,7 @@ class ChatBotsDeleteService extends SoffosAIService {
      * @returns {Promise<Object>} 
      * success - Determines if the API call is successful or not.
      * @example
-     * Examples are available at "https://github.com/Soffos-Inc/soffosai-js/tree/master/samples"
+     * Examples are available at "https://github.com/Soffos-Inc/soffosai-node/tree/master/samples"
      */
     call(user, chatbot_ids) {
       let payload = {

@@ -29,7 +29,7 @@ class ImageAnalysisService extends SoffosAIService {
      * @returns {Promise<Object>} 
      * analysis - the analysis of the image
      * @example
-     * Examples are available at "https://github.com/Soffos-Inc/soffosai-js/tree/master/samples"
+     * Examples are available at "https://github.com/Soffos-Inc/soffosai-node/tree/master/samples"
      */
     call(user, prompt, image_url, engine=null) {
       let payload = {

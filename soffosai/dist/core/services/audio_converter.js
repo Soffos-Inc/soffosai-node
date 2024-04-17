@@ -60,7 +60,7 @@ var AudioConverterService = /*#__PURE__*/function (_SoffosAIService) {
    * language - The detected language used by the speakers.
    * error -      * Description missing.
    * @example
-   * Examples are available at "https://github.com/Soffos-Inc/soffosai-js/tree/master/samples"
+   * Examples are available at "https://github.com/Soffos-Inc/soffosai-node/tree/master/samples"
    */
   _createClass(AudioConverterService, [{
     key: "call",

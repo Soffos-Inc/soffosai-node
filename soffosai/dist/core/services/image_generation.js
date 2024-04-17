@@ -58,7 +58,7 @@ var ImageGenerationService = /*#__PURE__*/function (_SoffosAIService) {
    * @returns {Promise<Object>} 
    * image_urls - list of image URLs
    * @example
-   * Examples are available at "https://github.com/Soffos-Inc/soffosai-js/tree/master/samples"
+   * Examples are available at "https://github.com/Soffos-Inc/soffosai-node/tree/master/samples"
    */
   _createClass(ImageGenerationService, [{
     key: "call",

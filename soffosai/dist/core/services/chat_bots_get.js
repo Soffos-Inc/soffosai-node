@@ -52,7 +52,7 @@ var ChatBotsGetService = /*#__PURE__*/function (_SoffosAIService) {
    * @returns {Promise<Object>} 
    * chatbots - A list of dictionaries with details about your chatbots.
    * @example
-   * Examples are available at "https://github.com/Soffos-Inc/soffosai-js/tree/master/samples"
+   * Examples are available at "https://github.com/Soffos-Inc/soffosai-node/tree/master/samples"
    */
   _createClass(ChatBotsGetService, [{
     key: "call",

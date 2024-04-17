@@ -52,7 +52,7 @@ var ChatBotGetUserSessionsService = /*#__PURE__*/function (_SoffosAIService) {
    * @returns {Promise<Object>} 
    * sessions -      * Description missing.
    * @example
-   * Examples are available at "https://github.com/Soffos-Inc/soffosai-js/tree/master/samples"
+   * Examples are available at "https://github.com/Soffos-Inc/soffosai-node/tree/master/samples"
    */
   _createClass(ChatBotGetUserSessionsService, [{
     key: "call",

@@ -49,7 +49,7 @@ class ChatBotService extends SoffosAIService {
      * context - The context that was made available to the agent for responding
      * to the user's last message.
      * @example
-     * Examples are available at "https://github.com/Soffos-Inc/soffosai-js/tree/master/samples"
+     * Examples are available at "https://github.com/Soffos-Inc/soffosai-node/tree/master/samples"
      */
     call(user, message, chatbot_id, user_id, mode, session_id=null, previous_messages=null, bot_document_ids=null, context_document_ids=null, engine=null) {
       let payload = {

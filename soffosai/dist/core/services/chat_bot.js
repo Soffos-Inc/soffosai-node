@@ -74,7 +74,7 @@ var ChatBotService = /*#__PURE__*/function (_SoffosAIService) {
    * context - The context that was made available to the agent for responding
    * to the user's last message.
    * @example
-   * Examples are available at "https://github.com/Soffos-Inc/soffosai-js/tree/master/samples"
+   * Examples are available at "https://github.com/Soffos-Inc/soffosai-node/tree/master/samples"
    */
   _createClass(ChatBotService, [{
     key: "call",

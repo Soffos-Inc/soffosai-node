@@ -27,7 +27,7 @@ class ChatBotsGetService extends SoffosAIService {
      * @returns {Promise<Object>} 
      * chatbots - A list of dictionaries with details about your chatbots.
      * @example
-     * Examples are available at "https://github.com/Soffos-Inc/soffosai-js/tree/master/samples"
+     * Examples are available at "https://github.com/Soffos-Inc/soffosai-node/tree/master/samples"
      */
     call(user, chatbot_ids=null) {
       let payload = {
