@@ -44,7 +44,7 @@ var FileConverterService = /*#__PURE__*/function (_SoffosAIService) {
   /**
    * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
    * the api is an application (app) and that app has users. Soffos API will accept any string.
-   * @param {string|Blob} file - The byte stream of the file. The file should not exceed 50Mb in size.
+   * @param {string|object} file - The byte stream of the file. The file should not exceed 50Mb in size.
    * @param {number} [normalize=0] - Whether to perform normalization.
    * @returns {Promise<Object>}
    * text - string<br>
@@ -96,7 +96,7 @@ var FileConverterService = /*#__PURE__*/function (_SoffosAIService) {
     /**
      * @param {string} name - Reference name of this Service.
      *  It will be used by the Pipeline to reference this Service.
-     * @param {Blob|InputConfig} file - The byte stream of the file. The file should not exceed 50Mb in size.
+     * @param {object|string|InputConfig} file - The byte stream of the file. The file should not exceed 50Mb in size.
      * @param {string|InputConfig} [normalize] - Whether to perform normalization.
      */
   }, {

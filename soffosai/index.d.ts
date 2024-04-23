@@ -842,7 +842,7 @@ declare module 'soffosai-node' {
             /**
              * @param {string} user - The ID of the user accessing the Soffos API.  Soffos assumes that the owner of
              * the api is an application (app) and that app has users. Soffos API will accept any string.
-             * @param {Blob} file - The byte stream of the file. The file should not exceed 50Mb in size.
+             * @param {object|string} file - The byte stream of the file. The file should not exceed 50Mb in size.
              * @param {number} [normalize=0] - Whether to perform normalization.
              * @returns {Promise<Object>}
              * text - string<br>
@@ -865,7 +865,7 @@ declare module 'soffosai-node' {
              * @example
              * // needs React.js or other frontend js library or framework
              */
-            call(user: string, file:Blob, normalize?:number): Promise<object>;
+            call(user: string, file:object|string, normalize?:number): Promise<object>;
             
             /**
              * @param {string} name - Reference name of this Service.
