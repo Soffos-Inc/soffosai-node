@@ -1,2 +1,5 @@
 node_modules/
 test.mjs
+ingest_soffos_chat_docs.py
+.venv/
+live_services/
